@@ -1,6 +1,6 @@
 #DesignMyApp Common API
 
-`Version: 1.0.1`
+`Version: 1.0.3`
 
 Follow us on Twitter:
 @DesignMyApp  
@@ -10,13 +10,27 @@ Technical:
 Legal:  
 @Olduv  
 
+# Maven
+```
+<dependency>
+	<groupId>mobi.designmyapp</groupId>
+	<artifactId>designmyapp-common-api</artifactId>
+	<version>${designmyapp-sdk.version}</version>
+</dependency>
+```
+
 # Documentation
 
 Documentation and developer resources are available on
 http://developer.designmyapp.mobi
 
-SDK repository is available on
+Common-API should be used along with the SDK. The SDK repository is available on
 https://github.com/e-biz/designmyapp-sdk
+
+# Common
+
+Warning: The artifact designmyapp-common on Maven Central is Deprecated and should not be used anymore.
+Only designmyapp-common-api and designmyapp-sdk should be included
 
 # Issues
 
