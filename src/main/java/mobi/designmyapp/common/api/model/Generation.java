@@ -35,6 +35,7 @@ public abstract class Generation {
 
   public static final String TARGET_ANDROID = "android";
   public static final String TARGET_IOS = "ios";
+  public static final String TARGET_WEBAPP = "webapp";
 
   public Generation() {
     this.name = "My First App";

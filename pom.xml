@@ -118,6 +118,7 @@
           </execution>
         </executions>
       </plugin>
+<!--
 
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -132,7 +133,7 @@
         </executions>
       </plugin>
 
-      <!--  Deploy to the excilysRepo Nexus server with the Nexus Staging Maven plugin -->
+      &lt;!&ndash;  Deploy to the excilysRepo Nexus server with the Nexus Staging Maven plugin &ndash;&gt;
       <plugin>
         <groupId>org.sonatype.plugins</groupId>
         <artifactId>nexus-staging-maven-plugin</artifactId>
@@ -159,6 +160,7 @@
           </execution>
         </executions>
       </plugin>
+-->
     </plugins>
   </build>
 

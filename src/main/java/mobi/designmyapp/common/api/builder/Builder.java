@@ -18,6 +18,6 @@ public interface Builder<T extends Generation> {
   Type getType();
 
   public static enum Type {
-  ANDROID,IOS;
+  ANDROID,IOS,WEBAPP;
   }
 }
