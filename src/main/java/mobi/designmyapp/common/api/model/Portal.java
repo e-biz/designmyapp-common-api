@@ -11,6 +11,9 @@ import org.jongo.marshall.jackson.oid.Id;
 
 import java.util.List;
 
+/**
+ * Created by Loïc Ortola on 7/7/14.
+ */
 public class Portal {
 
   @Id

@@ -6,8 +6,9 @@ without the express written permission of eBusiness Information.
 */
 package mobi.designmyapp.common.api.model;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import mobi.designmyapp.common.api.utils.UtilsFactory;
+
+import java.math.BigDecimal;
 
 
 /**
@@ -16,10 +17,9 @@ import mobi.designmyapp.common.api.utils.UtilsFactory;
  * or even specify different prices depending on which portal it is on.
  * Only put attributes, and use PriceUtils.create() to set up your prices
  */
-@JsonTypeInfo(use= JsonTypeInfo.Id.CLASS,property="_class")
 public abstract class Pricing {
 
-  public Price templatePrice = Price.ZERO;
+  public BigDecimal templatePrice = BigDecimal.ZERO;
 
   public void validate() {
     if (UtilsFactory.getPriceUtils().isNegative(templatePrice)) {
