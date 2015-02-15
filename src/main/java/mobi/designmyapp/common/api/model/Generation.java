@@ -12,15 +12,12 @@ import com.fasterxml.jackson.databind.annotation.JsonTypeIdResolver;
 import mobi.designmyapp.common.api.resolver.GenerationTypeIdResolver;
 import org.jongo.marshall.jackson.oid.Id;
 
-import java.util.List;
-
 /**
  * Created by Alexandre Nunesse on 7/18/14.
  */
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, visible = true, property = "templateTag")
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonTypeIdResolver(GenerationTypeIdResolver.class)
-public abstract class Generation {
+public class Generation {
   @Id
   protected String uuid;
   protected String name;
@@ -29,9 +26,10 @@ public abstract class Generation {
   protected String version;
   protected Portal portal;
   protected User user;
-  protected String templateTag;
-  protected String templateName;
-  protected List<String> targets;
+  @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, visible = true, property = "templateTag")
+  @JsonInclude(JsonInclude.Include.NON_EMPTY)
+  @JsonTypeIdResolver(GenerationTypeIdResolver.class)
+  protected Template template;
 
   public static final String TARGET_ANDROID = "android";
   public static final String TARGET_IOS = "ios";
@@ -104,43 +102,11 @@ public abstract class Generation {
     this.user = user;
   }
 
-  public String getTemplateTag() {
-    return templateTag;
+  public Template getTemplate() {
+    return template;
   }
 
-  public void setTemplateTag(String templateTag) {
-    this.templateTag = templateTag;
-  }
-
-  public String getTemplateName() {
-    return templateName;
-  }
-
-  public void setTemplateName(String templateName) {
-    this.templateName = templateName;
-  }
-
-  public List<String> getTargets() {
-    return targets;
-  }
-
-  public void setTargets(List<String> targets) {
-    this.targets = targets;
-  }
-
-  @Override
-  public String toString() {
-    return "Generation{" +
-        "uuid='" + uuid + '\'' +
-        ", name='" + name + '\'' +
-        ", package='" + applicationPackage + '\'' +
-        ", customIcon=" + customIcon +
-        ", version='" + version + '\'' +
-        ", portal=" + portal +
-        ", user=" + user +
-        ", templateTag='" + templateTag + '\'' +
-        ", templateName='" + templateName + '\'' +
-        ", targets='" + targets + '\'' +
-        '}';
+  public void setTemplate(Template template) {
+    this.template = template;
   }
 }

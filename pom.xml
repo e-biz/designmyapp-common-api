@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>mobi.designmyapp</groupId>
   <artifactId>designmyapp-common-api</artifactId>
-  <version>1.0.4-SNAPSHOT</version>
+  <version>2.0.0-SNAPSHOT</version>
   <name>DesignMyApp Common API</name>
   <description>This maven artifact contains all common interfaces required by the DesignMyApp SDK.</description>
   <url>http://developer.designmyapp.mobi</url>
@@ -38,7 +38,7 @@
   </developers>
   <licenses>
     <license>
-      <name>Closed source, Copyright 2014 eBusiness Information All rights reserved</name>
+      <name>Closed source, Copyright 2015 eBusiness Information All rights reserved</name>
       <url>http://www.designmyapp.mobi/#/dma/terms-en</url>
       <distribution>repo</distribution>
     </license>
@@ -46,14 +46,102 @@
 
   <!-- Project properties -->
   <properties>
-    <maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
-    <maven-release-plugin.version>2.5</maven-release-plugin.version>
-    <java.version>1.7</java.version>
+    <maven-compiler-plugin.version>3.2</maven-compiler-plugin.version>
+    <maven-javadoc-plugin.version>2.10.1</maven-javadoc-plugin.version>
+    <maven-release-plugin.version>2.5.1</maven-release-plugin.version>
+    <nexus-staging-maven-plugin.version>1.6.3</nexus-staging-maven-plugin.version>
+    <java.version>1.8</java.version>
     <jackson-databind.version>2.4.1.3</jackson-databind.version>
     <freemarker.version>2.3.20</freemarker.version>
     <jongo.version>1.1</jongo.version>
+    <slf4j.version>1.7.10</slf4j.version>
   </properties>
 
+  <!-- Profiles -->
+  <profiles>
+    <!-- Main release profile -->
+    <profile>
+      <id>release-sign-artifacts</id>
+      <activation>
+        <property>
+          <name>performRelease</name>
+          <value>true</value>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <!--  Src plugin -->
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-source-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>attach-sources</id>
+                <goals>
+                  <goal>jar</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <!--  Javadoc plugin -->
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <version>${maven-javadoc-plugin.version}</version>
+            <executions>
+              <execution>
+                <id>attach-javadocs</id>
+                <goals>
+                  <goal>jar</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <!-- Maven release plugin -->
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-release-plugin</artifactId>
+            <version>${maven-release-plugin.version}</version>
+            <configuration>
+              <autoVersionSubmodules>true</autoVersionSubmodules>
+              <pushChanges>false</pushChanges>
+              <tagNameFormat>@{project.version}</tagNameFormat>
+              <useReleaseProfile>false</useReleaseProfile>
+            </configuration>
+          </plugin>
+          <!--  Deploy to the internal Nexus server with the Nexus Staging Maven plugin -->
+          <plugin>
+            <groupId>org.sonatype.plugins</groupId>
+            <artifactId>nexus-staging-maven-plugin</artifactId>
+            <version>${nexus-staging-maven-plugin.version}</version>
+            <extensions>true</extensions>
+            <configuration>
+              <serverId>excilysRepo</serverId>
+              <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+              <autoReleaseAfterClose>true</autoReleaseAfterClose>
+            </configuration>
+          </plugin>
+          <!--  Sign jars -->
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <version>1.5</version>
+            <executions>
+              <execution>
+                <id>sign-artifacts</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+
+  <!-- Dependencies -->
   <dependencies>
 
     <!-- Jackson -->
@@ -77,23 +165,17 @@
       <version>${jongo.version}</version>
     </dependency>
 
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>${slf4j.version}</version>
+    </dependency>
+
   </dependencies>
 
   <!-- Project build configuration -->
   <build>
     <plugins>
-      <!-- Maven release plugin -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-release-plugin</artifactId>
-        <version>${maven-release-plugin.version}</version>
-        <configuration>
-          <autoVersionSubmodules>true</autoVersionSubmodules>
-          <pushChanges>false</pushChanges>
-          <tagNameFormat>@{project.version}</tagNameFormat>
-          <useReleaseProfile>false</useReleaseProfile>
-        </configuration>
-      </plugin>
       <!-- Maven compiler plugin -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -104,63 +186,6 @@
           <target>${java.version}</target>
         </configuration>
       </plugin>
-
-
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-source-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>attach-sources</id>
-            <goals>
-              <goal>jar</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-<!--
-
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-javadoc-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>attach-javadocs</id>
-            <goals>
-              <goal>jar</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-
-      &lt;!&ndash;  Deploy to the excilysRepo Nexus server with the Nexus Staging Maven plugin &ndash;&gt;
-      <plugin>
-        <groupId>org.sonatype.plugins</groupId>
-        <artifactId>nexus-staging-maven-plugin</artifactId>
-        <version>1.6.3</version>
-        <extensions>true</extensions>
-        <configuration>
-          <serverId>excilysRepo</serverId>
-          <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-          <autoReleaseAfterClose>true</autoReleaseAfterClose>
-        </configuration>
-      </plugin>
-
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-gpg-plugin</artifactId>
-        <version>1.5</version>
-        <executions>
-          <execution>
-            <id>sign-artifacts</id>
-            <phase>verify</phase>
-            <goals>
-              <goal>sign</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
--->
     </plugins>
   </build>
 

@@ -89,27 +89,45 @@ public interface IFileManagementUtils {
 
   /**
    * Create drawable reference in res/values/public.xml
+   * @param imageName the name of the image
+   * @param drawableId the drawable resource id (android)
+   * @param tempDirectory the destination directory
    */
   void createImageReference(String imageName, int drawableId, File tempDirectory);
 
+  /**
+   * Convert Minutes to milliseconds
+   * @param minutes the number of minutes
+   * @return the millisecond representation of the provided minutes
+   */
   long minToMillis(long minutes);
 
+  /**
+   * Checks whether an URL is an image or not
+   * @param value the URL
+   * @return true if the URL is an image, false otherwise
+   */
   boolean isImageUrl(String value);
 
+  /**
+   * Checks whether a string is a JsonPath or not
+   * @param value the string to test
+   * @return true if the string is a JsonPath, false otherwise
+   */
   boolean isJsonPath(String value);
 
   /**
    * Prevents path hacks such as ../my/path or /opt/my/path
-   * @param pathToTest
-   * @return
+   * @param pathToTest the initial path
+   * @return a string cleared of all eventual path hacks
    */
   String parsePath(String pathToTest);
 
   /**
    * Valid a filename, must be alpha numeric, and accept - and _ too.
    *
-   * @param fileName
-   * @return
+   * @param fileName the name of the file
+   * @return true if the name is valid, false otherwise
    */
   boolean isValidFileName(String fileName);
 

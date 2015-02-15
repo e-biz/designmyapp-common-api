@@ -7,13 +7,14 @@ without the express written permission of eBusiness Information.
 package mobi.designmyapp.common.api.builder;
 
 
-import mobi.designmyapp.common.api.model.Generation;
+import mobi.designmyapp.common.api.model.Template;
 
 /**
  * Created by loic on 7/7/14.
  */
-public interface Builder<T extends Generation> {
-  void build(T generation);
+public interface Builder<T extends Template> {
+  
+  void build(T template);
 
   Type getType();
 

@@ -20,14 +20,15 @@ import java.math.MathContext;
  */
 @JsonSerialize(using = PriceSerializer.class)
 @JsonDeserialize(using = PriceDeserializer.class)
-public class Price extends BigDecimal{
+public class Price extends BigDecimal {
 
   /**
+   * <p>
    * Translates a character array representation of a
    * {@code BigDecimal} into a {@code BigDecimal}, accepting the
    * same sequence of characters as the {@link #Price(String)}
    * constructor, while allowing a sub-array to be specified.
-   * <p/>
+   * </p>
    * <p>Note that if the sequence of characters is already available
    * within a character array, using this constructor is faster than
    * converting the {@code char} array to string and using the
@@ -37,8 +38,8 @@ public class Price extends BigDecimal{
    * @param offset first character in the array to inspect.
    * @param len    number of characters to consider.
    * @throws NumberFormatException if {@code in} is not a valid
-   *                                         representation of a {@code BigDecimal} or the defined subarray
-   *                                         is not wholly within {@code in}.
+   *                               representation of a {@code BigDecimal} or the defined subarray
+   *                               is not wholly within {@code in}.
    * @since 1.5
    */
   public Price(char[] in, int offset, int len) {
@@ -46,12 +47,12 @@ public class Price extends BigDecimal{
   }
 
   /**
-   * Translates a character array representation of a
+   * <p>Translates a character array representation of a
    * {@code BigDecimal} into a {@code BigDecimal}, accepting the
    * same sequence of characters as the {@link #Price(String)}
    * constructor, while allowing a sub-array to be specified and
    * with rounding according to the context settings.
-   * <p/>
+   * </p>
    * <p>Note that if the sequence of characters is already available
    * within a character array, using this constructor is faster than
    * converting the {@code char} array to string and using the
@@ -62,10 +63,10 @@ public class Price extends BigDecimal{
    * @param len    number of characters to consider..
    * @param mc     the context to use.
    * @throws ArithmeticException   if the result is inexact but the
-   *                                         rounding mode is {@code UNNECESSARY}.
+   *                               rounding mode is {@code UNNECESSARY}.
    * @throws NumberFormatException if {@code in} is not a valid
-   *                                         representation of a {@code BigDecimal} or the defined subarray
-   *                                         is not wholly within {@code in}.
+   *                               representation of a {@code BigDecimal} or the defined subarray
+   *                               is not wholly within {@code in}.
    * @since 1.5
    */
   public Price(char[] in, int offset, int len, MathContext mc) {
@@ -73,19 +74,21 @@ public class Price extends BigDecimal{
   }
 
   /**
+   * <p>
    * Translates a character array representation of a
    * {@code BigDecimal} into a {@code BigDecimal}, accepting the
    * same sequence of characters as the {@link #Price(String)}
    * constructor.
-   * <p/>
-   * <p>Note that if the sequence of characters is already available
+   * </p>
+   * <p>
+   * Note that if the sequence of characters is already available
    * as a character array, using this constructor is faster than
    * converting the {@code char} array to string and using the
    * {@code BigDecimal(String)} constructor .
    *
    * @param in {@code char} array that is the source of characters.
    * @throws NumberFormatException if {@code in} is not a valid
-   *                                         representation of a {@code BigDecimal}.
+   *                               representation of a {@code BigDecimal}.
    * @since 1.5
    */
   public Price(char[] in) {
@@ -93,12 +96,13 @@ public class Price extends BigDecimal{
   }
 
   /**
+   * <p>
    * Translates a character array representation of a
    * {@code BigDecimal} into a {@code BigDecimal}, accepting the
    * same sequence of characters as the {@link #Price(String)}
    * constructor and with rounding according to the context
    * settings.
-   * <p/>
+   * </p>
    * <p>Note that if the sequence of characters is already available
    * as a character array, using this constructor is faster than
    * converting the {@code char} array to string and using the
@@ -107,9 +111,9 @@ public class Price extends BigDecimal{
    * @param in {@code char} array that is the source of characters.
    * @param mc the context to use.
    * @throws ArithmeticException   if the result is inexact but the
-   *                                         rounding mode is {@code UNNECESSARY}.
+   *                               rounding mode is {@code UNNECESSARY}.
    * @throws NumberFormatException if {@code in} is not a valid
-   *                                         representation of a {@code BigDecimal}.
+   *                               representation of a {@code BigDecimal}.
    * @since 1.5
    */
   public Price(char[] in, MathContext mc) {
@@ -117,67 +121,58 @@ public class Price extends BigDecimal{
   }
 
   /**
+   * <p>
    * Translates the string representation of a {@code BigDecimal}
    * into a {@code BigDecimal}.  The string representation consists
    * of an optional sign, {@code '+'} (<tt> '&#92;u002B'</tt>) or
    * {@code '-'} (<tt>'&#92;u002D'</tt>), followed by a sequence of
    * zero or more decimal digits ("the integer"), optionally
    * followed by a fraction, optionally followed by an exponent.
-   * <p/>
+   * </p>
    * <p>The fraction consists of a decimal point followed by zero
    * or more decimal digits.  The string must contain at least one
    * digit in either the integer or the fraction.  The number formed
    * by the sign, the integer and the fraction is referred to as the
    * <i>significand</i>.
-   * <p/>
+   * </p>
    * <p>The exponent consists of the character {@code 'e'}
    * (<tt>'&#92;u0065'</tt>) or {@code 'E'} (<tt>'&#92;u0045'</tt>)
    * followed by one or more decimal digits.  The value of the
    * exponent must lie between -{@link Integer#MAX_VALUE} ({@link
    * Integer#MIN_VALUE}+1) and {@link Integer#MAX_VALUE}, inclusive.
-   * <p/>
+   * </p>
    * <p>More formally, the strings this constructor accepts are
    * described by the following grammar:
    * <blockquote>
    * <dl>
    * <dt><i>BigDecimalString:</i>
    * <dd><i>Sign<sub>opt</sub> Significand Exponent<sub>opt</sub></i>
-   * <p/>
    * <dt><i>Sign:</i>
    * <dd>{@code +}
    * <dd>{@code -}
-   * <p/>
    * <dt><i>Significand:</i>
    * <dd><i>IntegerPart</i> {@code .} <i>FractionPart<sub>opt</sub></i>
    * <dd>{@code .} <i>FractionPart</i>
    * <dd><i>IntegerPart</i>
-   * <p/>
    * <dt><i>IntegerPart:</i>
    * <dd><i>Digits</i>
-   * <p/>
    * <dt><i>FractionPart:</i>
    * <dd><i>Digits</i>
-   * <p/>
    * <dt><i>Exponent:</i>
    * <dd><i>ExponentIndicator SignedInteger</i>
-   * <p/>
    * <dt><i>ExponentIndicator:</i>
    * <dd>{@code e}
    * <dd>{@code E}
-   * <p/>
    * <dt><i>SignedInteger:</i>
    * <dd><i>Sign<sub>opt</sub> Digits</i>
-   * <p/>
    * <dt><i>Digits:</i>
    * <dd><i>Digit</i>
    * <dd><i>Digits Digit</i>
-   * <p/>
    * <dt><i>Digit:</i>
    * <dd>any character for which {@link Character#isDigit}
    * returns {@code true}, including 0, 1, 2 ...
    * </dl>
    * </blockquote>
-   * <p/>
    * <p>The scale of the returned {@code BigDecimal} will be the
    * number of digits in the fraction, or zero if the string
    * contains no decimal point, subject to adjustment for any
@@ -185,13 +180,14 @@ public class Price extends BigDecimal{
    * subtracted from the scale.  The value of the resulting scale
    * must lie between {@code Integer.MIN_VALUE} and
    * {@code Integer.MAX_VALUE}, inclusive.
-   * <p/>
+   * </p>
    * <p>The character-to-digit mapping is provided by {@link
    * Character#digit} set to convert to radix 10.  The
    * String may not contain any extraneous characters (whitespace,
    * for example).
-   * <p/>
-   * <p><b>Examples:</b><br>
+   * </p>
+   * <p>
+   * <b>Examples:</b><br>
    * The value of the returned {@code BigDecimal} is equal to
    * <i>significand</i> &times; 10<sup>&nbsp;<i>exponent</i></sup>.
    * For each string on the left, the resulting representation
@@ -212,7 +208,6 @@ public class Price extends BigDecimal{
    * "0E+7"         [0,-7]
    * "-0"           [0,0]
    * </pre>
-   * <p/>
    * <p>Note: For values other than {@code float} and
    * {@code double} NaN and &plusmn;Infinity, this constructor is
    * compatible with the values returned by {@link Float#toString}
@@ -223,7 +218,7 @@ public class Price extends BigDecimal{
    *
    * @param val String representation of {@code BigDecimal}.
    * @throws NumberFormatException if {@code val} is not a valid
-   *                                         representation of a {@code BigDecimal}.
+   *                               representation of a {@code BigDecimal}.
    */
   public Price(String val) {
     super(val);
@@ -238,9 +233,9 @@ public class Price extends BigDecimal{
    * @param val string representation of a {@code BigDecimal}.
    * @param mc  the context to use.
    * @throws ArithmeticException   if the result is inexact but the
-   *                                         rounding mode is {@code UNNECESSARY}.
+   *                               rounding mode is {@code UNNECESSARY}.
    * @throws NumberFormatException if {@code val} is not a valid
-   *                                         representation of a BigDecimal.
+   *                               representation of a BigDecimal.
    * @since 1.5
    */
   public Price(String val, MathContext mc) {
@@ -248,12 +243,13 @@ public class Price extends BigDecimal{
   }
 
   /**
+   * <p>
    * Translates a {@code double} into a {@code BigDecimal} which
    * is the exact decimal representation of the {@code double}'s
    * binary floating-point value.  The scale of the returned
    * {@code BigDecimal} is the smallest value such that
    * <tt>(10<sup>scale</sup> &times; val)</tt> is an integer.
-   * <p/>
+   * </p>
    * <b>Notes:</b>
    * <ol>
    * <li>
@@ -268,7 +264,7 @@ public class Price extends BigDecimal{
    * any finite length).  Thus, the value that is being passed
    * <i>in</i> to the constructor is not exactly equal to 0.1,
    * appearances notwithstanding.
-   * <p/>
+   * </li>
    * <li>
    * The {@code String} constructor, on the other hand, is
    * perfectly predictable: writing {@code new BigDecimal("0.1")}
@@ -276,7 +272,7 @@ public class Price extends BigDecimal{
    * 0.1, as one would expect.  Therefore, it is generally
    * recommended that the {@linkplain #Price(String)
    * <tt>String</tt> constructor} be used in preference to this one.
-   * <p/>
+   * </li>
    * <li>
    * When a {@code double} must be used as a source for a
    * {@code BigDecimal}, note that this constructor provides an
@@ -285,8 +281,8 @@ public class Price extends BigDecimal{
    * {@link Double#toString(double)} method and then using the
    * {@link #Price(String)} constructor.  To get that result,
    * use the {@code static} {@link #valueOf(double)} method.
+   * </li>
    * </ol>
-   *
    * @param val {@code double} value to be converted to
    *            {@code BigDecimal}.
    * @throws NumberFormatException if {@code val} is infinite or NaN.
@@ -296,11 +292,12 @@ public class Price extends BigDecimal{
   }
 
   /**
+   * <p>
    * Translates a {@code double} into a {@code BigDecimal}, with
    * rounding according to the context settings.  The scale of the
    * {@code BigDecimal} is the smallest value such that
    * <tt>(10<sup>scale</sup> &times; val)</tt> is an integer.
-   * <p/>
+   * </p>
    * <p>The results of this constructor can be somewhat unpredictable
    * and its use is generally not recommended; see the notes under
    * the {@link #Price(double)} constructor.
@@ -309,7 +306,7 @@ public class Price extends BigDecimal{
    *            {@code BigDecimal}.
    * @param mc  the context to use.
    * @throws ArithmeticException   if the result is inexact but the
-   *                                         RoundingMode is UNNECESSARY.
+   *                               RoundingMode is UNNECESSARY.
    * @throws NumberFormatException if {@code val} is infinite or NaN.
    * @since 1.5
    */
@@ -337,7 +334,7 @@ public class Price extends BigDecimal{
    *            {@code BigDecimal}.
    * @param mc  the context to use.
    * @throws ArithmeticException if the result is inexact but the
-   *                                       rounding mode is {@code UNNECESSARY}.
+   *                             rounding mode is {@code UNNECESSARY}.
    * @since 1.5
    */
   public Price(BigInteger val, MathContext mc) {
@@ -369,7 +366,7 @@ public class Price extends BigDecimal{
    * @param scale       scale of the {@code BigDecimal}.
    * @param mc          the context to use.
    * @throws ArithmeticException if the result is inexact but the
-   *                                       rounding mode is {@code UNNECESSARY}.
+   *                             rounding mode is {@code UNNECESSARY}.
    * @since 1.5
    */
   public Price(BigInteger unscaledVal, int scale, MathContext mc) {
@@ -396,7 +393,7 @@ public class Price extends BigDecimal{
    * @param val {@code int} value to be converted to {@code BigDecimal}.
    * @param mc  the context to use.
    * @throws ArithmeticException if the result is inexact but the
-   *                                       rounding mode is {@code UNNECESSARY}.
+   *                             rounding mode is {@code UNNECESSARY}.
    * @since 1.5
    */
   public Price(int val, MathContext mc) {
@@ -422,7 +419,7 @@ public class Price extends BigDecimal{
    * @param val {@code long} value to be converted to {@code BigDecimal}.
    * @param mc  the context to use.
    * @throws ArithmeticException if the result is inexact but the
-   *                                       rounding mode is {@code UNNECESSARY}.
+   *                             rounding mode is {@code UNNECESSARY}.
    * @since 1.5
    */
   public Price(long val, MathContext mc) {
@@ -521,10 +518,12 @@ public class Price extends BigDecimal{
   }
 
   /**
+   * <p>
    * Returns a {@code BigDecimal} whose value is {@code (+this)}, and whose
    * scale is {@code this.scale()}.
-   * <p/>
-   * <p>This method, which simply returns this {@code BigDecimal}
+   * </p>
+   * <p>
+   * This method, which simply returns this {@code BigDecimal}
    * is included for symmetry with the unary minus method {@link
    * #negate()}.
    *
