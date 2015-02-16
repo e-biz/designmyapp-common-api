@@ -4,21 +4,17 @@
  may not be reproduced or used in any manner whatsoever
  without the express written permission of eBusiness Information.
 */
-
 package mobi.designmyapp.common.api.utils;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.List;
 
 /**
- * Created by Alexandre Nunesse on 1/6/15.
+ * Created by Alexandre Nunesse on 1/7/15.
  */
-public interface IStorageUtils {
+public interface ZipUtils {
 
-  void copyDirectoryContent(File sourceDir, File destDir);
+  void unzip(File zipFile, List<String> validExtensions, List<String> errorFiles) throws IOException;
 
-  File locateFile(File sourceDir, String fileRelativePath);
-
-  boolean isWindows();
-
-  boolean isMac();
 }

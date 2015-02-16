@@ -18,24 +18,24 @@ public class UtilsFactory {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(UtilsFactory.class);
 
-  private static final String FILE_MANAGEMENT_UTILS = "mobi.designmyapp.common.utils.FileManagementUtils";
-  private static final String IMAGE_UTILS = "mobi.designmyapp.common.utils.ImageUtils";
-  private static final String PRICE_UTILS = "mobi.designmyapp.common.utils.PriceUtils";
-  private static final String RESOURCE_UTILS = "mobi.designmyapp.common.utils.ResourceUtils";
-  private static final String STORAGE_UTILS = "mobi.designmyapp.common.utils.StorageUtils";
-  private static final String ZIP_UTILS = "mobi.designmyapp.common.utils.ZipUtils";
-  private static final String DIGEST_UTILS = "mobi.designmyapp.common.utils.DigestUtils";
+  private static final String FILE_MANAGEMENT_UTILS = "mobi.designmyapp.common.utils.FileManagementUtilsImpl";
+  private static final String IMAGE_UTILS = "mobi.designmyapp.common.utils.ImageUtilsImpl";
+  private static final String PRICE_UTILS = "mobi.designmyapp.common.utils.PriceUtilsImpl";
+  private static final String RESOURCE_UTILS = "mobi.designmyapp.common.utils.ResourceUtilsImpl";
+  private static final String STORAGE_UTILS = "mobi.designmyapp.common.utils.StorageUtilsImpl";
+  private static final String ZIP_UTILS = "mobi.designmyapp.common.utils.ZipUtilsImpl";
+  private static final String DIGEST_UTILS = "mobi.designmyapp.common.utils.DigestUtilsImpl";
 
   private static final String RESOURCE_SERVICE = "mobi.designmyapp.engine.service.ResourceServiceImpl";
   private static final String PRICING_SERVICE = "mobi.designmyapp.engine.service.PricingServiceImpl";
 
-  private static IFileManagementUtils fileManagementUtils;
-  private static IImageUtils imageUtils;
-  private static IPriceUtils priceUtils;
-  private static IResourceUtils resourceUtils;
-  private static IStorageUtils storageUtils;
-  private static IZipUtils zipUtils;
-  private static IDigestUtils digestUtils;
+  private static FileManagementUtils fileManagementUtils;
+  private static ImageUtils imageUtils;
+  private static PriceUtils priceUtils;
+  private static ResourceUtils resourceUtils;
+  private static StorageUtils storageUtils;
+  private static ZipUtils zipUtils;
+  private static DigestUtils digestUtils;
 
   private static ResourceService resourceService;
   private static PricingService pricingService;
@@ -44,11 +44,11 @@ public class UtilsFactory {
 
   }
 
-  public static IFileManagementUtils getFileManagementUtils() {
+  public static FileManagementUtils getFileManagementUtils() {
     if (fileManagementUtils == null) {
       try {
         Class clazz = Class.forName(FILE_MANAGEMENT_UTILS);
-        fileManagementUtils = (IFileManagementUtils) clazz.newInstance();
+        fileManagementUtils = (FileManagementUtils) clazz.newInstance();
       } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
         LOGGER.warn("Cannot instanciate util: {}", e.getMessage());
         throw new IllegalStateException(e);
@@ -57,11 +57,11 @@ public class UtilsFactory {
     return fileManagementUtils;
   }
 
-  public static IImageUtils getImageUtils() {
+  public static ImageUtils getImageUtils() {
     if (imageUtils == null) {
       try {
         Class clazz = Class.forName(IMAGE_UTILS);
-        imageUtils = (IImageUtils) clazz.newInstance();
+        imageUtils = (ImageUtils) clazz.newInstance();
       } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
         LOGGER.warn("Cannot instanciate util: {}", e.getMessage());
         throw new IllegalStateException(e);
@@ -70,11 +70,11 @@ public class UtilsFactory {
     return imageUtils;
   }
 
-  public static IPriceUtils getPriceUtils() {
+  public static PriceUtils getPriceUtils() {
     if (priceUtils == null) {
       try {
         Class clazz = Class.forName(PRICE_UTILS);
-        priceUtils = (IPriceUtils) clazz.newInstance();
+        priceUtils = (PriceUtils) clazz.newInstance();
       } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
         LOGGER.warn("Cannot instanciate util: {}", e.getMessage());
         throw new IllegalStateException(e);
@@ -83,11 +83,11 @@ public class UtilsFactory {
     return priceUtils;
   }
 
-  public static IResourceUtils getResourceUtils() {
+  public static ResourceUtils getResourceUtils() {
     if (resourceUtils == null) {
       try {
         Class clazz = Class.forName(RESOURCE_UTILS);
-        resourceUtils = (IResourceUtils) clazz.newInstance();
+        resourceUtils = (ResourceUtils) clazz.newInstance();
       } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
         LOGGER.warn("Cannot instanciate util: {}", e.getMessage());
         throw new IllegalStateException(e);
@@ -96,11 +96,11 @@ public class UtilsFactory {
     return resourceUtils;
   }
 
-  public static IStorageUtils getStorageUtils() {
+  public static StorageUtils getStorageUtils() {
     if (storageUtils == null) {
       try {
         Class clazz = Class.forName(STORAGE_UTILS);
-        storageUtils = (IStorageUtils) clazz.newInstance();
+        storageUtils = (StorageUtils) clazz.newInstance();
       } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
         LOGGER.warn("Cannot instanciate util: {}", e.getMessage());
         throw new IllegalStateException(e);
@@ -109,11 +109,11 @@ public class UtilsFactory {
     return storageUtils;
   }
 
-  public static IZipUtils getZipUtils() {
+  public static ZipUtils getZipUtils() {
     if (zipUtils == null) {
       try {
         Class clazz = Class.forName(ZIP_UTILS);
-        zipUtils = (IZipUtils) clazz.newInstance();
+        zipUtils = (ZipUtils) clazz.newInstance();
       } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
         LOGGER.warn("Cannot instanciate util: {}",e.getMessage());
         throw new IllegalStateException(e);
@@ -122,11 +122,11 @@ public class UtilsFactory {
     return zipUtils;
   }
 
-  public static IDigestUtils getDigestUtils() {
+  public static DigestUtils getDigestUtils() {
     if (digestUtils == null) {
       try {
         Class clazz = Class.forName(DIGEST_UTILS);
-        digestUtils = (IDigestUtils) clazz.newInstance();
+        digestUtils = (DigestUtils) clazz.newInstance();
       } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
         LOGGER.warn("Cannot instanciate util: {}", e.getMessage());
         throw new IllegalStateException(e);

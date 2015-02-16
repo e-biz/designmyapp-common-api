@@ -11,7 +11,6 @@ import java.util.List;
 /**
  * Created by Loic Ortola on 14/02/15.
  */
-
 public abstract class Template {
   protected String uuid;
   protected String templateTag;

@@ -4,22 +4,21 @@
  may not be reproduced or used in any manner whatsoever
  without the express written permission of eBusiness Information.
 */
+
 package mobi.designmyapp.common.api.utils;
 
-import mobi.designmyapp.common.api.model.Price;
+import java.io.File;
 
 /**
  * Created by Alexandre Nunesse on 1/6/15.
  */
-public interface IPriceUtils {
+public interface StorageUtils {
 
-  Price create(String number);
+  void copyDirectoryContent(File sourceDir, File destDir);
 
-  Price round(Price Price);
+  File locateFile(File sourceDir, String fileRelativePath);
 
-  boolean isZero(Price Price);
+  boolean isWindows();
 
-  boolean eq(Price price, Price Price);
-
-  boolean isNegative(Price Price);
+  boolean isMac();
 }

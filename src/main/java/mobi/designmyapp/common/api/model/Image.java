@@ -9,7 +9,7 @@ package mobi.designmyapp.common.api.model;
 import mobi.designmyapp.common.api.utils.UtilsFactory;
 
 /**
- * Created by loic on 7/7/14.
+ * Created by Loïc Ortola on 7/7/14.
  */
 public class Image {
 

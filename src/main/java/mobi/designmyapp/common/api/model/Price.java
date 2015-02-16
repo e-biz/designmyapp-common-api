@@ -8,8 +8,8 @@ package mobi.designmyapp.common.api.model;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import mobi.designmyapp.common.api.deserializer.PriceDeserializer;
-import mobi.designmyapp.common.api.serializer.PriceSerializer;
+import mobi.designmyapp.common.deserializer.PriceDeserializer;
+import mobi.designmyapp.common.serializer.PriceSerializer;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;

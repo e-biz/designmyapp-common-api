@@ -6,7 +6,7 @@ without the express written permission of eBusiness Information.
 */
 package mobi.designmyapp.common.api.service;
 
-import mobi.designmyapp.common.api.builder.Builder;
+import mobi.designmyapp.common.builder.Builder;
 
 import java.io.File;
 

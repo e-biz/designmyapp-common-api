@@ -4,7 +4,7 @@ All rights reserved. This source code or any portion thereof
 may not be reproduced or used in any manner whatsoever
 without the express written permission of eBusiness Information.
 */
-package mobi.designmyapp.common.api.deserializer;
+package mobi.designmyapp.common.deserializer;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;

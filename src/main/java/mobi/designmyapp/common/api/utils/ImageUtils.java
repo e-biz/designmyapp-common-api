@@ -14,7 +14,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.InputStream;
 
-public interface IImageUtils {
+public interface ImageUtils {
 
   void resizeImageToIcon(InputStream stream, File destFile);
 

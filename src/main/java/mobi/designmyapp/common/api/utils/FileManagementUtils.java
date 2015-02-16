@@ -13,7 +13,7 @@ import java.io.*;
 import java.util.List;
 
 
-public interface IFileManagementUtils {
+public interface FileManagementUtils {
 
   public String generateKey();
 

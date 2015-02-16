@@ -12,9 +12,9 @@ import java.io.File;
 /**
  * Created by Alexandre Nunesse on 1/8/15.
  */
-public interface IResourceUtils {
+public interface ResourceUtils {
 
-  File getResourceDirectory(String appId, String nameSpace);
+  File getResourceDirectory(String appId, String namespace);
 
   String createUrl(String appId, String namespace, String filename, String portalName);
 
