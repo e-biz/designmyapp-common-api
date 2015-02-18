@@ -12,30 +12,30 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Created by Alexandre Nunesse on 1/6/15.
+ * Created by Alexandre Nunesse on 06/01/15.
  */
 public class UtilsFactory {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(UtilsFactory.class);
 
-  private static final String FILE_MANAGEMENT_UTILS = "mobi.designmyapp.common.utils.FileManagementUtilsImpl";
+  private static final String IO_UTILS = "mobi.designmyapp.common.utils.IOUtilsImpl";
   private static final String IMAGE_UTILS = "mobi.designmyapp.common.utils.ImageUtilsImpl";
   private static final String PRICE_UTILS = "mobi.designmyapp.common.utils.PriceUtilsImpl";
   private static final String RESOURCE_UTILS = "mobi.designmyapp.common.utils.ResourceUtilsImpl";
-  private static final String STORAGE_UTILS = "mobi.designmyapp.common.utils.StorageUtilsImpl";
   private static final String ZIP_UTILS = "mobi.designmyapp.common.utils.ZipUtilsImpl";
   private static final String DIGEST_UTILS = "mobi.designmyapp.common.utils.DigestUtilsImpl";
+  private static final String STRING_UTILS = "mobi.designmyapp.common.utils.StringUtilsImpl";
 
   private static final String RESOURCE_SERVICE = "mobi.designmyapp.engine.service.ResourceServiceImpl";
   private static final String PRICING_SERVICE = "mobi.designmyapp.engine.service.PricingServiceImpl";
 
-  private static FileManagementUtils fileManagementUtils;
+  private static IOUtils ioUtils;
   private static ImageUtils imageUtils;
   private static PriceUtils priceUtils;
   private static ResourceUtils resourceUtils;
-  private static StorageUtils storageUtils;
   private static ZipUtils zipUtils;
   private static DigestUtils digestUtils;
+  private static StringUtils stringUtils;
 
   private static ResourceService resourceService;
   private static PricingService pricingService;
@@ -44,17 +44,17 @@ public class UtilsFactory {
 
   }
 
-  public static FileManagementUtils getFileManagementUtils() {
-    if (fileManagementUtils == null) {
+  public static IOUtils getIOUtils() {
+    if (ioUtils == null) {
       try {
-        Class clazz = Class.forName(FILE_MANAGEMENT_UTILS);
-        fileManagementUtils = (FileManagementUtils) clazz.newInstance();
+        Class clazz = Class.forName(IO_UTILS);
+        ioUtils = (IOUtils) clazz.newInstance();
       } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
         LOGGER.warn("Cannot instanciate util: {}", e.getMessage());
         throw new IllegalStateException(e);
       }
     }
-    return fileManagementUtils;
+    return ioUtils;
   }
 
   public static ImageUtils getImageUtils() {
@@ -96,19 +96,6 @@ public class UtilsFactory {
     return resourceUtils;
   }
 
-  public static StorageUtils getStorageUtils() {
-    if (storageUtils == null) {
-      try {
-        Class clazz = Class.forName(STORAGE_UTILS);
-        storageUtils = (StorageUtils) clazz.newInstance();
-      } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-        LOGGER.warn("Cannot instanciate util: {}", e.getMessage());
-        throw new IllegalStateException(e);
-      }
-    }
-    return storageUtils;
-  }
-
   public static ZipUtils getZipUtils() {
     if (zipUtils == null) {
       try {
@@ -133,6 +120,19 @@ public class UtilsFactory {
       }
     }
     return digestUtils;
+  }
+
+  public static StringUtils getStringUtils() {
+    if (stringUtils == null) {
+      try {
+        Class clazz = Class.forName(STRING_UTILS);
+        stringUtils = (StringUtils) clazz.newInstance();
+      } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+        LOGGER.warn("Cannot instanciate util: {}", e.getMessage());
+        throw new IllegalStateException(e);
+      }
+    }
+    return stringUtils;
   }
 
   public static ResourceService getResourceService() {
