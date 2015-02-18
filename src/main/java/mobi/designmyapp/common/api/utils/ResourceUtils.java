@@ -10,7 +10,7 @@ package mobi.designmyapp.common.api.utils;
 import java.io.File;
 
 /**
- * Created by Alexandre Nunesse on 1/8/15.
+ * Created by Alexandre Nunesse on 08/01/15.
  */
 public interface ResourceUtils {
 

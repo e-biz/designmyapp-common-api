@@ -3,14 +3,14 @@ package mobi.designmyapp.common.api.utils;
 import java.io.File;
 
 /**
- * Created by Loïc Ortola on 2/5/2015.
+ * Created by Loïc Ortola on 05/02/15.
  */
 public interface DigestUtils {
 
   /**
-   *
-   * @param data
-   * @return
+   * Calculates the SHA-1 digest and returns the value as a hex string
+   * @param data Data to digest
+   * @return SHA-1 digest as a hex string
    */
   String shaHex(String data);
 

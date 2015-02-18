@@ -11,7 +11,7 @@ import mobi.designmyapp.common.api.model.Pricing;
 
 
 /**
- * Created by Loïc Ortola on 7/24/14.
+ * Created by Loïc Ortola on 24/07/14.
  */
 public interface PricingService {
   <T extends Pricing> T getPricing(Portal portal, String templateTag);

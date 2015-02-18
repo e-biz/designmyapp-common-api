@@ -9,7 +9,7 @@ package mobi.designmyapp.common.api.utils;
 import mobi.designmyapp.common.api.model.Price;
 
 /**
- * Created by Alexandre Nunesse on 1/6/15.
+ * Created by Alexandre Nunesse on 06/01/15.
  */
 public interface PriceUtils {
 

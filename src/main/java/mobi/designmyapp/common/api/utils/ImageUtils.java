@@ -8,7 +8,7 @@
 package mobi.designmyapp.common.api.utils;
 
 /**
- * Created by Alexandre Nunesse on 1/6/15.
+ * Created by Alexandre Nunesse on 06/01/15.
  */
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -26,8 +26,13 @@ public interface ImageUtils {
 
   String normalizeImageName(String value);
 
-  @Deprecated
-  void resizeImageForAllAndroidDensities(String imageName, File imageFile, File tmpDirectory, boolean force);
+  /**
+   * Copy Android drawable resources from tmp directory to work directory
+   * (drawable-ldpi to drawable-xxhdpi)
+   * @param tmpDirectory
+   * @param workDirectory
+   */
+  void copyAndroidDrawablesFromTmpToWork(File tmpDirectory, File workDirectory);
 
   void resizeImageForAllAndroidDensities(String imageName, File imageFile, File tmpDirectory);
 

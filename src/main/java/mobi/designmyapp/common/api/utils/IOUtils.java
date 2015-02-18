@@ -7,14 +7,17 @@ without the express written permission of eBusiness Information.
 package mobi.designmyapp.common.api.utils;
 
 
-import freemarker.template.Configuration;
 import java.io.*;
 import java.util.List;
 
 
 public interface IOUtils {
 
-  public String generateKey();
+  /**
+   * Retrieve a pseudo randomly generated UUID.
+   * @return  A randomly generated UUID key
+   */
+  String generateKey();
 
   /**
    * Copy srcFile to destFile
@@ -90,14 +93,6 @@ public interface IOUtils {
    * @return the filename minus the extension
    */
   String removeExtension(String fileName);
-
-  /**
-   * Copy Android drawable resources from tmp directory to work directory
-   * (drawable-ldpi to drawable-xxhdpi)
-   * @param tmpDirectory
-   * @param workDirectory
-   */
-  void copyAndroidDrawablesFromTmpToWork(File tmpDirectory, File workDirectory);
 
   /**
    * Cleans a directory without deleting it.

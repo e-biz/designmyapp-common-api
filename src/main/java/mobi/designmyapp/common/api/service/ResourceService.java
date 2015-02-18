@@ -7,18 +7,16 @@ without the express written permission of eBusiness Information.
 package mobi.designmyapp.common.api.service;
 
 import mobi.designmyapp.common.builder.Builder;
-
 import java.io.File;
 
 /**
- * Created by Loïc Ortola on 7/24/14.
+ * Created by Loïc Ortola on 24/07/14.
  */
-public interface ResourceService{
+public interface ResourceService {
   File getResourceDirectory(String appId);
   File getStaticResourcesDirectory(String templateTag);
   File getWorkDirectory(Builder.Type type, String appId);
   File getTmpDirectory(String appId);
   File getTemplateDirectory(Builder.Type type, String templateTag);
   String getEnvironmentBaseUrl();
-
 }
