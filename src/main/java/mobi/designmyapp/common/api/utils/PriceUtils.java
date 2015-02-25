@@ -6,20 +6,20 @@
 */
 package mobi.designmyapp.common.api.utils;
 
-import mobi.designmyapp.common.api.model.Price;
+import java.math.BigDecimal;
 
 /**
  * Created by Alexandre Nunesse on 06/01/15.
  */
 public interface PriceUtils {
 
-  Price create(String number);
+  BigDecimal create(String number);
 
-  Price round(Price Price);
+  BigDecimal round(BigDecimal price);
 
-  boolean isZero(Price Price);
+  boolean isZero(BigDecimal price);
 
-  boolean eq(Price price, Price Price);
+  boolean eq(BigDecimal price, BigDecimal Price);
 
-  boolean isNegative(Price Price);
+  boolean isNegative(BigDecimal price);
 }

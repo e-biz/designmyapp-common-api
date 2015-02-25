@@ -8,6 +8,8 @@ package mobi.designmyapp.common.api.model;
 
 import mobi.designmyapp.common.api.utils.UtilsFactory;
 
+import java.math.BigDecimal;
+
 
 /**
  * This class represents the default pricing model for your app.
@@ -17,7 +19,7 @@ import mobi.designmyapp.common.api.utils.UtilsFactory;
  */
 public abstract class Pricing {
 
-  public Price templatePrice = Price.ZERO;
+  public BigDecimal templatePrice = BigDecimal.ZERO;
 
   public void validate() {
     if (UtilsFactory.getPriceUtils().isNegative(templatePrice)) {

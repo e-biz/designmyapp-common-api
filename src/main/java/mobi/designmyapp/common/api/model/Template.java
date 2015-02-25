@@ -17,6 +17,7 @@ public abstract class Template {
   protected String templateName;
   protected List<String> targets;
 
+  public static final String DEFAULT_TEMPLATE_TAG = "generic";
   public static final String TARGET_ANDROID = "android";
   public static final String TARGET_IOS = "ios";
   public static final String TARGET_WEBAPP = "webapp";
