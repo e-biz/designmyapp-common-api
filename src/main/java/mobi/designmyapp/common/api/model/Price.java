@@ -6,11 +6,6 @@ without the express written permission of eBusiness Information.
 */
 package mobi.designmyapp.common.api.model;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import mobi.designmyapp.common.deserializer.PriceDeserializer;
-import mobi.designmyapp.common.serializer.PriceSerializer;
-
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.MathContext;
@@ -18,8 +13,6 @@ import java.math.MathContext;
 /**
  * Created by Christophe Deverre on 13/08/14.
  */
-@JsonSerialize(using = PriceSerializer.class)
-@JsonDeserialize(using = PriceDeserializer.class)
 public class Price extends BigDecimal {
 
   /**
