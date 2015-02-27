@@ -7,8 +7,6 @@ without the express written permission of eBusiness Information.
 package mobi.designmyapp.common.api.model;
 
 
-import org.jongo.marshall.jackson.oid.Id;
-
 import java.util.List;
 
 /**
@@ -16,23 +14,12 @@ import java.util.List;
  */
 public class Portal {
 
-  @Id
-  private String uuid;
-
   private List<String> urls;
 
   /**
    * The name of the portal
    */
   private String name;
-
-  public String getUuid() {
-    return uuid;
-  }
-
-  public void setUuid(String id) {
-    this.uuid = id;
-  }
 
   public String getName() {
     return name;
@@ -53,8 +40,7 @@ public class Portal {
   @Override
   public String toString() {
     return "Portal{" +
-        "id=" + uuid +
-        ", name='" + name + '\'' +
+        "name='" + name + '\'' +
         ", urls='" + urls +
         '}';
   }

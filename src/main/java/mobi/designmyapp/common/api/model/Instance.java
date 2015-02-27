@@ -100,4 +100,18 @@ public class Instance {
   public int hashCode() {
     return id != null ? id.hashCode() : 0;
   }
+
+  @Override
+  public String toString() {
+    return "Instance{" +
+        "name='" + name + '\'' +
+        ", id='" + id + '\'' +
+        ", image='" + image + '\'' +
+        ", status=" + status +
+        ", task='" + task + '\'' +
+        ", progress=" + progress +
+        ", cgroupMemoryRoot='" + cgroupMemoryRoot + '\'' +
+        ", uri='" + uri + '\'' +
+        '}';
+  }
 }

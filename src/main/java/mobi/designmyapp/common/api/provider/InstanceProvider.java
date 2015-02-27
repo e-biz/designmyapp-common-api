@@ -9,7 +9,6 @@ package mobi.designmyapp.common.api.provider;
 import mobi.designmyapp.common.api.model.Instance;
 import mobi.designmyapp.common.api.model.Status;
 
-import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -22,6 +21,8 @@ public abstract class InstanceProvider implements Comparable<InstanceProvider> {
   protected Integer priority;
 
   public abstract List<Instance> getInstances();
+
+  public abstract void refreshInstancesState();
 
   public abstract Instance getInstance(String instanceId);
 
@@ -59,7 +60,7 @@ public abstract class InstanceProvider implements Comparable<InstanceProvider> {
   /**
    * Restart an instance
    */
-  public abstract void restart(String instanceId);
+  public abstract Instance restart(String instanceId);
 
   public abstract Status getStatus();
 
