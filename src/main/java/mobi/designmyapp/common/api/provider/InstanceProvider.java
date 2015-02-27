@@ -9,12 +9,13 @@ package mobi.designmyapp.common.api.provider;
 import mobi.designmyapp.common.api.model.Instance;
 import mobi.designmyapp.common.api.model.Status;
 
+import java.util.Comparator;
 import java.util.List;
 
 /**
  * Created by Jean Blanchard on 28/10/14.
  */
-public abstract class InstanceProvider {
+public abstract class InstanceProvider implements Comparable<InstanceProvider> {
 
   protected List<Instance> instances;
   protected Integer poolSize;
@@ -51,9 +52,14 @@ public abstract class InstanceProvider {
   public abstract Instance start(String dockerImageName, String... args);
 
   /**
-   * Terminate a instance.
+   * Terminate an instance.
    */
   public abstract void stop(String instanceId);
+
+  /**
+   * Restart an instance
+   */
+  public abstract void restart(String instanceId);
 
   public abstract Status getStatus();
 
@@ -63,6 +69,20 @@ public abstract class InstanceProvider {
   public abstract boolean canCreateInstance();
 
   public abstract int getActiveCount();
+
+  /**
+   * Default implementation of compareTo for the InstanceManager.
+   * @param instanceProvider
+   * @return
+   */
+  @Override
+  public int compareTo(InstanceProvider instanceProvider) {
+    if (this.getPriority().equals(instanceProvider.getPriority())) {
+      return this.getName().compareTo(instanceProvider.getName());
+    } else {
+      return this.getPriority().compareTo(instanceProvider.getPriority());
+    }
+  }
 
 
 }

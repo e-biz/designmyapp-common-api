@@ -17,6 +17,8 @@ import java.util.Set;
  * Created by Alexandre Nunesse on 24/02/2015.
  */
 public abstract class InstanceManager {
+  
+  public InstanceSelectionStrategy strategy;
 
   private Set<InstanceProvider> instanceProviders;
 
@@ -36,4 +38,11 @@ public abstract class InstanceManager {
 
   public abstract Instance getInstance(String instanceID);
 
+  public InstanceSelectionStrategy getStrategy() {
+    return strategy;
+  }
+
+  public void setStrategy(InstanceSelectionStrategy strategy) {
+    this.strategy = strategy;
+  }
 }
