@@ -5,7 +5,7 @@
  without the express written permission of eBusiness Information.
 */
 
-package mobi.designmyapp.common.api.utils;
+package mobi.designmyapp.common.util;
 
 /**
  * Created by Alexandre Nunesse on 06/01/15.

@@ -4,7 +4,7 @@ All rights reserved. This source code or any portion thereof
 may not be reproduced or used in any manner whatsoever
 without the express written permission of eBusiness Information.
 */
-package mobi.designmyapp.common.api.model;
+package mobi.designmyapp.common.instance.model;
 
 /**
  * Created by Jean Blanchard on 22/10/14.

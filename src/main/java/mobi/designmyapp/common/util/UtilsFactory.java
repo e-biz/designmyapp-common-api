@@ -4,10 +4,10 @@
  may not be reproduced or used in any manner whatsoever
  without the express written permission of eBusiness Information.
 */
-package mobi.designmyapp.common.api.utils;
+package mobi.designmyapp.common.util;
 
-import mobi.designmyapp.common.api.service.PricingService;
-import mobi.designmyapp.common.api.service.ResourceService;
+import mobi.designmyapp.common.engine.service.PricingService;
+import mobi.designmyapp.common.engine.service.ResourceService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,13 +18,13 @@ public class UtilsFactory {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(UtilsFactory.class);
 
-  private static final String IO_UTILS = "mobi.designmyapp.common.utils.IOUtilsImpl";
-  private static final String IMAGE_UTILS = "mobi.designmyapp.common.utils.ImageUtilsImpl";
-  private static final String PRICE_UTILS = "mobi.designmyapp.common.utils.PriceUtilsImpl";
-  private static final String RESOURCE_UTILS = "mobi.designmyapp.common.utils.ResourceUtilsImpl";
-  private static final String ZIP_UTILS = "mobi.designmyapp.common.utils.ZipUtilsImpl";
-  private static final String DIGEST_UTILS = "mobi.designmyapp.common.utils.DigestUtilsImpl";
-  private static final String STRING_UTILS = "mobi.designmyapp.common.utils.StringUtilsImpl";
+  private static final String IO_UTILS = "mobi.designmyapp.common.util.IOUtilsImpl";
+  private static final String IMAGE_UTILS = "mobi.designmyapp.common.util.ImageUtilsImpl";
+  private static final String PRICE_UTILS = "mobi.designmyapp.common.util.PriceUtilsImpl";
+  private static final String RESOURCE_UTILS = "mobi.designmyapp.common.util.ResourceUtilsImpl";
+  private static final String ZIP_UTILS = "mobi.designmyapp.common.util.ZipUtilsImpl";
+  private static final String DIGEST_UTILS = "mobi.designmyapp.common.util.DigestUtilsImpl";
+  private static final String STRING_UTILS = "mobi.designmyapp.common.util.StringUtilsImpl";
 
   private static final String RESOURCE_SERVICE = "mobi.designmyapp.engine.service.ResourceServiceImpl";
   private static final String PRICING_SERVICE = "mobi.designmyapp.engine.service.PricingServiceImpl";

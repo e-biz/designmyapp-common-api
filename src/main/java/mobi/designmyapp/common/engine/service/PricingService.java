@@ -4,10 +4,10 @@ All rights reserved. This source code or any portion thereof
 may not be reproduced or used in any manner whatsoever
 without the express written permission of eBusiness Information.
 */
-package mobi.designmyapp.common.api.service;
+package mobi.designmyapp.common.engine.service;
 
-import mobi.designmyapp.common.api.model.Portal;
-import mobi.designmyapp.common.api.model.Pricing;
+import mobi.designmyapp.common.engine.model.Portal;
+import mobi.designmyapp.common.engine.model.Pricing;
 
 
 /**

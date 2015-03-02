@@ -4,10 +4,10 @@
  may not be reproduced or used in any manner whatsoever
  without the express written permission of eBusiness Information.
 */
-package mobi.designmyapp.common.api.provider;
+package mobi.designmyapp.common.instance.provider;
 
-import mobi.designmyapp.common.api.model.Instance;
-import mobi.designmyapp.common.api.model.Status;
+import mobi.designmyapp.common.instance.model.Instance;
+import mobi.designmyapp.common.instance.model.Status;
 
 import java.util.List;
 
