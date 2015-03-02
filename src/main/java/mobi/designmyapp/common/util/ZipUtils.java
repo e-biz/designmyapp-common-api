@@ -4,7 +4,7 @@
  may not be reproduced or used in any manner whatsoever
  without the express written permission of eBusiness Information.
 */
-package mobi.designmyapp.common.api.utils;
+package mobi.designmyapp.common.util;
 
 import java.io.File;
 import java.io.IOException;

@@ -4,20 +4,21 @@
  may not be reproduced or used in any manner whatsoever
  without the express written permission of eBusiness Information.
 */
-package mobi.designmyapp.common.api.manager;
+package mobi.designmyapp.common.instance.manager;
 
-import mobi.designmyapp.common.api.model.Instance;
-import mobi.designmyapp.common.api.provider.InstanceProvider;
-import mobi.designmyapp.common.api.strategy.InstanceSelectionStrategy;
+import mobi.designmyapp.common.instance.model.Instance;
+import mobi.designmyapp.common.instance.provider.InstanceProvider;
+import mobi.designmyapp.common.instance.strategy.InstanceSelectionStrategy;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 /**
  * Created by Alexandre Nunesse on 24/02/2015.
  */
 public abstract class InstanceManager {
-  
+
   public InstanceSelectionStrategy strategy;
 
   private Set<InstanceProvider> instanceProviders;
@@ -28,11 +29,11 @@ public abstract class InstanceManager {
 
   public abstract void addProvider(InstanceProvider instanceProvider);
 
-  public abstract Instance startInstance(String dockerImage, String... args);
+  public abstract Instance startInstance(String dockerImage,List<String> options, List<String> args);
 
   public abstract void stopInstance(String instanceId);
 
-  public abstract void restartInstance(String instanceId);
+  public abstract Instance restartInstance(String instanceId);
 
   public abstract Collection<InstanceProvider> getInstanceProviders();
 

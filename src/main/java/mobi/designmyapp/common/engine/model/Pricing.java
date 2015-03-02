@@ -4,9 +4,9 @@ All rights reserved. This source code or any portion thereof
 may not be reproduced or used in any manner whatsoever
 without the express written permission of eBusiness Information.
 */
-package mobi.designmyapp.common.api.model;
+package mobi.designmyapp.common.engine.model;
 
-import mobi.designmyapp.common.api.utils.UtilsFactory;
+import mobi.designmyapp.common.util.UtilsFactory;
 
 import java.math.BigDecimal;
 

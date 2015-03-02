@@ -4,7 +4,9 @@ All rights reserved. This source code or any portion thereof
 may not be reproduced or used in any manner whatsoever
 without the express written permission of eBusiness Information.
 */
-package mobi.designmyapp.common.api.model;
+package mobi.designmyapp.common.instance.model;
+
+import java.util.Map;
 
 /**
  * Created by Jean Blanchard on 22/10/14.
@@ -18,7 +20,9 @@ public class Instance {
   private String task;
   private int progress;
   private String cgroupMemoryRoot = null;
-  private String uri;
+  private String hostname;
+  
+  private Map<String,String> portsMap;
 
   public String getName() {
     return name;
@@ -76,12 +80,20 @@ public class Instance {
     this.cgroupMemoryRoot = cgroupMemoryRoot;
   }
 
-  public String getUri() {
-    return uri;
+  public String getHostname() {
+    return hostname;
   }
 
-  public void setUri(String uri) {
-    this.uri = uri;
+  public void setHostname(String hostname) {
+    this.hostname = hostname;
+  }
+
+  public Map<String, String> getPortsMap() {
+    return portsMap;
+  }
+
+  public void setPortsMap(Map<String, String> portsMap) {
+    this.portsMap = portsMap;
   }
 
   @Override
@@ -111,7 +123,8 @@ public class Instance {
         ", task='" + task + '\'' +
         ", progress=" + progress +
         ", cgroupMemoryRoot='" + cgroupMemoryRoot + '\'' +
-        ", uri='" + uri + '\'' +
+        ", hostname='" + hostname + '\'' +
+        ", portsMap='"+ portsMap +'\'' +
         '}';
   }
 }

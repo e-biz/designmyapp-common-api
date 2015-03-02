@@ -4,9 +4,9 @@ All rights reserved. This source code or any portion thereof
 may not be reproduced or used in any manner whatsoever
 without the express written permission of eBusiness Information.
 */
-package mobi.designmyapp.common.api.strategy;
+package mobi.designmyapp.common.instance.strategy;
 
-import mobi.designmyapp.common.api.provider.InstanceProvider;
+import mobi.designmyapp.common.instance.provider.InstanceProvider;
 
 import java.util.List;
 

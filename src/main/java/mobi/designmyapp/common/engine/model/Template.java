@@ -4,7 +4,7 @@ All rights reserved. This source code or any portion thereof
 may not be reproduced or used in any manner whatsoever
 without the express written permission of eBusiness Information.
 */
-package mobi.designmyapp.common.api.model;
+package mobi.designmyapp.common.engine.model;
 
 import java.util.List;
 
@@ -15,6 +15,7 @@ public abstract class Template {
   protected String uuid;
   protected String templateTag;
   protected String templateName;
+  protected Boolean customIcon;
   protected List<String> targets;
 
   public static final String DEFAULT_TEMPLATE_TAG = "generic";
@@ -50,6 +51,14 @@ public abstract class Template {
     this.templateName = templateName;
   }
 
+  public Boolean getCustomIcon() {
+    return customIcon;
+  }
+
+  public void setCustomIcon(Boolean customIcon) {
+    this.customIcon = customIcon;
+  }
+
   public List<String> getTargets() {
     return targets;
   }
@@ -64,6 +73,7 @@ public abstract class Template {
         "uuid='" + uuid + '\'' +
         "templateTag='" + templateTag + '\'' +
         ", templateName='" + templateName + '\'' +
+        ", customIcon='" + customIcon + '\'' +
         ", targets=" + targets +
         '}';
   }
