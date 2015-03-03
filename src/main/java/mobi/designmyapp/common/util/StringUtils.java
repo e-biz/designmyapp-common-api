@@ -9,6 +9,7 @@ package mobi.designmyapp.common.util;
 import java.util.List;
 
 /**
+ * This class provides utility methods for String management
  * Created by Alexandre Nunesse on 16/02/15.
  */
 public interface StringUtils {

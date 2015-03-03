@@ -3,6 +3,7 @@ package mobi.designmyapp.common.util;
 import java.io.File;
 
 /**
+ * This class provides utility methods to generate hash
  * Created by Loïc Ortola on 05/02/15.
  */
 public interface DigestUtils {

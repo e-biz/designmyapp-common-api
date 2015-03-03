@@ -10,6 +10,8 @@ package mobi.designmyapp.common.engine.builder;
 import mobi.designmyapp.common.engine.model.Template;
 
 /**
+ * Builder generic interface to build a specific template,
+ * the interface provides a type.
  * Created by loic on 7/7/14.
  */
 public interface Builder<T extends Template> {
@@ -19,6 +21,6 @@ public interface Builder<T extends Template> {
   Type getType();
 
   public static enum Type {
-  ANDROID,IOS,WEBAPP;
+    ANDROID,IOS,WEBAPP
   }
 }

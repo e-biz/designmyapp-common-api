@@ -6,11 +6,12 @@ without the express written permission of eBusiness Information.
 */
 package mobi.designmyapp.common.util;
 
-
 import java.io.*;
 import java.util.List;
 
-
+/**
+ * This class provides IO utility methods
+ */
 public interface IOUtils {
 
   /**

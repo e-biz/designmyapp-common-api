@@ -10,8 +10,16 @@ import mobi.designmyapp.common.engine.model.Pricing;
 
 
 /**
+ * This class provides pricing services
  * Created by Loïc Ortola on 24/07/14.
  */
 public interface PricingService {
+
+  /**
+   * Retrieve template specific pricing from template tag
+   * @param templateTag input template tag
+   * @return template pricing instance
+   */
   <T extends Pricing> T getPricing(String templateTag);
+
 }

@@ -11,8 +11,7 @@ import mobi.designmyapp.common.instance.provider.InstanceProvider;
 import java.util.List;
 
 /**
- * Sandbox server selection strategy.
- *
+ * Sandbox server selection strategy
  * Created by Jean Blanchard on 29/10/14.
  */
 public interface InstanceSelectionStrategy {
