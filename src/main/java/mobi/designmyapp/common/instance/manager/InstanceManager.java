@@ -11,6 +11,7 @@ import mobi.designmyapp.common.instance.provider.InstanceProvider;
 import mobi.designmyapp.common.instance.strategy.InstanceSelectionStrategy;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -28,11 +29,11 @@ public abstract class InstanceManager {
 
   public abstract void addProvider(InstanceProvider instanceProvider);
 
-  public abstract Instance startInstance(String dockerImage, String... args);
+  public abstract Instance startInstance(String dockerImage,List<String> options, List<String> args);
 
   public abstract void stopInstance(String instanceId);
 
-  public abstract void restartInstance(String instanceId);
+  public abstract Instance restartInstance(String instanceId);
 
   public abstract Collection<InstanceProvider> getInstanceProviders();
 

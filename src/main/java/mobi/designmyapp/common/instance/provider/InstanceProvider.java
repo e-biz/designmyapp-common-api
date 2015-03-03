@@ -50,7 +50,7 @@ public abstract class InstanceProvider implements Comparable<InstanceProvider> {
   /**
    * Start a new instance.
    */
-  public abstract Instance start(String dockerImageName, String... args);
+  public abstract Instance start(String dockerImageName,List<String> options, List<String> args);
 
   /**
    * Terminate an instance.
