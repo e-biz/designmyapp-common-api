@@ -10,14 +10,19 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-package mobi.designmyapp.common.instance.model;
+package mobi.designmyapp.common.instance.strategy;
+
+import mobi.designmyapp.common.instance.provider.InstanceProvider;
+
+import java.util.List;
 
 /**
- * This class represents the status of an instance or a provider
- * Created by Alexandre Nunesse on 24/02/2015.
+ * This class represents an instance provider selection strategy used to define how an
+ * instance manager will be selected
+ * Created by Jean Blanchard on 29/10/14.
  */
-public enum Status {
-  RUNNING,
-  BUSY,
-  SHUTDOWN
+public interface InstanceProviderSelectionStrategy {
+
+  public InstanceProvider selectInstanceProvider(List<InstanceProvider> instanceProviders);
+
 }

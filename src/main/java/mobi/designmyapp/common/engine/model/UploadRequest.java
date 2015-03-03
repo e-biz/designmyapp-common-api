@@ -1,26 +1,50 @@
 /*
-Copyright © 2014 by eBusiness Information
-All rights reserved. This source code or any portion thereof
-may not be reproduced or used in any manner whatsoever
-without the express written permission of eBusiness Information.
-*/
+ Copyright 2015 eBusiness Information
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ http://www.apache.org/licenses/LICENSE-2.0
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ */
 package mobi.designmyapp.common.engine.model;
 
 import java.io.InputStream;
 
 /**
+ * This class represents an upload request that will be used
+ * to call a custom upload processor @see mobi.designmyapp.sdk.processor.uploadProcessor.
+ * It will allow you to upload any custom resources for your application.
  * Created by Christophe Deverre on 01/08/14.
  */
 public class UploadRequest {
 
+  /**
+   * Original uploaded file name
+   */
   private String originalFilename;
 
+  /**
+   * Name of the portal on which the request is made
+   */
   private String portalName;
 
+  /**
+   * Application id
+   */
   private String appId;
 
+  /**
+   * Stream containing the Object to save
+   */
   private InputStream obj;
 
+  /**
+   * Object to store additional resources
+   */
   private Object resources;
 
   public UploadRequest(String originalFilename,String portalName, String appId, InputStream obj, Object resources) {

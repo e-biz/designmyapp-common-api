@@ -1,9 +1,15 @@
 /*
- Copyright © 2014 by eBusiness Information
- All rights reserved. This source code or any portion thereof
- may not be reproduced or used in any manner whatsoever
- without the express written permission of eBusiness Information.
-*/
+ Copyright 2015 eBusiness Information
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ http://www.apache.org/licenses/LICENSE-2.0
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ */
 package mobi.designmyapp.common.util;
 
 import mobi.designmyapp.common.engine.service.PricingService;
@@ -12,6 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * Factory to retrieve Utility and Service classes
  * Created by Alexandre Nunesse on 06/01/15.
  */
 public class UtilsFactory {
@@ -44,6 +51,10 @@ public class UtilsFactory {
 
   }
 
+  /**
+   * Retrieve IOUtils implementation
+   * @return IOUtils instance
+   */
   public static IOUtils getIOUtils() {
     if (ioUtils == null) {
       try {
@@ -57,6 +68,10 @@ public class UtilsFactory {
     return ioUtils;
   }
 
+  /**
+   * Retrieve ImageUtils implementation
+   * @return ImageUtils instance
+   */
   public static ImageUtils getImageUtils() {
     if (imageUtils == null) {
       try {
@@ -70,6 +85,10 @@ public class UtilsFactory {
     return imageUtils;
   }
 
+  /**
+   * Retrieve PriceUtils implementation
+   * @return PriceUtils instance
+   */
   public static PriceUtils getPriceUtils() {
     if (priceUtils == null) {
       try {
@@ -83,6 +102,10 @@ public class UtilsFactory {
     return priceUtils;
   }
 
+  /**
+   * Retrieve ResourceUtils implementation
+   * @return ResourceUtils instance
+   */
   public static ResourceUtils getResourceUtils() {
     if (resourceUtils == null) {
       try {
@@ -96,6 +119,10 @@ public class UtilsFactory {
     return resourceUtils;
   }
 
+  /**
+   * Retrieve ZipUtils implementation
+   * @return ZipUtils instance
+   */
   public static ZipUtils getZipUtils() {
     if (zipUtils == null) {
       try {
@@ -109,6 +136,10 @@ public class UtilsFactory {
     return zipUtils;
   }
 
+  /**
+   * Retrieve DigestUtils implementation
+   * @return DigestUtils instance
+   */
   public static DigestUtils getDigestUtils() {
     if (digestUtils == null) {
       try {
@@ -122,6 +153,10 @@ public class UtilsFactory {
     return digestUtils;
   }
 
+  /**
+   * Retrieve StringUtils implementation
+   * @return StringUtils instance
+   */
   public static StringUtils getStringUtils() {
     if (stringUtils == null) {
       try {
@@ -135,6 +170,10 @@ public class UtilsFactory {
     return stringUtils;
   }
 
+  /**
+   * Retrieve ResourceService implementation
+   * @return ResourceService instance
+   */
   public static ResourceService getResourceService() {
     if (resourceService == null) {
       try {
@@ -148,6 +187,10 @@ public class UtilsFactory {
     return resourceService;
   }
 
+  /**
+   * Retrieve PricingService implementation
+   * @return PricingService instance
+   */
   public static PricingService getPricingService() {
     if (pricingService == null) {
       try {
