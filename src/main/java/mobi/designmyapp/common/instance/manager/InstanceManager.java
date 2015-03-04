@@ -21,39 +21,27 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * This class represents an instance provider
- * (@see mobi.designmyapp.common.instance.provider.InstanceProvider) manager,
+ * This interface represents an instance provider manager
+ * (@see mobi.designmyapp.common.instance.provider.InstanceProvider),
  * this manager is used to store a Set of instance providers and manage their instances using
  * a predefined strategy (@see mobi.designmyapp.common.instance.strategy.InstanceSelectionStrategy)
+ * The InstanceManager singleton can be retrieved by the @see mobi.designmyapp.common.instance.service.InstanceService class.
  * Created by Alexandre Nunesse on 24/02/2015.
  */
-public abstract class InstanceManager {
+public interface InstanceManager {
 
-  public InstanceProviderSelectionStrategy strategy;
+  void addProvider(InstanceProvider instanceProvider, int priority);
 
-  private Set<InstanceProvider> instanceProviders;
+  void addProvider(InstanceProvider instanceProvider);
 
-  private InstanceProviderSelectionStrategy instanceSelectionStrategy;
+  Instance startInstance(String dockerImage,List<String> options, List<String> args);
 
-  public abstract void addProvider(InstanceProvider instanceProvider, int priority);
+  void stopInstance(String instanceId);
 
-  public abstract void addProvider(InstanceProvider instanceProvider);
+  Instance restartInstance(String instanceId);
 
-  public abstract Instance startInstance(String dockerImage,List<String> options, List<String> args);
+  Collection<InstanceProvider> getInstanceProviders();
+  
+  Instance getInstance(String instanceID);
 
-  public abstract void stopInstance(String instanceId);
-
-  public abstract Instance restartInstance(String instanceId);
-
-  public abstract Collection<InstanceProvider> getInstanceProviders();
-
-  public abstract Instance getInstance(String instanceID);
-
-  public InstanceProviderSelectionStrategy getStrategy() {
-    return strategy;
-  }
-
-  public void setStrategy(InstanceProviderSelectionStrategy strategy) {
-    this.strategy = strategy;
-  }
 }
