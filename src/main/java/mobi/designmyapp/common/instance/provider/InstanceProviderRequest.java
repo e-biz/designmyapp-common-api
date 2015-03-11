@@ -21,23 +21,50 @@ public class InstanceProviderRequest<T> {
 
   public static class DesignMyappRequest {
 
-    private String url;
+    private String keyId ;
+
+    private String secretKey ;
+
+    private String hostname;
 
     private DesignMyappRequest() {
 
     }
 
-    public DesignMyappRequest baseUrl(String url) {
-      this.url = url;
+    public DesignMyappRequest hostname(String hostname) {
+      this.hostname = hostname;
       return this;
     }
 
-    // ETC ETC
-    public InstanceProviderRequest<DesignMyappRequest> build() {
-      // Implement your check logic here. (all params set etc...)
-      return new InstanceProviderRequest(this);
+    public DesignMyappRequest keyId(String keyId) {
+      this.keyId = keyId;
+      return this;
+    }
+    
+    public DesignMyappRequest secretKey(String secretKey) {
+      this.secretKey = secretKey;
+      return this;
     }
 
+    public InstanceProviderRequest<DesignMyappRequest> build() {
+      if (this.hostname == null || this.keyId == null || this.secretKey == null) {
+        throw new NullPointerException("None of this parameter should be null : hostname, keyId, secretKey");
+      }
+      // Implement your check logic here. (all params set etc...)
+      return new InstanceProviderRequest<>(this);
+    }
+
+    public String getKeyId() {
+      return keyId;
+    }
+
+    public String getSecretKey() {
+      return secretKey;
+    }
+
+    public String getHostname() {
+      return hostname;
+    }
   }
 
   public static ElasticBeansTalkRequest elasticBeansTalk() {
@@ -67,7 +94,7 @@ public class InstanceProviderRequest<T> {
 
     public InstanceProviderRequest<ElasticBeansTalkRequest> build() {
       // Implement your check logic here. (all params set etc...)
-      return new InstanceProviderRequest(this);
+      return new InstanceProviderRequest<>(this);
     }
   }
 
