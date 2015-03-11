@@ -14,6 +14,7 @@ package mobi.designmyapp.common.util;
 
 import mobi.designmyapp.common.engine.service.PricingService;
 import mobi.designmyapp.common.engine.service.ResourceService;
+import mobi.designmyapp.common.instance.service.InstanceService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,6 +36,7 @@ public class UtilsFactory {
 
   private static final String RESOURCE_SERVICE = "mobi.designmyapp.engine.service.ResourceServiceImpl";
   private static final String PRICING_SERVICE = "mobi.designmyapp.engine.service.PricingServiceImpl";
+  private static final String INSTANCE_SERVICE = "mobi.designmyapp.engine.service.InstanceServiceImpl";
 
   private static IOUtils ioUtils;
   private static ImageUtils imageUtils;
@@ -46,6 +48,7 @@ public class UtilsFactory {
 
   private static ResourceService resourceService;
   private static PricingService pricingService;
+  private static InstanceService instanceService;
 
   private UtilsFactory() {
 
@@ -202,5 +205,22 @@ public class UtilsFactory {
       }
     }
     return pricingService;
+  }
+
+  /**
+   * Retrieve InstanceService implementation
+   * @return InstanceService instance
+   */
+  public static InstanceService getInstanceService() {
+    if (instanceService == null) {
+      try {
+        Class clazz = Class.forName(INSTANCE_SERVICE);
+        instanceService = (InstanceService) clazz.newInstance();
+      } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+        LOGGER.warn("Cannot instanciate util: {}", e.getMessage());
+        throw new IllegalStateException(e);
+      }
+    }
+    return instanceService;
   }
 }
