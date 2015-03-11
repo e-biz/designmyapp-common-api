@@ -28,6 +28,10 @@ public abstract class InstanceProvider implements Comparable<InstanceProvider> {
   protected Integer poolSize;
   protected Integer priority;
 
+  public enum Type {
+    DESIGNMYAPP, AMAZON_ELASTICBEANSTALK, GOOGLE_CLOUD
+  }
+
   /**
    * Retrieve deployed instances
    * @return
