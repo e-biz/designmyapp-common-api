@@ -16,9 +16,12 @@ public class InstanceProviderRequest<T> {
   }
 
   /**
-   * DesignMyAppRequest is used to create a new InstanceProvider using three parameters : 
+   * DesignMyAppRequest is used to create a new InstanceProvider using three parameters (all mandatory): 
    * A hostname that point to the instance provider client 
    * A keyId and a secretKey that protect your instance provider client
+   * 
+   * The particularity of this provider, is that it cna be used direcly with our default implementation of  
+   * the Instance manager API. ( See knowledge Base at 3.1.2 of the 2 section )
    * 
    * Use the builder pattern to create a new request :
    * InstanceProviderRequest request = InstanceProviderRequest.designMyApp()
