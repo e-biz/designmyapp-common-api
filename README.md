@@ -1,6 +1,6 @@
 #DesignMyApp Common API
 
-`Version: 2.0.0-SNAPSHOT`
+`Version: 2.1.0`
 
 Follow us on Twitter:
 @DesignMyApp  

@@ -15,11 +15,24 @@ public class InstanceProviderRequest<T> {
     this.obj = obj;
   }
 
-  public static DesignMyappRequest designMyApp() {
-    return new DesignMyappRequest();
+  /**
+   * DesignMyAppRequest is used to create a new InstanceProvider using three parameters : 
+   * A hostname that point to the instance provider client 
+   * A keyId and a secretKey that protect your instance provider client
+   * 
+   * Use the builder pattern to create a new request :
+   * InstanceProviderRequest request = InstanceProviderRequest.designMyApp()
+   *    .hostname("http://monServeurUrl:8080")
+   *    .keyId("myKeyId")
+   *    .secretKey("mySecretKey")
+   *    .build();
+   *
+   */
+  public static DesignMyAppRequest designMyApp() {
+    return new DesignMyAppRequest();
   }
 
-  public static class DesignMyappRequest {
+  public static class DesignMyAppRequest {
 
     private String keyId ;
 
@@ -27,30 +40,28 @@ public class InstanceProviderRequest<T> {
 
     private String hostname;
 
-    private DesignMyappRequest() {
-
+    private DesignMyAppRequest() {
     }
 
-    public DesignMyappRequest hostname(String hostname) {
+    public DesignMyAppRequest hostname(String hostname) {
       this.hostname = hostname;
       return this;
     }
 
-    public DesignMyappRequest keyId(String keyId) {
+    public DesignMyAppRequest keyId(String keyId) {
       this.keyId = keyId;
       return this;
     }
     
-    public DesignMyappRequest secretKey(String secretKey) {
+    public DesignMyAppRequest secretKey(String secretKey) {
       this.secretKey = secretKey;
       return this;
     }
 
-    public InstanceProviderRequest<DesignMyappRequest> build() {
+    public InstanceProviderRequest<DesignMyAppRequest> build() {
       if (this.hostname == null || this.keyId == null || this.secretKey == null) {
         throw new NullPointerException("None of this parameter should be null : hostname, keyId, secretKey");
       }
-      // Implement your check logic here. (all params set etc...)
       return new InstanceProviderRequest<>(this);
     }
 
@@ -66,36 +77,4 @@ public class InstanceProviderRequest<T> {
       return hostname;
     }
   }
-
-  public static ElasticBeansTalkRequest elasticBeansTalk() {
-    return new ElasticBeansTalkRequest();
-  }
-
-  public static class ElasticBeansTalkRequest {
-
-    private String url;
-    private String secret;
-
-    private ElasticBeansTalkRequest() {
-
-    }
-
-    public ElasticBeansTalkRequest baseUrl(String url) {
-      this.url = url;
-      return this;
-    }
-
-    public ElasticBeansTalkRequest secret(String secret) {
-      this.secret = secret;
-      return this;
-    }
-
-    // ETC ETC
-
-    public InstanceProviderRequest<ElasticBeansTalkRequest> build() {
-      // Implement your check logic here. (all params set etc...)
-      return new InstanceProviderRequest<>(this);
-    }
-  }
-
 }
