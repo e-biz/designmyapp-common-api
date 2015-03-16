@@ -111,8 +111,9 @@ public class Image {
     }
 
     public Image build() {
-      if(namespace == null || appId == null || image.getFileName() == null)
+      if(namespace == null || appId == null || image.getFileName() == null) {
         throw new IllegalStateException("fileName, appId and namespace fields are mandatory.");
+      }
       image.url = UtilsFactory.getResourceUtils().createUrl(appId, namespace, image.getFileName(), portal);
       return image;
     }
@@ -130,16 +131,17 @@ public class Image {
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
 
     Image image = (Image) o;
 
-    if (!fileName.equals(image.fileName)) return false;
-    if (originalName != null ? !originalName.equals(image.originalName) : image.originalName != null) return false;
-    if (!url.equals(image.url)) return false;
-
-    return true;
+    return (fileName.equals(image.fileName) && url.equals(image.url) &&
+        originalName != null ? originalName.equals(image.originalName) : image.originalName == null);
   }
 
   @Override

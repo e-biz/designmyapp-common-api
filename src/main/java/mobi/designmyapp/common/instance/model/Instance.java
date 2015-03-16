@@ -140,14 +140,16 @@ public class Instance {
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
 
     Instance instance = (Instance) o;
 
-    if (id != null ? !id.equals(instance.id) : instance.id != null) return false;
-
-    return true;
+    return (id != null ? id.equals(instance.id) : instance.id == null);
   }
 
   @Override

@@ -7,12 +7,12 @@ public class InstanceProviderRequest<T> {
 
   private T obj;
 
-  public T get() {
-    return obj;
-  }
-
   private InstanceProviderRequest(T obj) {
     this.obj = obj;
+  }
+
+  public T get() {
+    return obj;
   }
 
   /**
