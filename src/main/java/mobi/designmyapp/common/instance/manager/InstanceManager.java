@@ -43,5 +43,7 @@ public interface InstanceManager {
   Collection<InstanceProvider> getInstanceProviders();
   
   Instance getInstance(String instanceID);
+  
+  void setStrategy(InstanceProviderSelectionStrategy strategy);
 
 }

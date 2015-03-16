@@ -42,6 +42,8 @@ public class InstanceProviderRequest<T> {
     private String secretKey ;
 
     private String hostname;
+    
+    private int pollSize;
 
     private DesignMyAppRequest() {
     }
@@ -61,6 +63,11 @@ public class InstanceProviderRequest<T> {
       return this;
     }
 
+    public DesignMyAppRequest pollSize(int pollSize) {
+      this.pollSize = pollSize;
+      return this;
+    } 
+
     public InstanceProviderRequest<DesignMyAppRequest> build() {
       if (this.hostname == null || this.keyId == null || this.secretKey == null) {
         throw new NullPointerException("None of this parameter should be null : hostname, keyId, secretKey");
@@ -79,5 +86,10 @@ public class InstanceProviderRequest<T> {
     public String getHostname() {
       return hostname;
     }
+
+    public int getPollSize() {
+      return pollSize;
+    }
+
   }
 }
