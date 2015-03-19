@@ -69,8 +69,8 @@ public class InstanceProviderRequest<T> {
     } 
 
     public InstanceProviderRequest<DesignMyAppRequest> build() {
-      if (this.hostname == null || this.keyId == null || this.secretKey == null) {
-        throw new NullPointerException("None of this parameter should be null : hostname, keyId, secretKey");
+      if (this.hostname == null || this.keyId == null || this.secretKey == null || this.pollSize <= 0) {
+        throw new NullPointerException("None of this parameter should be null : hostname, keyId, secretKey, and pollSize must be strictly superior to 0");
       }
       return new InstanceProviderRequest<>(this);
     }
