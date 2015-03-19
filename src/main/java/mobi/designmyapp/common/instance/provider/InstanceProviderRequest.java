@@ -16,13 +16,13 @@ public class InstanceProviderRequest<T> {
   }
 
   /**
-   * DesignMyAppRequest is used to create a new InstanceProvider using three parameters (all mandatory): 
-   * A hostname that point to the instance provider client 
+   * DesignMyAppRequest is used to create a new InstanceProvider using three parameters (all mandatory):
+   * A hostname that point to the instance provider client
    * A keyId and a secretKey that protect your instance provider client
-   * 
-   * The particularity of this provider, is that it cna be used direcly with our default implementation of  
+   *
+   * The particularity of this provider, is that it cna be used direcly with our default implementation of
    * the Instance manager API. ( See knowledge Base at 3.1.2 of the 2 section )
-   * 
+   *
    * Use the builder pattern to create a new request :
    * InstanceProviderRequest request = InstanceProviderRequest.designMyApp()
    *    .hostname("http://monServeurUrl:8080")
@@ -42,7 +42,7 @@ public class InstanceProviderRequest<T> {
     private String secretKey ;
 
     private String hostname;
-    
+
     private int pollSize;
 
     private DesignMyAppRequest() {
@@ -57,20 +57,20 @@ public class InstanceProviderRequest<T> {
       this.keyId = keyId;
       return this;
     }
-    
+
     public DesignMyAppRequest secretKey(String secretKey) {
       this.secretKey = secretKey;
       return this;
     }
 
-    public DesignMyAppRequest pollSize(int pollSize) {
-      this.pollSize = pollSize;
+    public DesignMyAppRequest poolSize(int poolSize) {
+      this.pollSize = poolSize;
       return this;
-    } 
+    }
 
     public InstanceProviderRequest<DesignMyAppRequest> build() {
       if (this.hostname == null || this.keyId == null || this.secretKey == null || this.pollSize <= 0) {
-        throw new NullPointerException("None of this parameter should be null : hostname, keyId, secretKey, and pollSize must be strictly superior to 0");
+        throw new NullPointerException("None of this parameter should be null : hostname, keyId, secretKey, and poolSize must be strictly superior to 0");
       }
       return new InstanceProviderRequest<>(this);
     }
