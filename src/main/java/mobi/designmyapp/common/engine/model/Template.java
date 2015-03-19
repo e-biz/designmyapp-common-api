@@ -46,6 +46,9 @@ public abstract class Template {
    * List of available target applications
    */
   protected List<String> targets;
+  
+  //TODO fixme, perhaps do another approach
+  private Object webappResponse;
 
   public static final String DEFAULT_TEMPLATE_TAG = "generic";
   public static final String TARGET_ANDROID = "android";
@@ -94,6 +97,14 @@ public abstract class Template {
 
   public void setTargets(List<String> targets) {
     this.targets = targets;
+  }
+
+  public Object getWebappResponse() {
+    return webappResponse;
+  }
+
+  public void setWebappResponse(Object webappResponse) {
+    this.webappResponse = webappResponse;
   }
 
   @Override
