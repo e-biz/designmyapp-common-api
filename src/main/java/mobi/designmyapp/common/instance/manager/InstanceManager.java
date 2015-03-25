@@ -18,7 +18,6 @@ import mobi.designmyapp.common.instance.strategy.InstanceProviderSelectionStrate
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 /**
  * This interface represents an instance provider manager
@@ -34,16 +33,33 @@ public interface InstanceManager {
 
   void addProvider(InstanceProvider instanceProvider);
 
-  Instance startInstance(String dockerImage,List<String> options, List<String> args);
+  /**
+   * Start a new instance
+   * @param imageName the image name identifier
+   * @param options the list of startup options
+   * @param args the list of arguments to be passed to the image
+   * @return the live instance
+   */
+  Instance startInstance(String imageName, List<String> options, List<String> args);
+
+  /**
+   * Start a new instance with a specific time-to-live (in minutes).
+   * @param imageName the image name identifier
+   * @param options the list of startup options
+   * @param args the list of arguments to be passed to the image
+   * @param ttl the instance's time-to-live in minutes. After the TTL is expired, the instance will be killed.
+   * @return the live instance
+   */
+  Instance startInstance(String imageName, List<String> options, List<String> args, int ttl);
 
   void stopInstance(String instanceId);
 
   Instance restartInstance(String instanceId);
 
   Collection<InstanceProvider> getInstanceProviders();
-  
+
   Instance getInstance(String instanceID);
-  
+
   void setStrategy(InstanceProviderSelectionStrategy strategy);
 
 }
