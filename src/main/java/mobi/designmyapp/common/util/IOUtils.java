@@ -12,8 +12,11 @@
  */
 package mobi.designmyapp.common.util;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
+import java.util.Map;
 
 /**
  * This class provides IO utility methods
@@ -47,8 +50,19 @@ public interface IOUtils {
    * @param srcDirectory the source directory (read-only)
    * @param parseList the relative paths from the source directory
    * @param destDirectory the destination directory
+   * Warning: this method should not be used anymore, as it could create issues in the workflow in case non-custom files are modified
+   * Use @see mobi.designmyapp.common.IOUtils#replaceTokens(Map<String,String> model, File srcFile, File destFile) instead
    */
+  @Deprecated
   void replaceTokens(Object model, Boolean exceptionHandling, File srcDirectory, List<String> parseList, File destDirectory);
+
+  /**
+   * Perform token replacement in a file
+   * @param model the model object. The key being the token name, and value the String it will be replaced by
+   * @param srcFile the source file (read-only)
+   * @param destFile the destination file
+   */
+  void replaceTokens(Map<String,String> model, File srcFile, File destFile);
 
   /**
    * Locate for the file with fileRelativePath in directory sourceDir
