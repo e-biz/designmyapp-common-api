@@ -26,6 +26,7 @@ public abstract class InstanceProvider implements Comparable<InstanceProvider> {
 
   protected List<Instance> instances;
   protected Integer poolSize;
+  protected Integer ttl;
   protected Integer priority;
 
   /**
@@ -96,6 +97,14 @@ public abstract class InstanceProvider implements Comparable<InstanceProvider> {
    * @return
    */
   public abstract int getActiveCount();
+
+  /**
+   * Return the provider-level time-to-live for default instances
+   * @return
+   */
+  public Integer getTtl() {
+    return ttl;
+  }
 
   /**
    * Default implementation of compareTo for the InstanceManager.
