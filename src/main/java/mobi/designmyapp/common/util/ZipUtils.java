@@ -27,7 +27,7 @@ public interface ZipUtils {
    * @param zipFile input zip File
    * @param validExtensions input File valid extensions
    * @param errorFiles Files with invalid extensions or names not treated
-   * @throws IOException
+   * @throws IOException in case of an I/O error
    */
   void unzip(File zipFile, List<String> validExtensions, List<String> errorFiles) throws IOException;
 

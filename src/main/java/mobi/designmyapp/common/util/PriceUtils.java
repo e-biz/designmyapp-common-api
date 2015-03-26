@@ -44,15 +44,15 @@ public interface PriceUtils {
 
   /**
    * Test if two BigDecimals are equivalent
-   * @param  price1
-   * @param  price2
+   * @param  price1 1st BigDecimal to test
+   * @param  price2 2nd BigDecimal to test
    * @return true if the params are equivalent
    */
   boolean eq(BigDecimal price1, BigDecimal price2);
 
   /**
    * Test if this BigDecimal is strictly lower than zero
-   * @param price
+   * @param price input price
    * @return true if the param is strictly lower than zero
    */
   boolean isNegative(BigDecimal price);

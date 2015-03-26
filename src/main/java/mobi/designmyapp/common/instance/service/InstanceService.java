@@ -8,9 +8,11 @@ import mobi.designmyapp.common.instance.provider.InstanceProviderRequest;
  * Created by Loïc Ortola on 04/03/2015.
  */
 public interface InstanceService {
+
   /**
    * Retrieve the template instance manager
    * @param templateTag input template tag
+   * @param <T> output instance manager
    * @return template instance manager
    */
   <T extends InstanceManager> InstanceManager getInstanceManager(String templateTag);

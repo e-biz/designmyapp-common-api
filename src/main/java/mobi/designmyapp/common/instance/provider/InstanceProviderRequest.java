@@ -29,9 +29,9 @@ public class InstanceProviderRequest<T> {
    *    .keyId("myKeyId")
    *    .secretKey("mySecretKey")
    *    .poolSize(20)
-   *    .ttl(60) <- optional
+   *    .ttl(60) [optional]
    *    .build();
-   *
+   *  @return new DesignMyAppRequest instance
    */
   public static DesignMyAppRequest designMyApp() {
     return new DesignMyAppRequest();
@@ -80,7 +80,7 @@ public class InstanceProviderRequest<T> {
      * If this parameter is not provided, the instances will live forever, unless set otherwise.
      * If this parameter is provided, it will force each instance to be automatically shutdown after that ttl is expired.
      * @param ttl the children instances time to live in minutes
-     * @return
+     * @return building DesignMyAppRequest
      */
     public DesignMyAppRequest ttl(int ttl) {
       if (ttl < 0) {

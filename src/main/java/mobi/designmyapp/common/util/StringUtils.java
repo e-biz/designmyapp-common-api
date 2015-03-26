@@ -22,6 +22,8 @@ public interface StringUtils {
 
   /**
    * Escapes single and double quotes
+   * @param s input String
+   * @return escaped String
    */
   String escapeQuotes(String s);
 

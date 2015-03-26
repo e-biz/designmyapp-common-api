@@ -35,6 +35,7 @@ public interface ImageUtils {
    * Export to android icons (ldpi/mdpi/hdpi/xhdpi/xxhdpi/xxxhdpi)
    * @param icon the icon file
    * @param directory the destination directory
+   * @param iconName the icon name
    */
   void saveAndroidIcons(File icon, File directory, String iconName);
 
@@ -42,6 +43,7 @@ public interface ImageUtils {
    * Export to ios icons (icon,icon@2x,40,40@2x,50,50@2x,60,60@2x,72,72@2x,76,76@2x,small,small@2x)
    * @param icon the icon file
    * @param directory the destination directory
+   * @param iconName the icon name
    */
   void saveIosIcons(File icon, File directory, String iconName);
 
@@ -63,16 +65,16 @@ public interface ImageUtils {
   /**
    * Copy Android drawable resources from tmp directory to work directory
    * (drawable-ldpi to drawable-xxhdpi)
-   * @param tmpDirectory
-   * @param workDirectory
+   * @param tmpDirectory tmp input directory
+   * @param workDirectory work output directory
    */
   void copyAndroidDrawablesFromTmpToWork(File tmpDirectory, File workDirectory);
 
   /**
    * Resize image for all densities (ldpi/mdpi/hdpi/xhdpi/xxdpi)
-   * @param imageName
-   * @param imageFile
-   * @param tmpDirectory
+   * @param imageName image name
+   * @param imageFile image file
+   * @param tmpDirectory tmp input directory
    */
   void resizeImageForAllAndroidDensities(String imageName, File imageFile, File tmpDirectory);
 

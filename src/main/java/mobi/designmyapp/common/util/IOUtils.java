@@ -31,27 +31,34 @@ public interface IOUtils {
 
   /**
    * Copy srcFile to destFile
+   * @param srcFile source File to be copied
+   * @param destFile destination file to be copied to
    */
   void copyFile(File srcFile, File destFile);
 
   /**
    * Copy srcFile to destDir
+   * @param srcFile source File to be copied
+   * @param destDir destination directory to be copied in
    */
   void copyFileToDirectory(File srcFile, File destDir);
 
   /**
    * Copy all files in sourceDir to destDir.
+   * @param sourceDir source directory to be copied
+   * @param destDir destination directory to be copied in
    */
   void copyDirectoryContent(File sourceDir, File destDir);
 
   /**
    * Perform token replacement in multiple files
    * @param model the model object. Any attribute name matching a token will have its value replace the token
+   * @param exceptionHandling exception handling behavior, true: errors are thrown if parsing fails, false: errors are ignored
    * @param srcDirectory the source directory (read-only)
    * @param parseList the relative paths from the source directory
    * @param destDirectory the destination directory
    * Warning: this method should not be used anymore, as it could create issues in the workflow in case non-custom files are modified
-   * Use @see mobi.designmyapp.common.IOUtils#replaceTokens(Map<String,String> model, File srcFile, File destFile) instead
+   * Use {@link #replaceTokens(java.util.Map, java.io.File, java.io.File)} instead
    */
   @Deprecated
   void replaceTokens(Object model, Boolean exceptionHandling, File srcDirectory, List<String> parseList, File destDirectory);
@@ -66,8 +73,8 @@ public interface IOUtils {
 
   /**
    * Locate for the file with fileRelativePath in directory sourceDir
-   * @param sourceDir
-   * @param fileRelativePath
+   * @param sourceDir input source directory
+   * @param fileRelativePath relative path in source directory
    * @return file if found
    */
   File locateFile(File sourceDir, String fileRelativePath);
@@ -75,22 +82,22 @@ public interface IOUtils {
   /**
    * Compute application full name with applicationPackage.templateTag.appName
    * The appName is normalized
-   * @param appName
-   * @param applicationPackage
-   * @param templateTag
-   * @return
+   * @param appName input application name
+   * @param applicationPackage input application package
+   * @param templateTag input template tag
+   * @return application full name
    */
   String computePackage(String appName, String applicationPackage, String templateTag);
 
   /**
    * Check whether the dir is readable
-   * @param dir
+   * @param dir input dir
    */
   void assertCanRead(String dir);
 
   /**
    * Check whether the dir is writeable
-   * @param dir
+   * @param dir input dir
    */
   void assertCanWrite(String dir);
 
@@ -124,6 +131,7 @@ public interface IOUtils {
   /**
    * Reads the contents of a file into a String
    * @param file  the file to read
+   * @throws IOException in case of an I/O error
    * @return the file contents
    */
   String readFileToString(File file) throws IOException;
@@ -193,20 +201,19 @@ public interface IOUtils {
    * associated with a given class are implemented by the defining
    * ClassLoader of the class
    * @param  path name of the desired resource
-   * @return      A InputStream object or null if
-   *              no resource with this name is found
+   * @return An InputStream object or null if no resource with this name is found
    */
   InputStream openClassPathResource(String path);
 
   /**
    * Check whether the current environment is windows based
-   * @return
+   * @return true on windows environment false otherwise
    */
   boolean isWindows();
 
   /**
    * Check whether the current environment is mac based
-   * @return
+   * @return true on mac environment false otherwise
    */
   boolean isMac();
 

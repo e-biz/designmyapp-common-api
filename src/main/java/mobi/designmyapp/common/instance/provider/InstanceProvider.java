@@ -30,18 +30,20 @@ public abstract class InstanceProvider implements Comparable<InstanceProvider> {
   protected Integer priority;
 
   /**
-   * Retrieve deployed instances
-   * @return
+   * Retrieve deployed instances.
+   * @return deployed instances
    */
   public abstract List<Instance> getInstances();
 
   /**
-   * Refresh the status of the instances
+   * Refresh the status of the instances.
    */
   public abstract void refreshInstancesState();
 
   /**
-   * Retrieve a single instance by its id
+   * Retrieve a single instance by its id, null if the id is not found.
+   * @param instanceId instance id to retrieve
+   * @return the instance or null if not found
    */
   public abstract Instance getInstance(String instanceId);
 
@@ -63,44 +65,54 @@ public abstract class InstanceProvider implements Comparable<InstanceProvider> {
 
   /**
    * Friendly name for this provider.
+   * @return the name of the provider
    */
   public abstract String getName();
 
   /**
    * Start a new instance.
+   * @param imageName String representing the kind of instance to launch
+   * @param options List representing the option to use when starting the instance
+   * @param args List representing the args to use when starting the instance
+   * @return the started instance if no errors append
    */
   public abstract Instance start(String imageName, List<String> options, List<String> args);
 
   /**
    * Terminate an instance.
+   * @param instanceId instance id to terminate
    */
   public abstract void stop(String instanceId);
 
   /**
-   * Restart an instance
+   * Restart an instance.
+   * @param instanceId instance Id to restart
+   * @return the restarted instance
    */
   public abstract Instance restart(String instanceId);
 
   /**
-   * Retrieve the status of this InstanceProvider
-   * @return
+   * Retrieve the status of this InstanceProvider.
+   * @return InstanceProvider status @see mobi.designmyapp.common.instance.model.Status
    */
   public abstract Status getStatus();
 
   /**
-   * Indicates whether a new instance can be started.
+   * Indicate if the InstanceProvider can create instances checking poolSize
+   * and running instances List.
+   * @return boolean indicating whether a new instance can be started.
    */
   public abstract boolean canCreateInstance();
 
   /**
-   * Retrieve the number of RUNNING instances
-   * @return
+   * Retrieve the number of RUNNING instances.
+   * @return number of RUNNING instances
    */
   public abstract int getActiveCount();
 
   /**
-   * Return the provider-level time-to-live for default instances
-   * @return
+   * Return the provider-level time-to-live for default instances.
+   * @return time-to-live
    */
   public Integer getTtl() {
     return ttl;
@@ -108,8 +120,6 @@ public abstract class InstanceProvider implements Comparable<InstanceProvider> {
 
   /**
    * Default implementation of compareTo for the InstanceManager.
-   * @param instanceProvider
-   * @return
    */
   @Override
   public int compareTo(InstanceProvider instanceProvider) {
