@@ -119,6 +119,12 @@ public abstract class InstanceProvider implements Comparable<InstanceProvider> {
   }
 
   /**
+   * Retrieve hostname endpoint.
+   * @return hostname endpoint url
+   */
+  public abstract String getHostname();
+
+  /**
    * Default implementation of compareTo for the InstanceManager.
    */
   @Override
