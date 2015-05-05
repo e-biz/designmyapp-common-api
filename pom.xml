@@ -52,6 +52,7 @@
     <maven-release-plugin.version>2.5.1</maven-release-plugin.version>
     <nexus-staging-maven-plugin.version>1.6.3</nexus-staging-maven-plugin.version>
     <slf4j.version>1.7.10</slf4j.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
   <!-- Profiles -->

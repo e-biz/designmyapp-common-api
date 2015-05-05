@@ -12,6 +12,7 @@
  */
 package mobi.designmyapp.common.engine.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -46,9 +47,12 @@ public abstract class Template {
    * List of available target applications
    */
   protected List<String> targets;
-  
-  //TODO fixme, perhaps do another approach
-  private Object webappResponse;
+
+  /**
+   * Representation of the response sent to the frontend once webapp init is done.
+   * Object needs to be Serializable
+   */
+  protected Object webappResponse;
 
   public static final String DEFAULT_TEMPLATE_TAG = "generic";
   public static final String TARGET_ANDROID = "android";
@@ -103,7 +107,7 @@ public abstract class Template {
     return webappResponse;
   }
 
-  public void setWebappResponse(Object webappResponse) {
+  public void setWebappResponse(Serializable webappResponse) {
     this.webappResponse = webappResponse;
   }
 

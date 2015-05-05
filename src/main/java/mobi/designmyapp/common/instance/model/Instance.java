@@ -56,6 +56,8 @@ public class Instance {
    */
   private String cgroupMemoryRoot = null;
 
+  private String protocol;
+
   /**
    *
    */
@@ -120,6 +122,14 @@ public class Instance {
 
   public void setCgroupMemoryRoot(String cgroupMemoryRoot) {
     this.cgroupMemoryRoot = cgroupMemoryRoot;
+  }
+
+  public String getProtocol() {
+    return protocol;
+  }
+
+  public void setProtocol(String protocol) {
+    this.protocol = protocol;
   }
 
   public String getHostname() {
