@@ -62,7 +62,7 @@ public interface ContextService {
    * @param type        build target type
    * @return the template directory
    */
-  File getTemplateDirectory(Builder.Type type);
+  File getTemplateDirectory(Builder.Type type, String version);
 
   /**
    * Create url to retrieve data from server resources
