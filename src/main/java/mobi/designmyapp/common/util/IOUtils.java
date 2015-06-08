@@ -64,12 +64,22 @@ public interface IOUtils {
   void replaceTokens(Object model, Boolean exceptionHandling, File srcDirectory, List<String> parseList, File destDirectory);
 
   /**
-   * Perform token replacement in a file
+   * Perform token replacement in a file. The replacement is performed after the call of your builder (android or IOS).
+   * The replacement is asynchronous, and you should not use this methods during the build of a webapp.
+   * Use {@link #replaceTokensSync(java.util.Map, java.io.File, java.io.File)} instead
    * @param model the model object. The key being the token name, and value the String it will be replaced by
    * @param srcFile the source file (read-only)
    * @param destFile the destination file
    */
   void replaceTokens(Map<String,String> model, File srcFile, File destFile);
+
+  /**
+   * Perform token replacement in a file synchronously
+   * @param model the model object. The key being the token name, and value the String it will be replaced by
+   * @param srcFile the source file (read-only)
+   * @param destFile the destination file
+   */
+  void replaceTokensSync(Map<String,String> model, File srcFile, File destFile);
 
   /**
    * Locate for the file with fileRelativePath in directory sourceDir
