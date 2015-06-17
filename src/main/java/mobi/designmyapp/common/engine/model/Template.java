@@ -13,6 +13,7 @@
 package mobi.designmyapp.common.engine.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,27 +25,28 @@ import java.util.List;
 public abstract class Template {
 
   /**
-   * Random UUID referencing your application
+   * The name of the application that will be generated.
    */
-  protected String uuid;
+  protected String name;
 
   /**
-   * Unique string referencing your template
+   * The version of the template to create.
+   */
+  protected String version;
+
+  /**
+   * Unique String referencing your template.
    */
   protected String templateTag;
 
-  /**
-   * String representing your template name
-   */
-  protected String templateName;
 
   /**
-   * Base option representing the application icon
+   * Base option representing the application icon.
    */
   protected Boolean customIcon;
 
   /**
-   * List of available target applications
+   * List of available target applications.
    */
   protected List<String> targets;
 
@@ -61,14 +63,26 @@ public abstract class Template {
 
   public Template(String templateTag) {
     this.templateTag = templateTag;
+    this.customIcon=false;
+    this.name="My First App";
+    this.version="1.0.0";
+    this.targets=new ArrayList<>();
   }
 
-  public String getUuid() {
-    return uuid;
+  public void setName(String name) {
+    this.name = name;
   }
 
-  public void setUuid(String uuid) {
-    this.uuid = uuid;
+  public String getName() {
+    return this.name;
+  }
+
+  public String getVersion() {
+    return version;
+  }
+
+  public void setVersion(String version) {
+    this.version = version;
   }
 
   public String getTemplateTag() {
@@ -77,14 +91,6 @@ public abstract class Template {
 
   public void setTemplateTag(String templateTag) {
     this.templateTag = templateTag;
-  }
-
-  public String getTemplateName() {
-    return templateName;
-  }
-
-  public void setTemplateName(String templateName) {
-    this.templateName = templateName;
   }
 
   public Boolean getCustomIcon() {
@@ -114,9 +120,8 @@ public abstract class Template {
   @Override
   public String toString() {
     return "Template{" +
-        "uuid='" + uuid + '\'' +
-        "templateTag='" + templateTag + '\'' +
-        ", templateName='" + templateName + '\'' +
+        " name ='"+ name + "\'" +
+        ", version ='"+ version + "\'" +
         ", customIcon='" + customIcon + '\'' +
         ", targets=" + targets +
         '}';

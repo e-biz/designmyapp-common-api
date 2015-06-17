@@ -22,11 +22,17 @@ import mobi.designmyapp.common.engine.model.Pricing;
 public interface PricingService {
 
   /**
-   * Retrieve template specific pricing from template tag
-   * @param templateTag input template tag
+   * Retrieve template specific pricing
    * @param <T> output pricing instance
    * @return template pricing instance
    */
-  <T extends Pricing> T getPricing(String templateTag);
+  <T extends Pricing> T getPricing();
+
+  /**
+   * Retrieve generic pricing
+   * @param <T> output pricing instance
+   * @return generic template pricing instance
+   */
+  <T extends Pricing> T getGenericPricing();
 
 }

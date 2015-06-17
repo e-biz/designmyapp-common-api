@@ -21,22 +21,20 @@ import java.io.File;
  * See knowledge base on http://developer.designmyapp.mobi for more details
  * Created by Loïc Ortola on 24/07/14.
  */
-public interface ResourceService {
+public interface ContextService {
 
   /**
    * Retrieve the resource directory of an application.
    * The resource directory is where uploaded files are stored
    *
-   * @param appId application uuid
    * @return the application resource directory
    */
-  File getResourceDirectory(String appId);
+  File getResourceDirectory();
 
   /**
    * Retrieve the static resources directory for a specific template tag.
    * The static resources directory can contain any static asset specific to a template
    *
-   * @param templateTag input template tag
    * @return the static resources directory
    */
   File getStaticResourcesDirectory(String templateTag);
@@ -45,28 +43,40 @@ public interface ResourceService {
    * Retrieve the work directory typed for current target.
    *
    * @param type  build target type
-   * @param appId application uuid
    * @return the work directory
    */
-  File getWorkDirectory(Builder.Type type, String appId);
+  File getWorkDirectory(Builder.Type type);
 
   /**
    * Retrieve the tmp directory of an application.
    * Tmp directory should be the output of processed files right before they are built and transferred to the final application templates.
    *
-   * @param appId application uuid
    * @return the tmp directory
    */
-  File getTmpDirectory(String appId);
+  File getTmpDirectory();
 
   /**
    * Retrieve the read-only template directory for a specific template and target.
    *
    * @param type        build target type
-   * @param templateTag input template tag
    * @return the template directory
    */
-  File getTemplateDirectory(Builder.Type type, String templateTag);
+  File getTemplateDirectory(Builder.Type type);
+
+  /**
+   * Create url to retrieve data from server resources
+   * @param namespace resource namespace
+   * @param filename name of the file to expose
+   * @param portalName portal to access the file
+   * @return a String representing the url to access the file
+   */
+  String createUrl(String namespace, String filename, String portalName);
+
+  /**
+   * Return the appId of the current generation.
+   * @return the appId
+   */
+  String getAppId();
 
   /**
    * Retrieve environment URL

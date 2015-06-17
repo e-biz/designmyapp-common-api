@@ -12,8 +12,8 @@
  */
 package mobi.designmyapp.common.util;
 
+import mobi.designmyapp.common.engine.service.ContextService;
 import mobi.designmyapp.common.engine.service.PricingService;
-import mobi.designmyapp.common.engine.service.ResourceService;
 import mobi.designmyapp.common.instance.service.InstanceService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,24 +29,22 @@ public class UtilsFactory {
   private static final String IO_UTILS = "mobi.designmyapp.common.util.IOUtilsImpl";
   private static final String IMAGE_UTILS = "mobi.designmyapp.common.util.ImageUtilsImpl";
   private static final String PRICE_UTILS = "mobi.designmyapp.common.util.PriceUtilsImpl";
-  private static final String RESOURCE_UTILS = "mobi.designmyapp.common.util.ResourceUtilsImpl";
   private static final String ZIP_UTILS = "mobi.designmyapp.common.util.ZipUtilsImpl";
   private static final String DIGEST_UTILS = "mobi.designmyapp.common.util.DigestUtilsImpl";
   private static final String STRING_UTILS = "mobi.designmyapp.common.util.StringUtilsImpl";
 
-  private static final String RESOURCE_SERVICE = "mobi.designmyapp.engine.service.impl.ResourceServiceImpl";
+  private static final String RESOURCE_SERVICE = "mobi.designmyapp.engine.service.impl.ContextServiceImpl";
   private static final String PRICING_SERVICE = "mobi.designmyapp.engine.service.impl.PricingServiceImpl";
   private static final String INSTANCE_SERVICE = "mobi.designmyapp.engine.service.impl.InstanceServiceImpl";
 
   private static IOUtils ioUtils;
   private static ImageUtils imageUtils;
   private static PriceUtils priceUtils;
-  private static ResourceUtils resourceUtils;
   private static ZipUtils zipUtils;
   private static DigestUtils digestUtils;
   private static StringUtils stringUtils;
 
-  private static ResourceService resourceService;
+  private static ContextService contextService;
   private static PricingService pricingService;
   private static InstanceService instanceService;
 
@@ -106,23 +104,6 @@ public class UtilsFactory {
   }
 
   /**
-   * Retrieve ResourceUtils implementation
-   * @return ResourceUtils instance
-   */
-  public static ResourceUtils getResourceUtils() {
-    if (resourceUtils == null) {
-      try {
-        Class clazz = Class.forName(RESOURCE_UTILS);
-        resourceUtils = (ResourceUtils) clazz.newInstance();
-      } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-        LOGGER.warn("Cannot instanciate util: {}", e.getMessage());
-        throw new IllegalStateException(e);
-      }
-    }
-    return resourceUtils;
-  }
-
-  /**
    * Retrieve ZipUtils implementation
    * @return ZipUtils instance
    */
@@ -174,20 +155,20 @@ public class UtilsFactory {
   }
 
   /**
-   * Retrieve ResourceService implementation
-   * @return ResourceService instance
+   * Retrieve ContextService implementation
+   * @return ContextService instance
    */
-  public static ResourceService getResourceService() {
-    if (resourceService == null) {
+  public static ContextService getContextService() {
+    if (contextService == null) {
       try {
         Class clazz = Class.forName(RESOURCE_SERVICE);
-        resourceService = (ResourceService) clazz.newInstance();
+        contextService = (ContextService) clazz.newInstance();
       } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
         LOGGER.warn("Cannot instanciate util: {}", e.getMessage());
         throw new IllegalStateException(e);
       }
     }
-    return resourceService;
+    return contextService;
   }
 
   /**

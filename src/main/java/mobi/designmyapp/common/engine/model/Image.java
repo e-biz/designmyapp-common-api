@@ -88,7 +88,6 @@ public class Image {
 
     private Image image;
     private String portal;
-    private String appId;
     private String namespace;
 
     private URLBuilder(Image image) {
@@ -100,21 +99,16 @@ public class Image {
       return this;
     }
 
-    public URLBuilder appId(String appId) {
-      this.appId = appId;
-      return this;
-    }
-
     public URLBuilder namespace(String namespace) {
       this.namespace = namespace;
       return this;
     }
 
     public Image build() {
-      if(namespace == null || appId == null || image.getFileName() == null) {
+      if(namespace == null || image.getFileName() == null) {
         throw new IllegalStateException("fileName, appId and namespace fields are mandatory.");
       }
-      image.url = UtilsFactory.getResourceUtils().createUrl(appId, namespace, image.getFileName(), portal);
+      image.url = UtilsFactory.getContextService().createUrl(namespace, image.getFileName(), portal);
       return image;
     }
 
