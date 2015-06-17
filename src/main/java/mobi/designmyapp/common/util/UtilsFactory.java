@@ -34,9 +34,9 @@ public class UtilsFactory {
   private static final String DIGEST_UTILS = "mobi.designmyapp.common.util.DigestUtilsImpl";
   private static final String STRING_UTILS = "mobi.designmyapp.common.util.StringUtilsImpl";
 
-  private static final String RESOURCE_SERVICE = "mobi.designmyapp.engine.service.ResourceServiceImpl";
-  private static final String PRICING_SERVICE = "mobi.designmyapp.engine.service.PricingServiceImpl";
-  private static final String INSTANCE_SERVICE = "mobi.designmyapp.engine.service.InstanceServiceImpl";
+  private static final String RESOURCE_SERVICE = "mobi.designmyapp.engine.service.impl.ResourceServiceImpl";
+  private static final String PRICING_SERVICE = "mobi.designmyapp.engine.service.impl.PricingServiceImpl";
+  private static final String INSTANCE_SERVICE = "mobi.designmyapp.engine.service.impl.InstanceServiceImpl";
 
   private static IOUtils ioUtils;
   private static ImageUtils imageUtils;
