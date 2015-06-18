@@ -28,11 +28,4 @@ public interface PricingService {
    */
   <T extends Pricing> T getPricing();
 
-  /**
-   * Retrieve generic pricing
-   * @param <T> output pricing instance
-   * @return generic template pricing instance
-   */
-  <T extends Pricing> T getGenericPricing();
-
 }

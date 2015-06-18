@@ -26,12 +26,12 @@ public class UtilsFactory {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(UtilsFactory.class);
 
-  private static final String IO_UTILS = "mobi.designmyapp.common.util.IOUtilsImpl";
-  private static final String IMAGE_UTILS = "mobi.designmyapp.common.util.ImageUtilsImpl";
-  private static final String PRICE_UTILS = "mobi.designmyapp.common.util.PriceUtilsImpl";
-  private static final String ZIP_UTILS = "mobi.designmyapp.common.util.ZipUtilsImpl";
-  private static final String DIGEST_UTILS = "mobi.designmyapp.common.util.DigestUtilsImpl";
-  private static final String STRING_UTILS = "mobi.designmyapp.common.util.StringUtilsImpl";
+  private static final String IO_UTILS = "mobi.designmyapp.common.util.impl.IOUtilsImpl";
+  private static final String IMAGE_UTILS = "mobi.designmyapp.common.util.impl.ImageUtilsImpl";
+  private static final String PRICE_UTILS = "mobi.designmyapp.common.util.impl.PriceUtilsImpl";
+  private static final String ZIP_UTILS = "mobi.designmyapp.common.util.impl.ZipUtilsImpl";
+  private static final String DIGEST_UTILS = "mobi.designmyapp.common.util.impl.DigestUtilsImpl";
+  private static final String STRING_UTILS = "mobi.designmyapp.common.util.impl.StringUtilsImpl";
 
   private static final String RESOURCE_SERVICE = "mobi.designmyapp.engine.service.impl.ContextServiceImpl";
   private static final String PRICING_SERVICE = "mobi.designmyapp.engine.service.impl.PricingServiceImpl";
