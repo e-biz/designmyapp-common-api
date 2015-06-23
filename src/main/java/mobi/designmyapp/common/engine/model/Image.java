@@ -87,15 +87,15 @@ public class Image {
   public static class URLBuilder {
 
     private Image image;
-    private String portal;
+    private String apiKey;
     private String namespace;
 
     private URLBuilder(Image image) {
       this.image = image;
     }
 
-    public URLBuilder portal(String portal) {
-      this.portal = portal;
+    public URLBuilder apiKey(String apiKey) {
+      this.apiKey = apiKey;
       return this;
     }
 
@@ -108,7 +108,7 @@ public class Image {
       if(namespace == null || image.getFileName() == null) {
         throw new IllegalStateException("fileName, appId and namespace fields are mandatory.");
       }
-      image.url = UtilsFactory.getContextService().createUrl(namespace, image.getFileName(), portal);
+      image.url = UtilsFactory.getContextService().createUrl(namespace, image.getFileName(), apiKey);
       return image;
     }
 

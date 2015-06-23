@@ -20,7 +20,7 @@ import java.math.BigDecimal;
 /**
  * This class represents the default pricing model for your app.
  * You will later be able to customize and change those values in your admin area,
- * or even specify different prices depending on which portal it is on.
+ * or even specify different prices depending on which apiKey it is on.
  * Only put attributes, and use PriceUtils.create() to set up your prices
  */
 public abstract class Pricing {

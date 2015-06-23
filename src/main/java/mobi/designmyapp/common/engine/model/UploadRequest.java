@@ -28,7 +28,7 @@ public class UploadRequest {
   private String originalFilename;
 
   /**
-   * Name of the portal on which the request is made
+   * Name of the apiKey on which the request is made
    */
   private String portalName;
 

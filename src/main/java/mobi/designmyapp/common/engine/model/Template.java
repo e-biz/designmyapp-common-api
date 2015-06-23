@@ -12,7 +12,6 @@
  */
 package mobi.designmyapp.common.engine.model;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -108,15 +107,7 @@ public abstract class Template {
   public void setTargets(List<String> targets) {
     this.targets = targets;
   }
-
-  public Object getWebappResponse() {
-    return webappResponse;
-  }
-
-  public void setWebappResponse(Serializable webappResponse) {
-    this.webappResponse = webappResponse;
-  }
-
+  
   @Override
   public String toString() {
     return "Template{" +

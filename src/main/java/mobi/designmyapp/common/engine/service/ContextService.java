@@ -15,6 +15,7 @@ package mobi.designmyapp.common.engine.service;
 import mobi.designmyapp.common.engine.builder.Builder;
 
 import java.io.File;
+import java.io.Serializable;
 
 /**
  * This class provides resource services.
@@ -67,7 +68,7 @@ public interface ContextService {
    * Create url to retrieve data from server resources
    * @param namespace resource namespace
    * @param filename name of the file to expose
-   * @param portalName portal to access the file
+   * @param portalName apiKey to access the file
    * @return a String representing the url to access the file
    */
   String createUrl(String namespace, String filename, String portalName);
@@ -84,4 +85,10 @@ public interface ContextService {
    * @return current environment base URL
    */
   String getEnvironmentBaseUrl();
+
+  /**
+   * Set the webapp response of current build.
+   * @param response the webapp custom response.
+   */
+  void setWebappResponse(Serializable response);
 }

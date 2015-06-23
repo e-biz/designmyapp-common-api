@@ -79,4 +79,11 @@ public interface StringUtils {
    */
   boolean isImageUrl(String value);
 
+  /**
+   * Strips all special and invalid characters to format as a real name.
+   * @param name the input name.
+   * @return the normalized name.
+   */
+  String normalizeName(String name);
+
 }

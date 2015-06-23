@@ -14,9 +14,14 @@ package mobi.designmyapp.common.util;
 
 import mobi.designmyapp.common.engine.service.ContextService;
 import mobi.designmyapp.common.engine.service.PricingService;
+import mobi.designmyapp.common.engine.service.provider.ServiceProvider;
 import mobi.designmyapp.common.instance.service.InstanceService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 
 /**
  * Factory to retrieve Utility and Service classes
@@ -33,10 +38,6 @@ public class UtilsFactory {
   private static final String DIGEST_UTILS = "mobi.designmyapp.common.util.impl.DigestUtilsImpl";
   private static final String STRING_UTILS = "mobi.designmyapp.common.util.impl.StringUtilsImpl";
 
-  private static final String RESOURCE_SERVICE = "mobi.designmyapp.engine.service.impl.ContextServiceImpl";
-  private static final String PRICING_SERVICE = "mobi.designmyapp.engine.service.impl.PricingServiceImpl";
-  private static final String INSTANCE_SERVICE = "mobi.designmyapp.engine.service.impl.InstanceServiceImpl";
-
   private static IOUtils ioUtils;
   private static ImageUtils imageUtils;
   private static PriceUtils priceUtils;
@@ -44,12 +45,48 @@ public class UtilsFactory {
   private static DigestUtils digestUtils;
   private static StringUtils stringUtils;
 
-  private static ContextService contextService;
-  private static PricingService pricingService;
-  private static InstanceService instanceService;
+  private static ServiceProvider serviceProvider;
+  private static ServiceProvider serviceProviderProxy;
+
+  static {
+
+    InvocationHandler serviceProviderHandler = (proxy, method, args) -> {
+
+      if (serviceProvider != null) {
+        return ReflectUtils.invoke(serviceProvider, ServiceProvider.class, method.getName(), args);
+      } else {
+        // The first and only argument of the sole serviceProviderMethod is a class
+        Class returnclazz = (Class) args[0];
+        return Proxy.newProxyInstance(returnclazz.getClassLoader(), new Class[]{returnclazz}, new ServiceInvocationHandler());
+      }
+
+    };
+    serviceProviderProxy = (ServiceProvider) Proxy.newProxyInstance(ServiceProvider.class.getClassLoader(), new Class[]{ServiceProvider.class}, serviceProviderHandler);
+  }
+
+  public static class ServiceInvocationHandler implements InvocationHandler {
+
+    private Object instance;
+
+    @Override
+    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+      Class clazz = proxy.getClass();
+      if (instance == null) {
+        instance = serviceProvider.getService(clazz);
+      }
+      return instance == null ? null : ReflectUtils.invoke(instance, clazz, method.getName(), args);
+    }
+  }
 
   private UtilsFactory() {
+  }
 
+  /**
+   * This is called by the engine system to set the service provider
+   * @param provider the service provider
+   */
+  public static void setServiceProvider(ServiceProvider provider) {
+    serviceProvider = provider;
   }
 
   /**
@@ -159,16 +196,7 @@ public class UtilsFactory {
    * @return ContextService instance
    */
   public static ContextService getContextService() {
-    if (contextService == null) {
-      try {
-        Class clazz = Class.forName(RESOURCE_SERVICE);
-        contextService = (ContextService) clazz.newInstance();
-      } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-        LOGGER.warn("Cannot instanciate util: {}", e.getMessage());
-        throw new IllegalStateException(e);
-      }
-    }
-    return contextService;
+    return serviceProviderProxy.getService(ContextService.class);
   }
 
   /**
@@ -176,16 +204,7 @@ public class UtilsFactory {
    * @return PricingService instance
    */
   public static PricingService getPricingService() {
-    if (pricingService == null) {
-      try {
-        Class clazz = Class.forName(PRICING_SERVICE);
-        pricingService = (PricingService) clazz.newInstance();
-      } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-        LOGGER.warn("Cannot instanciate util: {}", e.getMessage());
-        throw new IllegalStateException(e);
-      }
-    }
-    return pricingService;
+    return serviceProviderProxy.getService(PricingService.class);
   }
 
   /**
@@ -193,15 +212,6 @@ public class UtilsFactory {
    * @return InstanceService instance
    */
   public static InstanceService getInstanceService() {
-    if (instanceService == null) {
-      try {
-        Class clazz = Class.forName(INSTANCE_SERVICE);
-        instanceService = (InstanceService) clazz.newInstance();
-      } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-        LOGGER.warn("Cannot instanciate util: {}", e.getMessage());
-        throw new IllegalStateException(e);
-      }
-    }
-    return instanceService;
+    return serviceProviderProxy.getService(InstanceService.class);
   }
 }
