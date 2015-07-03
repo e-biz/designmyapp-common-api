@@ -49,6 +49,9 @@ public class InstanceProviderRequest<T> {
 
     private int ttl;
 
+    private boolean replaceOldestOnOverload;
+
+
     private DesignMyAppRequest() {
     }
 
@@ -64,6 +67,11 @@ public class InstanceProviderRequest<T> {
 
     public DesignMyAppRequest secretKey(String secretKey) {
       this.secretKey = secretKey;
+      return this;
+    }
+
+    public DesignMyAppRequest replaceOldestOnOverload(boolean replaceOldestOnOverload) {
+      this.replaceOldestOnOverload = replaceOldestOnOverload;
       return this;
     }
 
@@ -115,6 +123,10 @@ public class InstanceProviderRequest<T> {
 
     public int getTtl() {
       return ttl;
+    }
+
+    public boolean getReplaceOldestOnOverload() {
+      return replaceOldestOnOverload;
     }
   }
 }
