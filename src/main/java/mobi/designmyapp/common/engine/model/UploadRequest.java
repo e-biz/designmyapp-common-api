@@ -30,7 +30,7 @@ public class UploadRequest {
   /**
    * Name of the apiKey on which the request is made
    */
-  private String portalName;
+  private String apiKey;
 
   /**
    * Application id
@@ -47,9 +47,9 @@ public class UploadRequest {
    */
   private Object resources;
 
-  public UploadRequest(String originalFilename,String portalName, String appId, InputStream obj, Object resources) {
+  public UploadRequest(String originalFilename,String apiKey, String appId, InputStream obj, Object resources) {
     this.originalFilename=originalFilename;
-    this.portalName=portalName;
+    this.apiKey = apiKey;
     this.appId=appId;
     this.obj=obj;
     this.resources =resources;
@@ -63,12 +63,12 @@ public class UploadRequest {
     this.originalFilename = originalFilename;
   }
 
-  public String getPortalName() {
-    return portalName;
+  public String getApiKey() {
+    return apiKey;
   }
 
-  public void setPortalName(String portalName) {
-    this.portalName = portalName;
+  public void setApiKey(String apiKey) {
+    this.apiKey = apiKey;
   }
 
   public InputStream getObj() {

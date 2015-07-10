@@ -68,10 +68,10 @@ public interface ContextService {
    * Create url to retrieve data from server resources
    * @param namespace resource namespace
    * @param filename name of the file to expose
-   * @param portalName apiKey to access the file
+   * @param apiKey apiKey to access the file
    * @return a String representing the url to access the file
    */
-  String createUrl(String namespace, String filename, String portalName);
+  String createUrl(String namespace, String filename, String apiKey);
 
   /**
    * Create url to retrieve bundle.zip from server webapp resources
