@@ -57,4 +57,33 @@ public class InstanceProgress {
     }
     this.messages.add(message);
   }
+
+  @Override
+  public String toString() {
+    return "InstanceProgress{" +
+        "instanceUuid='" + instanceUuid + '\'' +
+        ", percentage=" + percentage +
+        ", messages=" + messages +
+        '}';
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+
+    InstanceProgress progress = (InstanceProgress) o;
+
+    return !(instanceUuid != null ? !instanceUuid.equals(progress.instanceUuid) : progress.instanceUuid != null);
+
+  }
+
+  @Override
+  public int hashCode() {
+    return instanceUuid != null ? instanceUuid.hashCode() : 0;
+  }
 }
