@@ -37,6 +37,15 @@ public interface IOUtils {
   void copyFile(File srcFile, File destFile);
 
   /**
+   * Create a directory recursively, or clean previous dir if already exists.
+   *
+   * @param directory the directory root
+   * @param subDir    the sub directory
+   * @return the result directory File object
+   */
+  File setupDirectory(File directory, String subDir);
+
+  /**
    * Copy srcFile to destDir
    * @param srcFile source File to be copied
    * @param destDir destination directory to be copied in
