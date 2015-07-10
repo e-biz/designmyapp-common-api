@@ -42,7 +42,7 @@ public abstract class Template {
   /**
    * Base option representing the application icon.
    */
-  protected Boolean customIcon;
+  protected boolean customIcon;
 
   /**
    * List of available target applications.
@@ -62,9 +62,7 @@ public abstract class Template {
 
   public Template(String templateTag) {
     this.templateTag = templateTag;
-    this.customIcon=false;
-    this.name="My First App";
-    this.version="1.0.0";
+    this.name="My Application";
     this.targets=new ArrayList<>();
   }
 
