@@ -79,6 +79,16 @@ public abstract class InstanceProvider implements Comparable<InstanceProvider> {
   public abstract Instance start(String imageName, List<String> options, List<String> args);
 
   /**
+   * Create a new instance.
+   * @param imageName String representing the kind of instance to launch
+   * @param options List representing the option to use when starting the instance
+   * @param args List representing the args to use when starting the instance
+   * @return the started instance if no errors append
+   */
+  public abstract void create(String imageName, List<String> options, List<String> args);
+
+
+  /**
    * Terminate an instance.
    * @param instanceId instance id to terminate
    */

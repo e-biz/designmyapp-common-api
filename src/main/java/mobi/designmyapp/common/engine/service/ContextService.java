@@ -74,6 +74,12 @@ public interface ContextService {
   String createUrl(String namespace, String filename, String portalName);
 
   /**
+   * Create url to retrieve bundle.zip from server webapp resources
+   * @return a String representing the url to access the file
+   */
+  String createBundleUrl();
+
+  /**
    * Return the appId of the current generation.
    * @return the appId
    */
