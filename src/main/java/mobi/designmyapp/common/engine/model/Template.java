@@ -90,11 +90,11 @@ public abstract class Template {
     this.templateTag = templateTag;
   }
 
-  public Boolean getCustomIcon() {
+  public boolean getCustomIcon() {
     return customIcon;
   }
 
-  public void setCustomIcon(Boolean customIcon) {
+  public void setCustomIcon(boolean customIcon) {
     this.customIcon = customIcon;
   }
 
