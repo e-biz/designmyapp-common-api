@@ -35,19 +35,21 @@ public interface InstanceManager {
 
   /**
    * Start a new instance
+   *
    * @param imageName the image name identifier
-   * @param options the list of startup options
-   * @param args the list of arguments to be passed to the image
+   * @param options   the list of startup options
+   * @param args      the list of arguments to be passed to the image
    * @return the live instance
    */
   Instance startInstance(String imageName, List<String> options, List<String> args);
 
   /**
    * Start a new instance with a specific time-to-live (in minutes).
+   *
    * @param imageName the image name identifier
-   * @param options the list of startup options
-   * @param args the list of arguments to be passed to the image
-   * @param ttl the instance's time-to-live in minutes. After the TTL is expired, the instance will be killed.
+   * @param options   the list of startup options
+   * @param args      the list of arguments to be passed to the image
+   * @param ttl       the instance's time-to-live in minutes. After the TTL is expired, the instance will be killed.
    * @return the live instance
    */
   Instance startInstance(String imageName, List<String> options, List<String> args, int ttl);
@@ -57,6 +59,8 @@ public interface InstanceManager {
   Instance restartInstance(String instanceId);
 
   Collection<InstanceProvider> getInstanceProviders();
+
+  void setInstanceProviders(Collection<InstanceProvider> instanceProviders);
 
   Instance getInstance(String instanceID);
 
