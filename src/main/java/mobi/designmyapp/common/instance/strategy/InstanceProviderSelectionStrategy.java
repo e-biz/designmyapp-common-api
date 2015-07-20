@@ -12,17 +12,51 @@
  */
 package mobi.designmyapp.common.instance.strategy;
 
+import mobi.designmyapp.common.instance.model.Status;
 import mobi.designmyapp.common.instance.provider.InstanceProvider;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+
 
 /**
+ * Created by Anas Hammani on 17/07/15.
  * This class represents an instance provider selection strategy used to define how an
  * instance manager will be selected
- * Created by Jean Blanchard on 29/10/14.
  */
-public interface InstanceProviderSelectionStrategy {
+public enum InstanceProviderSelectionStrategy {
+  FIRST_INSTANCE {
+    @Override
+    public InstanceProvider selectInstanceProvider(Collection<InstanceProvider> instanceProviders) {
+      for (InstanceProvider iProvider : instanceProviders) {
+        if (!Status.SHUTDOWN.equals(iProvider.getStatus())) {
+          return iProvider;
+        }
+      }
+      return null;
+    }
+  },
 
-  public InstanceProvider selectInstanceProvider(Collection<InstanceProvider> instanceProviders);
+  ROUND_ROBIN {
+    private int lastIndex = -1;
 
+    @Override
+    public InstanceProvider selectInstanceProvider(Collection<InstanceProvider> instanceProviders) {
+      List<InstanceProvider> instanceProvidersList = new ArrayList<>(instanceProviders);
+      int nbInstances = instanceProvidersList.size();
+      int tmpLastIndex = lastIndex;
+      for (int i = 1; i <= nbInstances; i++) {
+        int index = (tmpLastIndex + i) % nbInstances;
+        InstanceProvider instanceProvider = instanceProvidersList.get(index);
+        if (Status.RUNNING.equals(instanceProvider.getStatus())) {
+          lastIndex = index;
+          return instanceProvider;
+        }
+      }
+      return null;
+    }
+  };
+
+  public abstract InstanceProvider selectInstanceProvider(Collection<InstanceProvider> instanceProviders);
 }

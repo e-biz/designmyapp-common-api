@@ -31,6 +31,7 @@ public abstract class InstanceProvider implements Comparable<InstanceProvider> {
 
   /**
    * Retrieve deployed instances.
+   *
    * @return deployed instances
    */
   public abstract List<Instance> getInstances();
@@ -42,16 +43,17 @@ public abstract class InstanceProvider implements Comparable<InstanceProvider> {
 
   /**
    * Retrieve a single instance by its id, null if the id is not found.
+   *
    * @param instanceId instance id to retrieve
    * @return the instance or null if not found
    */
   public abstract Instance getInstance(String instanceId);
 
-  public Integer getPoolSize(){
+  public Integer getPoolSize() {
     return poolSize;
   }
 
-  public void setPoolSize(Integer poolSize){
+  public void setPoolSize(Integer poolSize) {
     this.poolSize = poolSize;
   }
 
@@ -65,24 +67,27 @@ public abstract class InstanceProvider implements Comparable<InstanceProvider> {
 
   /**
    * Friendly name for this provider.
+   *
    * @return the name of the provider
    */
   public abstract String getName();
 
   /**
    * Start a new instance.
+   *
    * @param imageName String representing the kind of instance to launch
-   * @param options List representing the option to use when starting the instance
-   * @param args List representing the args to use when starting the instance
+   * @param options   List representing the option to use when starting the instance
+   * @param args      List representing the args to use when starting the instance
    * @return the started instance if no errors append
    */
   public abstract Instance start(String imageName, List<String> options, List<String> args);
 
   /**
    * Create a new instance.
+   *
    * @param imageName String representing the kind of instance to launch
-   * @param options List representing the option to use when starting the instance
-   * @param args List representing the args to use when starting the instance
+   * @param options   List representing the option to use when starting the instance
+   * @param args      List representing the args to use when starting the instance
    * @return the started instance if no errors append
    */
   public abstract void create(String imageName, List<String> options, List<String> args);
@@ -90,12 +95,14 @@ public abstract class InstanceProvider implements Comparable<InstanceProvider> {
 
   /**
    * Terminate an instance.
+   *
    * @param instanceId instance id to terminate
    */
   public abstract void stop(String instanceId);
 
   /**
    * Restart an instance.
+   *
    * @param instanceId instance Id to restart
    * @return the restarted instance
    */
@@ -103,6 +110,7 @@ public abstract class InstanceProvider implements Comparable<InstanceProvider> {
 
   /**
    * Retrieve the status of this InstanceProvider.
+   *
    * @return InstanceProvider status @see mobi.designmyapp.common.instance.model.Status
    */
   public abstract Status getStatus();
@@ -110,18 +118,21 @@ public abstract class InstanceProvider implements Comparable<InstanceProvider> {
   /**
    * Indicate if the InstanceProvider can create instances checking poolSize
    * and running instances List.
+   *
    * @return boolean indicating whether a new instance can be started.
    */
   public abstract boolean canCreateInstance();
 
   /**
    * Retrieve the number of RUNNING instances.
+   *
    * @return number of RUNNING instances
    */
   public abstract int getActiveCount();
 
   /**
    * Return the provider-level time-to-live for default instances.
+   *
    * @return time-to-live
    */
   public Integer getTtl() {
@@ -130,6 +141,7 @@ public abstract class InstanceProvider implements Comparable<InstanceProvider> {
 
   /**
    * Retrieve hostname endpoint.
+   *
    * @return hostname endpoint url
    */
   public abstract String getHostname();
