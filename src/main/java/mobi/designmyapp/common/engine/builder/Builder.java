@@ -27,6 +27,6 @@ public interface Builder<T extends Template> {
   Type getType();
 
   public static enum Type {
-    ANDROID,IOS,WEBAPP
+    ANDROID,IOS, CONTAINER
   }
 }

@@ -10,7 +10,7 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-package mobi.designmyapp.common.instance.model;
+package mobi.designmyapp.common.container.model;
 
 /**
  * This class represents the status of an instance or a provider

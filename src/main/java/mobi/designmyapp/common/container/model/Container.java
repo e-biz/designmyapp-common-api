@@ -10,27 +10,36 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-package mobi.designmyapp.common.instance.model;
+package mobi.designmyapp.common.container.model;
 
+import java.net.URI;
 import java.util.Map;
 
 /**
- * This class represents an instance that can be any kind of running device
- * (physical server, docker image,...)
+ * This class represents a container
  * Created by Jean Blanchard on 22/10/14.
  */
-public class Instance {
-
+public class Container {
+  
+  public static enum Type {
+    COMMAND, DATA_VOLUME
+  }
+  
   /**
-   * Name of the instance
+   * Name of the container
    */
   private String name;
 
   /**
-   * Unique id of the instance
+   * Unique container id
    */
-  private String id;
+  private String uuid;
 
+  /**
+   * Container group of the container. This is used to automatically group multiple containers when built together.
+   */
+  private String containerGroupUuid;
+  
   /**
    * Type/Image of the instance
    */
@@ -47,26 +56,18 @@ public class Instance {
   private String task;
 
   /**
-   * Deployment or task progress
+   * Deployment or task progress percentage
    */
   private int progress;
-
   /**
-   * Memory management
+   * Hostname (protocol + hostname)
    */
-  private String cgroupMemoryRoot = null;
-
-  private String protocol;
-
-  /**
-   *
-   */
-  private String hostname;
+  private URI hostname;
 
   /**
    * Port mapping
    */
-  private Map<String,String> portsMap;
+  private Map<String,String> portMap;
 
   public String getName() {
     return name;
@@ -76,12 +77,12 @@ public class Instance {
     this.name = name;
   }
 
-  public String getId() {
-    return id;
+  public String getUuid() {
+    return uuid;
   }
 
-  public void setId(String id) {
-    this.id = id;
+  public void setUuid(String uuid) {
+    this.uuid = uuid;
   }
 
   public String getImage() {
@@ -116,36 +117,28 @@ public class Instance {
     this.progress = progress;
   }
 
-  public String getCgroupMemoryRoot() {
-    return cgroupMemoryRoot;
-  }
-
-  public void setCgroupMemoryRoot(String cgroupMemoryRoot) {
-    this.cgroupMemoryRoot = cgroupMemoryRoot;
-  }
-
-  public String getProtocol() {
-    return protocol;
-  }
-
-  public void setProtocol(String protocol) {
-    this.protocol = protocol;
-  }
-
-  public String getHostname() {
+  public URI getHostname() {
     return hostname;
   }
 
-  public void setHostname(String hostname) {
+  public void setHostname(URI hostname) {
     this.hostname = hostname;
   }
 
-  public Map<String, String> getPortsMap() {
-    return portsMap;
+  public Map<String, String> getPortMap() {
+    return portMap;
   }
 
-  public void setPortsMap(Map<String, String> portsMap) {
-    this.portsMap = portsMap;
+  public void setPortMap(Map<String, String> portsMap) {
+    this.portMap = portsMap;
+  }
+
+  public String getContainerGroupUuid() {
+    return containerGroupUuid;
+  }
+
+  public void setContainerGroupUuid(String containerGroupUuid) {
+    this.containerGroupUuid = containerGroupUuid;
   }
 
   @Override
@@ -157,28 +150,27 @@ public class Instance {
       return false;
     }
 
-    Instance instance = (Instance) o;
+    Container container = (Container) o;
 
-    return (id != null ? id.equals(instance.id) : instance.id == null);
+    return (uuid != null ? uuid.equals(container.uuid) : container.uuid == null);
   }
 
   @Override
   public int hashCode() {
-    return id != null ? id.hashCode() : 0;
+    return uuid != null ? uuid.hashCode() : 0;
   }
 
   @Override
   public String toString() {
     return "Instance{" +
         "name='" + name + '\'' +
-        ", id='" + id + '\'' +
+        ", uuid='" + uuid + '\'' +
         ", image='" + image + '\'' +
         ", status=" + status +
         ", task='" + task + '\'' +
         ", progress=" + progress +
-        ", cgroupMemoryRoot='" + cgroupMemoryRoot + '\'' +
         ", hostname='" + hostname + '\'' +
-        ", portsMap='"+ portsMap +'\'' +
+        ", portMap='"+ portMap +'\'' +
         '}';
   }
 }

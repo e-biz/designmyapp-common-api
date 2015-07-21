@@ -49,16 +49,10 @@ public abstract class Template {
    */
   protected List<String> targets;
 
-  /**
-   * Representation of the response sent to the frontend once webapp init is done.
-   * Object needs to be Serializable
-   */
-  protected Object webappResponse;
-
   public static final String DEFAULT_TEMPLATE_TAG = "generic";
   public static final String TARGET_ANDROID = "android";
   public static final String TARGET_IOS = "ios";
-  public static final String TARGET_WEBAPP = "webapp";
+  public static final String TARGET_CONTAINER = "webapp";
 
   public Template(String templateTag) {
     this.templateTag = templateTag;

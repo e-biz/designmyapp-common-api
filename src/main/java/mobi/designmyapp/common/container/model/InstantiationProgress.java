@@ -1,4 +1,4 @@
-package mobi.designmyapp.common.instance.model;
+package mobi.designmyapp.common.container.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,8 +6,8 @@ import java.util.List;
 /**
  * Created by Anas Hammani on 09/07/15.
  */
-public class InstanceProgress {
-  private String instanceUuid;
+public class InstantiationProgress {
+  private String containerId;
 
   private int percentage;
 
@@ -16,16 +16,16 @@ public class InstanceProgress {
   /**
    * Default constructor.
    */
-  public InstanceProgress() {
+  public InstantiationProgress() {
 
   }
 
-  public String getInstanceUuid() {
-    return instanceUuid;
+  public String getContainerId() {
+    return containerId;
   }
 
-  public void setInstanceUuid(String instanceUuid) {
-    this.instanceUuid = instanceUuid;
+  public void setContainerId(String containerId) {
+    this.containerId = containerId;
   }
 
   public int getPercentage() {
@@ -61,7 +61,7 @@ public class InstanceProgress {
   @Override
   public String toString() {
     return "InstanceProgress{" +
-        "instanceUuid='" + instanceUuid + '\'' +
+        "containerId='" + containerId + '\'' +
         ", percentage=" + percentage +
         ", messages=" + messages +
         '}';
@@ -76,14 +76,14 @@ public class InstanceProgress {
       return false;
     }
 
-    InstanceProgress progress = (InstanceProgress) o;
+    InstantiationProgress progress = (InstantiationProgress) o;
 
-    return !(instanceUuid != null ? !instanceUuid.equals(progress.instanceUuid) : progress.instanceUuid != null);
+    return !(containerId != null ? !containerId.equals(progress.containerId) : progress.containerId != null);
 
   }
 
   @Override
   public int hashCode() {
-    return instanceUuid != null ? instanceUuid.hashCode() : 0;
+    return containerId != null ? containerId.hashCode() : 0;
   }
 }

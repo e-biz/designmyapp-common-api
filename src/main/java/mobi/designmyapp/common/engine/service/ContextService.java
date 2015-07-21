@@ -15,7 +15,6 @@ package mobi.designmyapp.common.engine.service;
 import mobi.designmyapp.common.engine.builder.Builder;
 
 import java.io.File;
-import java.io.Serializable;
 
 /**
  * This class provides resource services.
@@ -92,9 +91,4 @@ public interface ContextService {
    */
   String getEnvironmentBaseUrl();
 
-  /**
-   * Set the webapp response of current build.
-   * @param response the webapp custom response.
-   */
-  void setWebappResponse(Serializable response);
 }

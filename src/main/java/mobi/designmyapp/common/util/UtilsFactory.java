@@ -15,7 +15,7 @@ package mobi.designmyapp.common.util;
 import mobi.designmyapp.common.engine.service.ContextService;
 import mobi.designmyapp.common.engine.service.PricingService;
 import mobi.designmyapp.common.engine.service.provider.ServiceProvider;
-import mobi.designmyapp.common.instance.service.InstanceService;
+import mobi.designmyapp.common.container.service.ContainerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -211,7 +211,7 @@ public class UtilsFactory {
    * Retrieve InstanceService implementation
    * @return InstanceService instance
    */
-  public static InstanceService getInstanceService() {
-    return serviceProviderProxy.getService(InstanceService.class);
+  public static ContainerService getContainerService() {
+    return serviceProviderProxy.getService(ContainerService.class);
   }
 }
