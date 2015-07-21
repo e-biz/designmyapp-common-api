@@ -3,7 +3,7 @@ package mobi.designmyapp.common.util;
 import java.lang.reflect.InvocationTargetException;
 
 /**
- * Created by loic on 22/06/2015.
+ * Created by Loïc Ortola on 22/06/2015.
  */
 public class ReflectUtils {
 
