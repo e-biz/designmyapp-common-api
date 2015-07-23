@@ -19,7 +19,7 @@ import java.util.Map;
  * This class represents a container
  * Created by Jean Blanchard on 22/10/14.
  */
-public class Container {
+public class Container implements Cloneable {
   
   public static enum Type {
     COMMAND, DATA_VOLUME

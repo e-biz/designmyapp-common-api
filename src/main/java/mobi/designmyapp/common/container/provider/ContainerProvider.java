@@ -12,11 +12,14 @@
  */
 package mobi.designmyapp.common.container.provider;
 
+import mobi.designmyapp.common.container.listener.ContainerProviderChangeListener;
 import mobi.designmyapp.common.container.model.Container;
 import mobi.designmyapp.common.container.model.ContainerConfig;
 import mobi.designmyapp.common.container.model.Status;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -29,20 +32,22 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 public abstract class ContainerProvider implements Comparable<ContainerProvider> {
 
   protected String templateTag;
-  private ConcurrentLinkedQueue<Container> containers;
   protected Integer poolSize;
   protected Integer ttl;
   protected Integer priority;
+  private ConcurrentLinkedQueue<Container> containers;
+  private ContainerProviderChangeListener listener;
 
   /**
    * Constructor.
+   *
    * @param templateTag the template tag
    */
   public ContainerProvider(String templateTag) {
     this.templateTag = templateTag;
     this.containers = new ConcurrentLinkedQueue<>();
   }
-  
+
   /**
    * Retrieve deployed containers.
    *
@@ -53,25 +58,25 @@ public abstract class ContainerProvider implements Comparable<ContainerProvider>
   }
 
   /**
-   * Update a container.
-   * @param containers
+   * Set the ContainerProviderChangeListener.
+   *
+   * @param listener the listener to notify.
    */
-  protected void updateContainers(List<Container> containers) {
-    //TODO
-  }
-
-  /**
-   * Remove a container.
-   * @param container
-   */
-  protected void removeContainer(Container container) {
-    //TODO
+  public void setListener(ContainerProviderChangeListener listener) {
+    this.listener = listener;
   }
 
   /**
    * Refresh the status of the containers.
    */
   public abstract void refreshContainersState();
+
+  /**
+   * @return the number of containers present, whatever their state is
+   */
+  public int getActiveCount() {
+    return containers.size();
+  }
 
   /**
    * Retrieve a single container by its id, null if the id is not found.
@@ -96,13 +101,6 @@ public abstract class ContainerProvider implements Comparable<ContainerProvider>
     this.poolSize = poolSize;
   }
 
-  public Integer getPriority() {
-    return priority;
-  }
-
-  public void setPriority(Integer priority) {
-    this.priority = priority;
-  }
 
   /**
    * Friendly name for this provider.
@@ -111,6 +109,81 @@ public abstract class ContainerProvider implements Comparable<ContainerProvider>
    */
   public String getName() {
     return ContainerProvider.class.getSimpleName();
+  }
+
+  /**
+   * @return the priority
+   */
+  public Integer getPriority() {
+    return priority;
+  }
+
+  /**
+   * The priority is an arbitrary number.
+   * Default value is 0.
+   * The lower the priority, the more important:
+   * Priority 0 - Highest importance (will be preferred when choosing one of the ContainerProvider instances)
+   * Priority 1 - High importance
+   * Priority 2 - Lower importance
+   * ... etc...
+   *
+   * @param priority the priority value
+   */
+  public void setPriority(Integer priority) {
+    this.priority = priority;
+  }
+
+  /**
+   * Return the provider-level time-to-live for default containers.
+   *
+   * @return time-to-live
+   */
+  public Integer getTtl() {
+    return ttl;
+  }
+
+  /**
+   * Retrieve hostname endpoint.
+   *
+   * @return hostname endpoint url
+   */
+  public abstract String getHostname();
+
+
+  /**
+   * Retrieve the status of this ContainerProvider.
+   *
+   * @return ContainerProvider status @see mobi.designmyapp.common.container.model.Status
+   */
+  public abstract Status getStatus();
+
+
+  /**
+   * Indicate if the ContainerProvider can create containers checking poolSize
+   * and running containers List.
+   *
+   * @return boolean indicating whether a new container can be started.
+   */
+  public boolean canCreateContainer() {
+    return getActiveCount() < this.poolSize;
+  }
+
+  /**
+   * Indicate if the ContainerProvider can create containers checking poolSize
+   * and running containers List.
+   *
+   * @param size the number of containers to create.
+   * @return boolean indicating whether a new container can be started.
+   */
+  public boolean canCreateContainers(int size) {
+    return getActiveCount() < (this.poolSize - size);
+  }
+
+  /**
+   * @return retrieves and removes the oldest container
+   */
+  public Container pollOldestContainer() {
+    return containers.poll();
   }
 
   /**
@@ -145,67 +218,84 @@ public abstract class ContainerProvider implements Comparable<ContainerProvider>
   public abstract Container restart(String containerId);
 
   /**
-   * Retrieve the status of this ContainerProvider.
+   * Add a container.
    *
-   * @return ContainerProvider status @see mobi.designmyapp.common.container.model.Status
+   * @param container the container to add
    */
-  public abstract Status getStatus();
-
-  /**
-   * Indicate if the ContainerProvider can create containers checking poolSize
-   * and running containers List.
-   *
-   * @return boolean indicating whether a new container can be started.
-   */
-  public boolean canCreateContainer() {
-    return getActiveCount() < this.poolSize;
+  protected void addContainer(Container container) {
+    containers.add(container);
+    notifyContainersChanged();
   }
 
   /**
-   * Indicate if the ContainerProvider can create containers checking poolSize
-   * and running containers List.
+   * Add a serie of containers.
    *
-   * @param size the number of containers to create.
-   * @return boolean indicating whether a new container can be started.
+   * @param containers the containers to add
    */
-  public boolean canCreateContainers(int size) {
-    return getActiveCount() < (this.poolSize - size);
+  protected void addContainers(Container... containers) {
+    this.containers.addAll(Arrays.asList(containers));
+    notifyContainersChanged();
   }
 
   /**
-   * Retrieve the number of RUNNING containers.
+   * Update containers states.
    *
-   * @return number of RUNNING containers
+   * @param updatedContainers the updated containers
    */
-  public int getActiveCount() {
-    return containers.size();
+  protected void updateContainers(List<Container> updatedContainers) {
+
+    Iterator<Container> it = this.containers.iterator();
+    // Updates the containers DesignMyApp knows about.
+    while (it.hasNext()) {
+      Container c = it.next();
+      int index;
+      if ((index = updatedContainers.indexOf(c)) > -1) {
+        // Container is still remotely present. Update state
+        mergeStates(c, updatedContainers.get(index));
+      } else {
+        // Container is absent remotely. Remove from list.
+        // N.B.: deletion while iterating is possible because we use a ConcurrentLinkedQueue implementation.
+        containers.remove(c);
+      }
+    }
+    notifyContainersChanged();
   }
 
   /**
-   * Return the provider-level time-to-live for default containers.
+   * Remove a container.
    *
-   * @return time-to-live
+   * @param container
    */
-  public Integer getTtl() {
-    return ttl;
+  protected void removeContainer(Container container) {
+    containers.remove(container);
+    notifyContainersChanged();
   }
 
   /**
-   * @return retrieves and removes the oldest container
+   * Merges the state of the second container into the first one.
+   *
+   * @param container    the container to merge the state to.
+   * @param newContainer the container with the updated state.
    */
-  public Container pollOldestContainer() {
-    return containers.poll();
+  private void mergeStates(Container container, Container newContainer) {
+    container.setPortMap(newContainer.getPortMap());
+    container.setProgress(newContainer.getProgress());
+    container.setStatus(newContainer.getStatus());
   }
 
   /**
-   * Retrieve hostname endpoint.
-   *
-   * @return hostname endpoint url
+   * Notifies the eventual listener that there was a change on the ContainerProvider.
    */
-  public abstract String getHostname();
+  private void notifyContainersChanged() {
+    if (listener != null) {
+      listener.onContainerProviderChanged(this);
+    }
+  }
+
 
   /**
    * Default implementation of compareTo for the ContainerManager.
+   * Ordering is by priority and name when priority is equal.
    */
   @Override
   public int compareTo(ContainerProvider containerProvider) {
