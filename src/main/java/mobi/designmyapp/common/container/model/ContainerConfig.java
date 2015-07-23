@@ -110,10 +110,10 @@ import java.util.regex.Pattern;
  * .build();*
  */
 public class ContainerConfig {
-  private String name;
-  private String image;
-  private Container.Type type;
-  private Options options;
+  protected String name;
+  protected String image;
+  protected Container.Type type;
+  protected Options options;
 
   public String getName() {
     return name;
@@ -399,6 +399,40 @@ public class ContainerConfig {
   }
 
   /**
+   * Represents the container's command to execute.
+   *
+   * @see <a href="https://docs.docker.com/reference/run/#general-form">https://docs.docker.com/reference/run/#general-form</a>
+   */
+  public static class Command {
+    private String cmd;
+    private String[] args;
+
+    /**
+     * Constructor.
+     *
+     * @param cmd  the command to execute
+     * @param args the command args (optional)
+     */
+    private Command(String cmd, String... args) {
+      this.cmd = cmd;
+      this.args = args;
+    }
+
+    /**
+     * Factory method for Command.
+     *
+     * @param cmd  the container command to execute
+     * @param args the command args (optional)
+     * @return the new Command instance
+     */
+    public static Command create(String cmd, String... args) {
+      return new Command(cmd, args);
+
+    }
+
+  }
+
+  /**
    * Represents a port forwarding map entry.
    *
    * @see <a href="https://docs.docker.com/reference/run/#expose-incoming-ports">https://docs.docker.com/reference/run/#expose-incoming-ports</a>
@@ -514,7 +548,7 @@ public class ContainerConfig {
   }
 
   public static class DataVolumeContainerOptions extends Options {
-    private Set<Volume> volumes;
+    protected Set<Volume> volumes;
 
     public Set<Volume> getVolumes() {
       return volumes;
@@ -552,12 +586,14 @@ public class ContainerConfig {
   }
 
   public static class CommandContainerOptions extends Options {
-    private Set<String> dataVolumeContainers;
-    private Set<HostVolume> hostVolumes;
-    private Set<EnvVariable> envVariables;
-    private Mode mode;
-    private Set<Link> links;
-    private Set<PortForwarding> portMap;
+    protected Set<String> dataVolumeContainers;
+    protected Set<HostVolume> hostVolumes;
+    protected Set<EnvVariable> envVariables;
+    protected Mode mode;
+    protected Set<Link> links;
+    protected boolean mapExposedPorts;
+    protected Set<PortForwarding> portMap;
+    protected Command command;
 
     public Set<String> getDataVolumeContainers() {
       return dataVolumeContainers;
@@ -577,6 +613,14 @@ public class ContainerConfig {
 
     public Set<Link> getLinks() {
       return links;
+    }
+
+    public Command getCommand() {
+      return command;
+    }
+
+    public boolean getMapExposedPorts() {
+      return mapExposedPorts;
     }
 
     public Set<PortForwarding> getPortMap() {
@@ -634,8 +678,10 @@ public class ContainerConfig {
           ", hostVolumes=" + hostVolumes +
           ", envVariables=" + envVariables +
           ", mode=" + mode +
+          ", mapExposedPorts=" + mapExposedPorts +
           ", links=" + links +
           ", portMap=" + portMap +
+          ", command=" + command +
           '}';
     }
   }
@@ -734,6 +780,23 @@ public class ContainerConfig {
         options.links = new HashSet<>();
       }
       options.links.add(l);
+      return this;
+    }
+
+    public CommandContainerBuilder executeCommand(String cmd, String... args) {
+      return executeCommand(Command.create(cmd, args));
+    }
+
+    public CommandContainerBuilder executeCommand(Command command) {
+      if (command != null) {
+        throw new IllegalStateException("Can only execute one command.");
+      }
+      options.command = command;
+      return this;
+    }
+
+    public CommandContainerBuilder mapExposedPorts(boolean map) {
+      options.mapExposedPorts = map;
       return this;
     }
 
