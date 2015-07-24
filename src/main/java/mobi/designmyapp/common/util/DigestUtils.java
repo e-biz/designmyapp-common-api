@@ -21,14 +21,16 @@ import java.io.File;
 public interface DigestUtils {
 
   /**
-   * Calculates the SHA-1 digest and returns the value as a hex string
+   * Calculates the SHA-1 digest and returns the value as a hex string.
+   *
    * @param data Data to digest
    * @return SHA-1 digest as a hex string
    */
   String shaHex(String data);
 
   /**
-   * Calculates the SHA-1 digest and returns the value as a hex string
+   * Calculates the SHA-1 digest and returns the value as a hex string.
+   *
    * @param f file to digest
    * @return SHA-1 digest as a hex string
    */

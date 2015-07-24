@@ -7,5 +7,11 @@ import mobi.designmyapp.common.container.provider.ContainerProvider;
  * This class provides update callbacks to the ContainerManager Instance.
  */
 public interface ContainerProviderChangeListener {
+
+  /**
+   * Callback is triggered when a ContainerProvider has an updated state.
+   *
+   * @param provider the updated Container Provider
+   */
   void onContainerProviderChanged(ContainerProvider provider);
 }

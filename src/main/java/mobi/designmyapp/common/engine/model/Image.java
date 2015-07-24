@@ -21,23 +21,33 @@ import mobi.designmyapp.common.util.UtilsFactory;
 public class Image {
 
   /**
-   * Generated image filename
+   * Generated image filename.
    */
   private String fileName;
 
   /**
-   * Image original filename
+   * Image original filename.
    */
   private String originalName;
 
   /**
-   * Image access url
+   * Image access url.
    */
   private String url;
 
+  /**
+   * Default constructor.
+   */
   private Image() {
   }
 
+  /**
+   * Constructor.
+   *
+   * @param fileName     the generated filename
+   * @param originalName the original file name
+   * @param url          the image access url
+   */
   public Image(String fileName, String originalName, String url) {
     this.fileName = fileName;
     this.originalName = originalName;
@@ -55,6 +65,15 @@ public class Image {
   public String getUrl() {
     return url;
   }
+
+
+  /*=========================================*/
+  // BEGIN GENERATED CODE
+  /*=========================================*/
+
+  /*=========================================*/
+  /*------------BUILDER----------------------*/
+  /*=========================================*/
 
   public static Builder builder() {
     return new Builder();
@@ -77,6 +96,7 @@ public class Image {
       image.originalName = originalName;
       return this;
     }
+
 
     public URLBuilder prepareUrl() {
       return new URLBuilder(image);
@@ -105,7 +125,7 @@ public class Image {
     }
 
     public Image build() {
-      if(namespace == null || image.getFileName() == null) {
+      if (namespace == null || image.getFileName() == null) {
         throw new IllegalStateException("fileName, appId and namespace fields are mandatory.");
       }
       image.url = UtilsFactory.getContextService().createUrl(namespace, image.getFileName(), apiKey);
@@ -145,4 +165,8 @@ public class Image {
     result = 31 * result + url.hashCode();
     return result;
   }
+
+  /*=========================================*/
+  // END GENERATED CODE
+  /*=========================================*/
 }

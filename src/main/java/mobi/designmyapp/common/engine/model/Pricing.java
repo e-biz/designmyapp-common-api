@@ -27,6 +27,10 @@ public abstract class Pricing {
 
   public BigDecimal templatePrice = BigDecimal.ZERO;
 
+  /**
+   * Check if the the template price is negative.
+   * If yes, change it to 0.00
+   */
   public void validate() {
     if (UtilsFactory.getPriceUtils().isNegative(templatePrice)) {
       templatePrice = UtilsFactory.getPriceUtils().create("0.00");

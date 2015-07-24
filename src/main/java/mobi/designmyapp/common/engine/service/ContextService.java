@@ -15,6 +15,7 @@ package mobi.designmyapp.common.engine.service;
 import mobi.designmyapp.common.engine.builder.Builder;
 
 import java.io.File;
+import java.io.Serializable;
 
 /**
  * This class provides resource services.
@@ -35,6 +36,7 @@ public interface ContextService {
    * Retrieve the static resources directory for a specific template tag.
    * The static resources directory can contain any static asset specific to a template
    *
+   * @param templateTag the template tag
    * @return the static resources directory
    */
   File getStaticResourcesDirectory(String templateTag);
@@ -42,7 +44,7 @@ public interface ContextService {
   /**
    * Retrieve the work directory typed for current target.
    *
-   * @param type  build target type
+   * @param type build target type
    * @return the work directory
    */
   File getWorkDirectory(Builder.Type type);
@@ -58,37 +60,40 @@ public interface ContextService {
   /**
    * Retrieve the read-only template directory for a specific template and target.
    *
-   * @param type        build target type
+   * @param type    build target type
+   * @param version the template version
    * @return the template directory
    */
   File getTemplateDirectory(Builder.Type type, String version);
 
   /**
-   * Create url to retrieve data from server resources
+   * Create url to retrieve data from server resources.
+   *
    * @param namespace resource namespace
-   * @param filename name of the file to expose
-   * @param apiKey apiKey to access the file
+   * @param filename  name of the file to expose
+   * @param apiKey    apiKey to access the file
    * @return a String representing the url to access the file
    */
   String createUrl(String namespace, String filename, String apiKey);
 
   /**
-   * Create url to retrieve bundle.zip from server webapp resources
+   * Create url to retrieve bundle.zip from server webapp resources.
+   *
    * @return a String representing the url to access the file
    */
   String createBundleUrl();
 
   /**
    * Return the appId of the current generation.
+   *
    * @return the appId
    */
   String getAppId();
 
   /**
-   * Retrieve environment URL
+   * Retrieve environment URL.
    *
    * @return current environment base URL
    */
   String getEnvironmentBaseUrl();
-
 }

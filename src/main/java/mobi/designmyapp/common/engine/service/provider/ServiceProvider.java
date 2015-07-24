@@ -6,6 +6,11 @@ package mobi.designmyapp.common.engine.service.provider;
  */
 public interface ServiceProvider {
 
-
+  /**
+   * Get sdk service.
+   * @param clazz the class
+   * @param <T> the object
+   * @return the object
+   */
   <T> T getService(Class clazz);
 }

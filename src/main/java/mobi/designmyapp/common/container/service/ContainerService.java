@@ -11,7 +11,7 @@ import mobi.designmyapp.common.container.provider.ContainerProviderRequest;
 public interface ContainerService {
 
   /**
-   * Retrieve the template instance manager
+   * Retrieve the template instance manager.
    *
    * @param templateTag input template tag
    * @param <T>         output instance manager
@@ -20,7 +20,7 @@ public interface ContainerService {
   <T extends ContainerManager> ContainerManager getContainerManager(String templateTag);
 
   /**
-   * Retrieve an instance provider matching one of the default implementations managed by DesignMyApp
+   * Retrieve an instance provider matching one of the default implementations.
    *
    * @param request the InstanceProviderRequest
    * @return your instance provider object

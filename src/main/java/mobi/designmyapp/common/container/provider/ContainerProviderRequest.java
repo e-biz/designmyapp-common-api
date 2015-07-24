@@ -7,13 +7,30 @@ public class ContainerProviderRequest<T> {
 
   private T obj;
 
+  /**
+   * Constructor.
+   * @param obj the object
+   */
   private ContainerProviderRequest(T obj) {
     this.obj = obj;
   }
 
+  /**
+   * Get obj attribute.
+   * @return obj
+   */
   public T get() {
     return obj;
   }
+
+
+  /*=========================================*/
+  // BEGIN GENERATED CODE
+  /*=========================================*/
+
+  /*=========================================*/
+  /*------------BUILDER----------------------*/
+  /*=========================================*/
 
   /**
    * DesignMyAppRequest is used to create a new ContainerProvider using three parameters (all mandatory):
@@ -41,9 +58,9 @@ public class ContainerProviderRequest<T> {
   }
 
   public static class DesignMyAppRequest {
-    
+
     private String templateTag;
-    
+
     private String keyId;
 
     private String secretKey;
@@ -61,7 +78,7 @@ public class ContainerProviderRequest<T> {
       this.templateTag = templateTag;
       return this;
     }
-    
+
     public DesignMyAppRequest hostname(String hostname) {
       this.hostname = hostname;
       return this;
@@ -132,4 +149,7 @@ public class ContainerProviderRequest<T> {
       return ttl;
     }
   }
+  /*=========================================*/
+  // END GENERATED CODE
+  /*=========================================*/
 }

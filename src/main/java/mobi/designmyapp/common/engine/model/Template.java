@@ -54,10 +54,14 @@ public abstract class Template {
   public static final String TARGET_IOS = "ios";
   public static final String TARGET_CONTAINER = "webapp";
 
+  /**
+   * Constructor.
+   * @param templateTag the template tag
+   */
   public Template(String templateTag) {
     this.templateTag = templateTag;
-    this.name="My Application";
-    this.targets=new ArrayList<>();
+    this.name = "My Application";
+    this.targets = new ArrayList<>();
   }
 
   public void setName(String name) {
@@ -99,12 +103,12 @@ public abstract class Template {
   public void setTargets(List<String> targets) {
     this.targets = targets;
   }
-  
+
   @Override
   public String toString() {
     return "Template{" +
-        " name ='"+ name + "\'" +
-        ", version ='"+ version + "\'" +
+        " name ='" + name + "\'" +
+        ", version ='" + version + "\'" +
         ", customIcon='" + customIcon + '\'' +
         ", targets=" + targets +
         '}';

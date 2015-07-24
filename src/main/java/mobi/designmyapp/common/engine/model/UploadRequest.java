@@ -23,36 +23,44 @@ import java.io.InputStream;
 public class UploadRequest {
 
   /**
-   * Original uploaded file name
+   * Original uploaded file name.
    */
   private String originalFilename;
 
   /**
-   * Name of the apiKey on which the request is made
+   * Name of the apiKey on which the request is made.
    */
   private String apiKey;
 
   /**
-   * Application id
+   * Application id.
    */
   private String appId;
 
   /**
-   * Stream containing the Object to save
+   * Stream containing the Object to save.
    */
   private InputStream obj;
 
   /**
-   * Object to store additional resources
+   * Object to store additional resources.
    */
   private Object resources;
 
-  public UploadRequest(String originalFilename,String apiKey, String appId, InputStream obj, Object resources) {
-    this.originalFilename=originalFilename;
+  /**
+   * Constructor.
+   * @param originalFilename the original uploaded file name
+   * @param apiKey name of the apiKey on which the request is made
+   * @param appId the application id
+   * @param obj the object to save in stream
+   * @param resources Object to store additional resources
+   */
+  public UploadRequest(String originalFilename, String apiKey, String appId, InputStream obj, Object resources) {
+    this.originalFilename = originalFilename;
     this.apiKey = apiKey;
-    this.appId=appId;
-    this.obj=obj;
-    this.resources =resources;
+    this.appId = appId;
+    this.obj = obj;
+    this.resources = resources;
   }
 
   public String getOriginalFilename() {

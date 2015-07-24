@@ -26,13 +26,13 @@ import java.util.List;
  * instance manager will be selected
  */
 public enum ContainerProviderSelectionStrategy {
-  
+
   FIRST_CONTAINER {
     @Override
     public ContainerProvider selectContainerProvider(Collection<ContainerProvider> containerProviders, int size, boolean replaceOldestWhenFull) {
       // Used to store the ideal candidate when all instance providers are full.
       ContainerProvider firstFullCandidate = null;
-      
+
       for (ContainerProvider provider : containerProviders) {
         if (Status.RUNNING.equals(provider.getStatus())) {
           if (provider.canCreateContainer()) {
@@ -63,7 +63,7 @@ public enum ContainerProviderSelectionStrategy {
       int providerSize = containerProvidersList.size();
       int tmpLastIndex = lastIndex;
       ContainerProvider firstFullCandidate = null;
-      
+
       for (int i = 1; i <= providerSize; i++) {
         int index = (tmpLastIndex + i) % providerSize;
         ContainerProvider containerProvider = containerProvidersList.get(index);
@@ -83,14 +83,27 @@ public enum ContainerProviderSelectionStrategy {
       }
       // All instance providers are full, but this one is the best according to the current strategy.
       if (firstFullCandidate != null && replaceOldestWhenFull) {
-        return firstFullCandidate;  
+        return firstFullCandidate;
       }
       return null;
     }
   };
 
+  /**
+   * Describe the strategy for pick a ContainerProvider.
+   * @param containerProviders the containerProviders collection
+   * @param size the pool size
+   * @param replaceOldestWhenFull true if we want to replace oldest containerProvider when pool is full
+   * @return the chosen ContainerProvider
+   */
   public abstract ContainerProvider selectContainerProvider(Collection<ContainerProvider> containerProviders, int size, boolean replaceOldestWhenFull);
-  
+
+  /**
+   * Describe the strategy for pick a ContainerProvider.
+   * @param containerProviders the containerProviders collection
+   * @param replaceOldestWhenFull true if we want to replace oldest containerProvider when pool is full
+   * @return the chosen ContainerProvider
+   */
   public ContainerProvider selectContainerProvider(Collection<ContainerProvider> containerProviders, boolean replaceOldestWhenFull) {
     return selectContainerProvider(containerProviders, 1, replaceOldestWhenFull);
   }

@@ -21,12 +21,19 @@ import mobi.designmyapp.common.engine.model.Template;
  * Created by Loïc Ortola on 7/7/14.
  */
 public interface Builder<T extends Template> {
-
+  /**
+   * Build a template.
+   * @param template the template
+   */
   void build(T template);
 
+  /**
+   * Get the type of the application (android,ios,container).
+   * @return the application type.
+   */
   Type getType();
 
   public static enum Type {
-    ANDROID,IOS, CONTAINER
+    ANDROID, IOS, CONTAINER
   }
 }

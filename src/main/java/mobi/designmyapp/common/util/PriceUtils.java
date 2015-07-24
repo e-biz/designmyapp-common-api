@@ -21,37 +21,42 @@ import java.math.BigDecimal;
 public interface PriceUtils {
 
   /**
-   * Translates the String representation of BigDecimal
+   * Translates the String representation of BigDecimal.
    * into a BigDecimal
+   *
    * @param number String representation
    * @return new BigDecimal number
    */
   BigDecimal create(String number);
 
   /**
-   * This method return a half down rounded price
+   * This method return a half down rounded price.
+   *
    * @param price immutable input price
    * @return output rounded price
    */
   BigDecimal round(BigDecimal price);
 
   /**
-   * Test if this BigDecimal is equivalent to zero
-   * @param  price to compare with zero
+   * Test if this BigDecimal is equivalent to zero.
+   *
+   * @param price to compare with zero
    * @return true if the price equals zero
    */
   boolean isZero(BigDecimal price);
 
   /**
-   * Test if two BigDecimals are equivalent
-   * @param  price1 1st BigDecimal to test
-   * @param  price2 2nd BigDecimal to test
+   * Test if two BigDecimals are equivalent.
+   *
+   * @param price1 1st BigDecimal to test
+   * @param price2 2nd BigDecimal to test
    * @return true if the params are equivalent
    */
   boolean eq(BigDecimal price1, BigDecimal price2);
 
   /**
-   * Test if this BigDecimal is strictly lower than zero
+   * Test if this BigDecimal is strictly lower than zero.
+   *
    * @param price input price
    * @return true if the param is strictly lower than zero
    */

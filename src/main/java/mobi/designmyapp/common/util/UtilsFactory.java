@@ -12,10 +12,10 @@
  */
 package mobi.designmyapp.common.util;
 
+import mobi.designmyapp.common.container.service.ContainerService;
 import mobi.designmyapp.common.engine.service.ContextService;
 import mobi.designmyapp.common.engine.service.PricingService;
 import mobi.designmyapp.common.engine.service.provider.ServiceProvider;
-import mobi.designmyapp.common.container.service.ContainerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -78,11 +78,15 @@ public class UtilsFactory {
     }
   }
 
+  /**
+   * Private constructor.
+   */
   private UtilsFactory() {
   }
 
   /**
-   * This is called by the engine system to set the service provider
+   * This is called by the engine system to set the service provider.
+   *
    * @param provider the service provider
    */
   public static void setServiceProvider(ServiceProvider provider) {
@@ -90,8 +94,10 @@ public class UtilsFactory {
   }
 
   /**
-   * Retrieve IOUtils implementation
+   * Retrieve IOUtils implementation.
+   *
    * @return IOUtils instance
+   * @throws  IllegalStateException
    */
   public static IOUtils getIOUtils() {
     if (ioUtils == null) {
@@ -107,8 +113,10 @@ public class UtilsFactory {
   }
 
   /**
-   * Retrieve ImageUtils implementation
+   * Retrieve ImageUtils implementation.
+   *
    * @return ImageUtils instance
+   * @throws  IllegalStateException
    */
   public static ImageUtils getImageUtils() {
     if (imageUtils == null) {
@@ -124,8 +132,10 @@ public class UtilsFactory {
   }
 
   /**
-   * Retrieve PriceUtils implementation
+   * Retrieve PriceUtils implementation.
+   *
    * @return PriceUtils instance
+   * @throws  IllegalStateException
    */
   public static PriceUtils getPriceUtils() {
     if (priceUtils == null) {
@@ -141,8 +151,10 @@ public class UtilsFactory {
   }
 
   /**
-   * Retrieve ZipUtils implementation
+   * Retrieve ZipUtils implementation.
+   *
    * @return ZipUtils instance
+   * @throws  IllegalStateException
    */
   public static ZipUtils getZipUtils() {
     if (zipUtils == null) {
@@ -150,7 +162,7 @@ public class UtilsFactory {
         Class clazz = Class.forName(ZIP_UTILS);
         zipUtils = (ZipUtils) clazz.newInstance();
       } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-        LOGGER.warn("Cannot instanciate util: {}",e.getMessage());
+        LOGGER.warn("Cannot instanciate util: {}", e.getMessage());
         throw new IllegalStateException(e);
       }
     }
@@ -158,8 +170,10 @@ public class UtilsFactory {
   }
 
   /**
-   * Retrieve DigestUtils implementation
+   * Retrieve DigestUtils implementation.
+   *
    * @return DigestUtils instance
+   * @throws  IllegalStateException
    */
   public static DigestUtils getDigestUtils() {
     if (digestUtils == null) {
@@ -175,8 +189,10 @@ public class UtilsFactory {
   }
 
   /**
-   * Retrieve StringUtils implementation
+   * Retrieve StringUtils implementation.
+   *
    * @return StringUtils instance
+   * @throws  IllegalStateException
    */
   public static StringUtils getStringUtils() {
     if (stringUtils == null) {
@@ -192,7 +208,8 @@ public class UtilsFactory {
   }
 
   /**
-   * Retrieve ContextService implementation
+   * Retrieve ContextService implementation.
+   *
    * @return ContextService instance
    */
   public static ContextService getContextService() {
@@ -200,7 +217,8 @@ public class UtilsFactory {
   }
 
   /**
-   * Retrieve PricingService implementation
+   * Retrieve PricingService implementation.
+   *
    * @return PricingService instance
    */
   public static PricingService getPricingService() {
@@ -208,7 +226,8 @@ public class UtilsFactory {
   }
 
   /**
-   * Retrieve InstanceService implementation
+   * Retrieve InstanceService implementation.
+   *
    * @return InstanceService instance
    */
   public static ContainerService getContainerService() {

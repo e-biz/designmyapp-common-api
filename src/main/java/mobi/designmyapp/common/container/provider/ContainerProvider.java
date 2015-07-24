@@ -14,7 +14,9 @@ package mobi.designmyapp.common.container.provider;
 
 import mobi.designmyapp.common.container.listener.ContainerProviderChangeListener;
 import mobi.designmyapp.common.container.model.Container;
-import mobi.designmyapp.common.container.model.ContainerConfig;
+import mobi.designmyapp.common.container.model.Container.PortForwarding;
+import mobi.designmyapp.common.container.model.Container.CommandOptions.CommandOptionsEditor;
+import mobi.designmyapp.common.container.model.ContainerStatus;
 import mobi.designmyapp.common.container.model.Status;
 
 import java.util.Arrays;
@@ -22,10 +24,12 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.stream.Collectors;
 
 /**
- * This class represents an container provider, a provider manage
+ * This class represents a container provider, a provider manage
  * containers (@see mobi.designmyapp.common.container.model.Container)
  * Created by Jean Blanchard on 28/10/14.
  */
@@ -37,6 +41,15 @@ public abstract class ContainerProvider implements Comparable<ContainerProvider>
   protected Integer priority;
   private ConcurrentLinkedQueue<Container> containers;
   private ContainerProviderChangeListener listener;
+  private ConcurrentLinkedQueue<String> containersToClean;
+
+  /**
+   * Default constructor.
+   */
+  public ContainerProvider() {
+    this.containers = new ConcurrentLinkedQueue<>();
+    this.containersToClean = new ConcurrentLinkedQueue<>();
+  }
 
   /**
    * Constructor.
@@ -44,8 +57,8 @@ public abstract class ContainerProvider implements Comparable<ContainerProvider>
    * @param templateTag the template tag
    */
   public ContainerProvider(String templateTag) {
+    this();
     this.templateTag = templateTag;
-    this.containers = new ConcurrentLinkedQueue<>();
   }
 
   /**
@@ -86,7 +99,7 @@ public abstract class ContainerProvider implements Comparable<ContainerProvider>
    */
   public Container getContainer(String containerId) {
     for (Container container : containers) {
-      if (container.getUuid().equals(containerId)) {
+      if (container.getContainerId().equals(containerId)) {
         return container;
       }
     }
@@ -157,6 +170,13 @@ public abstract class ContainerProvider implements Comparable<ContainerProvider>
    */
   public abstract Status getStatus();
 
+  public String getTemplateTag() {
+    return templateTag;
+  }
+
+  public void setTemplateTag(String templateTag) {
+    this.templateTag = templateTag;
+  }
 
   /**
    * Indicate if the ContainerProvider can create containers checking poolSize
@@ -190,32 +210,36 @@ public abstract class ContainerProvider implements Comparable<ContainerProvider>
    * Start a new container.
    *
    * @param config the container config
-   * @return the started container if no errors append
    */
-  public abstract Container start(ContainerConfig config);
+  public abstract void start(Container config);
 
   /**
    * Start a new container set.
    *
    * @param configs the container configs
-   * @return the started container if no errors append
    */
-  public abstract List<Container> start(ContainerConfig... configs);
+  public abstract void start(Container... configs);
 
   /**
-   * Terminate an container.
+   * Terminate a container.
    *
    * @param containerId container id to terminate
    */
   public abstract void stop(String containerId);
 
   /**
-   * Restart an container.
+   * Restart a container.
    *
    * @param containerId container Id to restart
-   * @return the restarted container
    */
   public abstract Container restart(String containerId);
+
+  /**
+   * Remove a container.
+   *
+   * @param containerId container id to terminate
+   */
+  public abstract void remove(String containerId);
 
   /**
    * Add a container.
@@ -242,7 +266,7 @@ public abstract class ContainerProvider implements Comparable<ContainerProvider>
    *
    * @param updatedContainers the updated containers
    */
-  protected void updateContainers(List<Container> updatedContainers) {
+  protected void updateContainers(List<ContainerStatus> updatedContainers) {
 
     Iterator<Container> it = this.containers.iterator();
     // Updates the containers DesignMyApp knows about.
@@ -264,7 +288,7 @@ public abstract class ContainerProvider implements Comparable<ContainerProvider>
   /**
    * Remove a container.
    *
-   * @param container
+   * @param container the container
    */
   protected void removeContainer(Container container) {
     containers.remove(container);
@@ -272,15 +296,36 @@ public abstract class ContainerProvider implements Comparable<ContainerProvider>
   }
 
   /**
+   * Add a container to the clean-up list.
+   * That means the container will be removed after completion.
+   *
+   * @param container the clean-up container
+   */
+  protected void addContainerToClean(Container container) {
+    containersToClean.add(container.getContainerId());
+  }
+
+  /**
    * Merges the state of the second container into the first one.
    *
    * @param container    the container to merge the state to.
-   * @param newContainer the container with the updated state.
+   * @param newStatus the container with the updated state.
    */
-  private void mergeStates(Container container, Container newContainer) {
-    container.setPortMap(newContainer.getPortMap());
-    container.setProgress(newContainer.getProgress());
-    container.setStatus(newContainer.getStatus());
+  protected void mergeStates(Container container, ContainerStatus newStatus) {
+    if (container.getType() == Container.Type.COMMAND) {
+      CommandOptionsEditor editor = ((Container.CommandOptions) container.getOptions()).edit();
+      Set<PortForwarding> newPortMap = newStatus.getPortMap().entrySet().stream().map(port -> PortForwarding.create(port.getKey(), port.getValue())).collect(Collectors.toSet());
+      editor.setPortMap(newPortMap);
+      editor.build();
+    }
+    Container.Editor editor = container.edit();
+    editor.setProgress(newStatus.getProgress())
+    .setStatus(newStatus.getStatus());
+    editor.build();
+    // If container was a clean-up container, trigger removal.
+    if (container.getStatus().equals(Status.SHUTDOWN) && containersToClean.contains(container.getContainerId())) {
+      remove(container.getContainerId());
+    }
   }
 
   /**
@@ -291,7 +336,6 @@ public abstract class ContainerProvider implements Comparable<ContainerProvider>
       listener.onContainerProviderChanged(this);
     }
   }
-
 
   /**
    * Default implementation of compareTo for the ContainerManager.
