@@ -155,11 +155,11 @@ public abstract class ContainerProvider implements Comparable<ContainerProvider>
   }
 
   /**
-   * Retrieve hostname endpoint.
+   * Retrieve endpoint endpoint.
    *
-   * @return hostname endpoint url
+   * @return endpoint endpoint url
    */
-  public abstract String getHostname();
+  public abstract String getEndpoint();
 
 
   /**
@@ -324,7 +324,7 @@ public abstract class ContainerProvider implements Comparable<ContainerProvider>
     Container.Editor editor = container.edit();
     editor.setProgress(newStatus.getProgress())
     .setStatus(newStatus.getStatus())
-    .setHostname(newStatus.getHostname());
+    .setEndpoint(newStatus.getEndpoint());
     editor.build();
     // If container was a clean-up container, trigger removal.
     if (container.getStatus().equals(Status.SHUTDOWN) && containersToClean.contains(container.getContainerId())) {

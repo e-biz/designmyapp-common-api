@@ -126,7 +126,8 @@ public class Container {
 
   private int progress;
   private Status status;
-  private URI hostname;
+  private URI endpoint;
+
   /**
    * Default constructor.
    */
@@ -165,12 +166,13 @@ public class Container {
     return status;
   }
 
-  public URI getHostname() {
-    return hostname;
+  public URI getEndpoint() {
+    return endpoint;
   }
 
   /**
    * Get an instance of Editor.
+   *
    * @return the editor
    */
   public Editor edit() {
@@ -181,10 +183,11 @@ public class Container {
 
     private Integer tmpProgress = null;
     private Status tmpStatus = null;
-    private URI tmpHostname = null;
+    private URI tmpEndpoint = null;
 
     /**
      * Set progress of the container.
+     *
      * @param p new progress
      * @return the editor
      */
@@ -195,6 +198,7 @@ public class Container {
 
     /**
      * Set status of container.
+     *
      * @param s New status
      * @return the editor
      */
@@ -204,17 +208,19 @@ public class Container {
     }
 
     /**
-     * Set hostname of container.
-     * @param h New hostname
+     * Set endpoint of container.
+     *
+     * @param h New endpoint
      * @return the editor
      */
-    public Editor setHostname(URI h) {
-      tmpHostname = h;
+    public Editor setEndpoint(URI h) {
+      tmpEndpoint = h;
       return this;
     }
 
     /**
      * New value are set.
+     *
      * @return the updated container
      */
     public Container build() {
@@ -224,15 +230,15 @@ public class Container {
       if (tmpStatus != null) {
         status = tmpStatus;
       }
-      if (tmpHostname != null) {
-        hostname = tmpHostname;
+      if (tmpEndpoint != null) {
+        endpoint = tmpEndpoint;
       }
       return Container.this;
     }
 
   }
 
- /*=========================================*/
+  /*=========================================*/
   // BEGIN GENERATED CODE
   /*=========================================*/
 
@@ -281,7 +287,7 @@ public class Container {
         ", options=" + options +
         ", progress=" + progress +
         ", status=" + status +
-        ", hostname=" + hostname +
+        ", endpoint=" + endpoint +
         '}';
   }
   
@@ -958,6 +964,15 @@ public class Container {
       return this;
     }
 
+    public CommandContainerBuilder mapPortToHost(PortForwarding portForwarding) {
+      if (portForwarding.host > 0) {
+        mapPortToHost(portForwarding.host, portForwarding.container);
+      } else {
+        mapPortToHost(portForwarding.hostRange, portForwarding.containerRange);
+      }
+      return this;
+    }
+
     public CommandContainerBuilder mapPortToHost(int hostPort, int containerPort) {
       if (options.portMap == null) {
         options.portMap = new HashMap<>();
@@ -965,7 +980,7 @@ public class Container {
       if (!PortForwarding.isValidPort(hostPort) || !PortForwarding.isValidPort(containerPort)) {
         throw new IllegalArgumentException("Port Range must be declared like this: XXXXX-YYYYY. example: 80-123");
       }
-      options.portMap.put(hostPort,containerPort);
+      options.portMap.put(containerPort, hostPort);
       return this;
     }
 
@@ -977,11 +992,17 @@ public class Container {
       Pattern p2 = Pattern.compile("-");
       String[] hostPorts = p2.split(hostPortRange);
       String[] containerPorts = p2.split(hostPortRange);
+
       if (!PortForwarding.isValidRangeSet(hostPorts, containerPorts)) {
         throw new IllegalArgumentException("Range Set is invalid. All ports in Range must be between 1 and 65535.");
       }
-      for (Integer i = Integer.valueOf(hostPorts[0]) ; i < Integer.valueOf(hostPorts[1]) ; ++i) {
-        options.portMap.put(i,Integer.valueOf(containerPorts[0]) + i);
+
+      int beginHostPort = Integer.valueOf(hostPorts[0]);
+      int beginContainerPort = Integer.valueOf(containerPorts[0]);
+      int rangeSize = Integer.valueOf(hostPorts[1]) - beginHostPort;
+
+      for (Integer i = 0; i < rangeSize; i++) {
+        options.portMap.put(beginContainerPort + i, beginHostPort + i);
       }
       return this;
     }

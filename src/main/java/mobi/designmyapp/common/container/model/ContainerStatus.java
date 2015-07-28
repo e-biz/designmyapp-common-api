@@ -26,9 +26,9 @@ public class ContainerStatus {
   private int progress;
 
   /**
-   * Hostname (protocol + hostname).
+   * Endpoint (protocol + endpoint).
    */
-  private URI hostname;
+  private URI endpoint;
 
   /**
    * Port mapping.
@@ -75,11 +75,11 @@ public class ContainerStatus {
     this.status = status;
   }
 
-  public URI getHostname() {
-    return hostname;
+  public URI getEndpoint() {
+    return endpoint;
   }
 
-  public void setHostname(URI hostname) {
-    this.hostname = hostname;
+  public void setEndpoint(URI endpoint) {
+    this.endpoint = endpoint;
   }
 }
