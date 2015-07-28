@@ -49,7 +49,6 @@ public interface ContainerManager {
    * WARNING: if you need to launch multiple containers, use {@link #startContainers(mobi.designmyapp.common.container.model.Container...)} instead.
    *
    * @param config the container config
-   * @return the live container
    */
   void startContainer(Container config);
 
@@ -58,7 +57,6 @@ public interface ContainerManager {
    * Those containers will be launched on the same provider.
    *
    * @param configs the container configs
-   * @return the live containers
    */
   void startContainers(Container... configs);
 
@@ -67,7 +65,6 @@ public interface ContainerManager {
    *
    * @param ttl    the container's time-to-live in minutes. After the TTL is expired, the container will be killed.
    * @param config the container config
-   * @return the live container
    */
   void startContainer(int ttl, Container config);
 
@@ -77,7 +74,6 @@ public interface ContainerManager {
    *
    * @param ttl     the container's time-to-live in minutes. After the TTL is expired, the container will be killed.
    * @param configs the container configs
-   * @return the live containers
    */
   void startContainers(int ttl, Container... configs);
 
@@ -94,7 +90,7 @@ public interface ContainerManager {
    * @param containerId the container id
    * @return the container dto
    */
-  ContainerDto restartContainer(String containerId);
+  Container restartContainer(String containerId);
 
   /**
    * Get all containerProvider.
@@ -115,7 +111,7 @@ public interface ContainerManager {
    * @param containerId the container id
    * @return the container dto
    */
-  ContainerDto getContainer(String containerId);
+  Container getContainer(String containerId);
 
   /**
    * Retrieve the containers for an appId.

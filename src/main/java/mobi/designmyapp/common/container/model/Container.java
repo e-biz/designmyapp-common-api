@@ -1,6 +1,9 @@
 package mobi.designmyapp.common.container.model;
 
+import java.net.URI;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
 
@@ -123,11 +126,11 @@ public class Container {
 
   private int progress;
   private Status status;
+  private URI hostname;
   /**
    * Default constructor.
    */
   protected Container() {
-    
   }
 
   public String getContainerId() {
@@ -162,6 +165,14 @@ public class Container {
     return status;
   }
 
+  public URI getHostname() {
+    return hostname;
+  }
+
+  /**
+   * Get an instance of Editor.
+   * @return the editor
+   */
   public Editor edit() {
     return new Editor();
   }
@@ -170,32 +181,58 @@ public class Container {
 
     private Integer tmpProgress = null;
     private Status tmpStatus = null;
+    private URI tmpHostname = null;
 
+    /**
+     * Set progress of the container.
+     * @param p new progress
+     * @return the editor
+     */
     public Editor setProgress(int p) {
       tmpProgress = p;
       return this;
     }
 
+    /**
+     * Set status of container.
+     * @param s New status
+     * @return the editor
+     */
     public Editor setStatus(Status s) {
       tmpStatus = s;
       return this;
     }
 
+    /**
+     * Set hostname of container.
+     * @param h New hostname
+     * @return the editor
+     */
+    public Editor setHostname(URI h) {
+      tmpHostname = h;
+      return this;
+    }
+
+    /**
+     * New value are set.
+     * @return the updated container
+     */
     public Container build() {
       if (tmpProgress != null) {
         progress = tmpProgress;
-      } if (tmpStatus != null) {
+      }
+      if (tmpStatus != null) {
         status = tmpStatus;
+      }
+      if (tmpHostname != null) {
+        hostname = tmpHostname;
       }
       return Container.this;
     }
 
   }
 
-
-
-  
-  /*=========================================*/
+ /*=========================================*/
   // BEGIN GENERATED CODE
   /*=========================================*/
 
@@ -242,6 +279,9 @@ public class Container {
         ", image='" + image + '\'' +
         ", type=" + type +
         ", options=" + options +
+        ", progress=" + progress +
+        ", status=" + status +
+        ", hostname=" + hostname +
         '}';
   }
   
@@ -312,10 +352,7 @@ public class Container {
         throw new IllegalStateException("Container image and name must be filled out before calling toCommandContainer or toDataVolumeContainer");
       }
     }
-
-
   }
-
 
   /**
    * Represents a data-volume.
@@ -692,7 +729,7 @@ public class Container {
     protected Mode mode;
     protected Set<Link> links;
     protected boolean mapExposedPorts;
-    protected Set<PortForwarding> portMap;
+    protected Map<Integer, Integer> portMap;
     protected Command command;
 
     public Set<String> getDataVolumeContainers() {
@@ -723,7 +760,7 @@ public class Container {
       return mapExposedPorts;
     }
 
-    public Set<PortForwarding> getPortMap() {
+    public Map<Integer, Integer> getPortMap() {
       return portMap;
     }
 
@@ -791,9 +828,9 @@ public class Container {
 
     public class CommandOptionsEditor {
 
-      Set<PortForwarding> tmpSetPF = null;
+      Map<Integer, Integer> tmpSetPF = null;
 
-      public CommandOptionsEditor setPortMap(Set<PortForwarding> pm) {
+      public CommandOptionsEditor setPortMap(Map<Integer, Integer> pm) {
         tmpSetPF = pm;
         return this;
       }
@@ -807,7 +844,6 @@ public class Container {
     }
 
   }
-
 
   public static abstract class ContainerBuilder {
     protected Container config;
@@ -923,18 +959,30 @@ public class Container {
     }
 
     public CommandContainerBuilder mapPortToHost(int hostPort, int containerPort) {
-      return mapPortToHost(PortForwarding.create(hostPort, containerPort));
+      if (options.portMap == null) {
+        options.portMap = new HashMap<>();
+      }
+      if (!PortForwarding.isValidPort(hostPort) || !PortForwarding.isValidPort(containerPort)) {
+        throw new IllegalArgumentException("Port Range must be declared like this: XXXXX-YYYYY. example: 80-123");
+      }
+      options.portMap.put(hostPort,containerPort);
+      return this;
     }
 
     public CommandContainerBuilder mapPortToHost(String hostPortRange, String containerPortRange) {
-      return mapPortToHost(PortForwarding.create(hostPortRange, containerPortRange));
-    }
-
-    public CommandContainerBuilder mapPortToHost(PortForwarding p) {
-      if (options.portMap == null) {
-        options.portMap = new HashSet<>();
+      Pattern p = Pattern.compile("^\\d+-\\d+$");
+      if (!p.matcher(hostPortRange).matches() || !p.matcher(containerPortRange).matches()) {
+        throw new IllegalArgumentException("Port Range must be declared like this: XXXXX-YYYYY. example: 80-123");
       }
-      options.portMap.add(p);
+      Pattern p2 = Pattern.compile("-");
+      String[] hostPorts = p2.split(hostPortRange);
+      String[] containerPorts = p2.split(hostPortRange);
+      if (!PortForwarding.isValidRangeSet(hostPorts, containerPorts)) {
+        throw new IllegalArgumentException("Range Set is invalid. All ports in Range must be between 1 and 65535.");
+      }
+      for (Integer i = Integer.valueOf(hostPorts[0]) ; i < Integer.valueOf(hostPorts[1]) ; ++i) {
+        options.portMap.put(i,Integer.valueOf(containerPorts[0]) + i);
+      }
       return this;
     }
   }

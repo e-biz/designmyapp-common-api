@@ -14,19 +14,18 @@ package mobi.designmyapp.common.container.provider;
 
 import mobi.designmyapp.common.container.listener.ContainerProviderChangeListener;
 import mobi.designmyapp.common.container.model.Container;
-import mobi.designmyapp.common.container.model.Container.PortForwarding;
 import mobi.designmyapp.common.container.model.Container.CommandOptions.CommandOptionsEditor;
 import mobi.designmyapp.common.container.model.ContainerStatus;
 import mobi.designmyapp.common.container.model.Status;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.stream.Collectors;
 
 /**
  * This class represents a container provider, a provider manage
@@ -231,6 +230,7 @@ public abstract class ContainerProvider implements Comparable<ContainerProvider>
    * Restart a container.
    *
    * @param containerId container Id to restart
+   * @return the updated container
    */
   public abstract Container restart(String containerId);
 
@@ -314,13 +314,17 @@ public abstract class ContainerProvider implements Comparable<ContainerProvider>
   protected void mergeStates(Container container, ContainerStatus newStatus) {
     if (container.getType() == Container.Type.COMMAND) {
       CommandOptionsEditor editor = ((Container.CommandOptions) container.getOptions()).edit();
-      Set<PortForwarding> newPortMap = newStatus.getPortMap().entrySet().stream().map(port -> PortForwarding.create(port.getKey(), port.getValue())).collect(Collectors.toSet());
-      editor.setPortMap(newPortMap);
+      Map<Integer, Integer> newMap = new HashMap<>();
+      for (Map.Entry<String, String> ports : newStatus.getPortMap().entrySet()) {
+        newMap.put(Integer.valueOf(ports.getKey()), Integer.valueOf(ports.getValue()));
+      }
+      editor.setPortMap(newMap);
       editor.build();
     }
     Container.Editor editor = container.edit();
     editor.setProgress(newStatus.getProgress())
-    .setStatus(newStatus.getStatus());
+    .setStatus(newStatus.getStatus())
+    .setHostname(newStatus.getHostname());
     editor.build();
     // If container was a clean-up container, trigger removal.
     if (container.getStatus().equals(Status.SHUTDOWN) && containersToClean.contains(container.getContainerId())) {

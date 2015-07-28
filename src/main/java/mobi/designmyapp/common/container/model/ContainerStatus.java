@@ -1,33 +1,39 @@
 package mobi.designmyapp.common.container.model;
 
+import java.net.URI;
 import java.util.Map;
 
 public class ContainerStatus {
 
   /**
-   * Name of the container
+   * Name of the container.
    */
   private String name;
 
   /**
-   * Unique container id
+   * Unique container id.
    */
   private String containerId;
 
   /**
-   * Actual status
+   * Actual status.
    */
   private Status status;
 
   /**
-   * Deployment or task progress percentage
+   * Deployment or task progress percentage.
    */
   private int progress;
 
   /**
-   * Port mapping
+   * Hostname (protocol + hostname).
    */
-  private Map<String,String> portMap;
+  private URI hostname;
+
+  /**
+   * Port mapping.
+   */
+  private Map<String, String> portMap;
 
   public String getName() {
     return name;
@@ -67,5 +73,13 @@ public class ContainerStatus {
 
   public void setStatus(Status status) {
     this.status = status;
+  }
+
+  public URI getHostname() {
+    return hostname;
+  }
+
+  public void setHostname(URI hostname) {
+    this.hostname = hostname;
   }
 }

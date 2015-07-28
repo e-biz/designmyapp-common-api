@@ -7,6 +7,7 @@ import java.util.List;
  * Created by Anas Hammani on 09/07/15.
  */
 public class InstantiationProgress {
+
   private String containerId;
 
   private int percentage;

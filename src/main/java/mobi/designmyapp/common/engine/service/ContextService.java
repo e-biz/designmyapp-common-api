@@ -15,7 +15,6 @@ package mobi.designmyapp.common.engine.service;
 import mobi.designmyapp.common.engine.builder.Builder;
 
 import java.io.File;
-import java.io.Serializable;
 
 /**
  * This class provides resource services.

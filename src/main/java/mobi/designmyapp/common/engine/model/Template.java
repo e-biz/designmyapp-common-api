@@ -13,6 +13,7 @@
 package mobi.designmyapp.common.engine.model;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -47,15 +48,16 @@ public abstract class Template {
   /**
    * List of available target applications.
    */
-  protected List<String> targets;
+  private List<String> targets;
 
   public static final String DEFAULT_TEMPLATE_TAG = "generic";
   public static final String TARGET_ANDROID = "android";
   public static final String TARGET_IOS = "ios";
-  public static final String TARGET_CONTAINER = "webapp";
+  public static final String TARGET_CONTAINER = "container";
 
   /**
    * Constructor.
+   *
    * @param templateTag the template tag
    */
   public Template(String templateTag) {
@@ -102,6 +104,19 @@ public abstract class Template {
 
   public void setTargets(List<String> targets) {
     this.targets = targets;
+  }
+
+  /**
+   * Add a target to the actual list of targets.
+   * @param target the target to add
+   */
+  protected void addTarget(String target) {
+    if (targets == null) {
+      targets = new LinkedList<>();
+    }
+    if (!target.contains(target)) {
+      targets.add(target);
+    }
   }
 
   @Override
