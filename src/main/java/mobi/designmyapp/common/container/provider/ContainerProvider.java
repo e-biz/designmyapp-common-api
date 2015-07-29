@@ -14,7 +14,6 @@ package mobi.designmyapp.common.container.provider;
 
 import mobi.designmyapp.common.container.listener.ContainerProviderChangeListener;
 import mobi.designmyapp.common.container.model.Container;
-import mobi.designmyapp.common.container.model.Container.CommandOptions.CommandOptionsEditor;
 import mobi.designmyapp.common.container.model.ContainerStatus;
 import mobi.designmyapp.common.container.model.Status;
 
@@ -67,6 +66,17 @@ public abstract class ContainerProvider implements Comparable<ContainerProvider>
    */
   public List<Container> getContainers() {
     return Collections.unmodifiableList(new LinkedList<>(containers));
+  }
+
+  /**
+   * Set containers.
+   *
+   * @param containers the containers
+   */
+  public void setContainers(List<Container> containers) {
+    ConcurrentLinkedQueue<Container> concurrent = new ConcurrentLinkedQueue<>();
+    concurrent.addAll(containers);
+    this.containers = concurrent;
   }
 
   /**
@@ -152,6 +162,10 @@ public abstract class ContainerProvider implements Comparable<ContainerProvider>
    */
   public Integer getTtl() {
     return ttl;
+  }
+
+  public void setTtl(Integer ttl) {
+    this.ttl = ttl;
   }
 
   /**
@@ -308,24 +322,25 @@ public abstract class ContainerProvider implements Comparable<ContainerProvider>
   /**
    * Merges the state of the second container into the first one.
    *
-   * @param container    the container to merge the state to.
+   * @param container the container to merge the state to.
    * @param newStatus the container with the updated state.
    */
   protected void mergeStates(Container container, ContainerStatus newStatus) {
-    if (container.getType() == Container.Type.COMMAND) {
-      CommandOptionsEditor editor = ((Container.CommandOptions) container.getOptions()).edit();
+    if (container.getOptions().getType() == Container.Type.COMMAND) {
+      Container.CommandOptions options = ((Container.CommandOptions) container.getOptions());
       Map<Integer, Integer> newMap = new HashMap<>();
+      if (newStatus.getPortMap() == null) {
+        newStatus.setPortMap(new HashMap<>());
+      }
       for (Map.Entry<String, String> ports : newStatus.getPortMap().entrySet()) {
         newMap.put(Integer.valueOf(ports.getKey()), Integer.valueOf(ports.getValue()));
       }
-      editor.setPortMap(newMap);
-      editor.build();
+      options.setPortMap(newMap);
     }
-    Container.Editor editor = container.edit();
-    editor.setProgress(newStatus.getProgress())
-    .setStatus(newStatus.getStatus())
-    .setEndpoint(newStatus.getEndpoint());
-    editor.build();
+    container.setProgress(newStatus.getProgress());
+    container.setStatus(newStatus.getStatus());
+    container.setEndpoint(newStatus.getEndpoint());
+
     // If container was a clean-up container, trigger removal.
     if (container.getStatus().equals(Status.SHUTDOWN) && containersToClean.contains(container.getContainerId())) {
       remove(container.getContainerId());

@@ -120,8 +120,7 @@ public class Container {
   private String containerId;
   private String containerGroupId;
   private String name;
-  private String image;
-  private Type type;
+  private Image image;
   private Options options;
 
   private int progress;
@@ -146,12 +145,8 @@ public class Container {
     return name;
   }
 
-  public String getImage() {
+  public Image getImage() {
     return image;
-  }
-
-  public Type getType() {
-    return type;
   }
 
   public Options getOptions() {
@@ -170,72 +165,36 @@ public class Container {
     return endpoint;
   }
 
-  /**
-   * Get an instance of Editor.
-   *
-   * @return the editor
-   */
-  public Editor edit() {
-    return new Editor();
+  public void setContainerId(String containerId) {
+    this.containerId = containerId;
   }
 
-  public class Editor {
+  public void setContainerGroupId(String containerGroupId) {
+    this.containerGroupId = containerGroupId;
+  }
 
-    private Integer tmpProgress = null;
-    private Status tmpStatus = null;
-    private URI tmpEndpoint = null;
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    /**
-     * Set progress of the container.
-     *
-     * @param p new progress
-     * @return the editor
-     */
-    public Editor setProgress(int p) {
-      tmpProgress = p;
-      return this;
-    }
+  public void setImage(Image image) {
+    this.image = image;
+  }
 
-    /**
-     * Set status of container.
-     *
-     * @param s New status
-     * @return the editor
-     */
-    public Editor setStatus(Status s) {
-      tmpStatus = s;
-      return this;
-    }
+  public void setOptions(Options options) {
+    this.options = options;
+  }
 
-    /**
-     * Set endpoint of container.
-     *
-     * @param h New endpoint
-     * @return the editor
-     */
-    public Editor setEndpoint(URI h) {
-      tmpEndpoint = h;
-      return this;
-    }
+  public void setProgress(int progress) {
+    this.progress = progress;
+  }
 
-    /**
-     * New value are set.
-     *
-     * @return the updated container
-     */
-    public Container build() {
-      if (tmpProgress != null) {
-        progress = tmpProgress;
-      }
-      if (tmpStatus != null) {
-        status = tmpStatus;
-      }
-      if (tmpEndpoint != null) {
-        endpoint = tmpEndpoint;
-      }
-      return Container.this;
-    }
+  public void setStatus(Status status) {
+    this.status = status;
+  }
 
+  public void setEndpoint(URI endpoint) {
+    this.endpoint = endpoint;
   }
 
   /*=========================================*/
@@ -262,9 +221,6 @@ public class Container {
     if (options != null ? !options.equals(that.options) : that.options != null) {
       return false;
     }
-    if (type != that.type) {
-      return false;
-    }
 
     return true;
   }
@@ -273,7 +229,6 @@ public class Container {
   public int hashCode() {
     int result = name != null ? name.hashCode() : 0;
     result = 31 * result + (image != null ? image.hashCode() : 0);
-    result = 31 * result + (type != null ? type.hashCode() : 0);
     result = 31 * result + (options != null ? options.hashCode() : 0);
     return result;
   }
@@ -285,7 +240,6 @@ public class Container {
         ", containerGroupId='" + containerGroupId + '\'' +
         ", name='" + name + '\'' +
         ", image='" + image + '\'' +
-        ", type=" + type +
         ", options=" + options +
         ", progress=" + progress +
         ", status=" + status +
@@ -325,7 +279,7 @@ public class Container {
       return this;
     }
 
-    public Builder image(String image) {
+    public Builder image(Image image) {
       config.image = image;
       return this;
     }
@@ -356,9 +310,106 @@ public class Container {
      * @throws java.lang.IllegalStateException if not.
      */
     private void assertMandatoryFieldsValid() {
-      if (config.name == null || config.name.trim().isEmpty() || config.image == null || config.image.trim().isEmpty()) {
+      if (config.name == null || config.name.trim().isEmpty() || config.image == null || config.image.image.trim().isEmpty()) {
         throw new IllegalStateException("Container image and name must be filled out before calling toCommandContainer or toDataVolumeContainer");
       }
+    }
+  }
+
+  public static class Image {
+    private String image;
+    private String remote;
+    private boolean fromDockerFile;
+    private String authHeader;
+
+    /**
+     * POJO Constructor.
+     */
+    public Image() {
+
+    }
+
+    private Image(String image, String remote, boolean fromDockerFile) {
+      this.image = image;
+      this.remote = remote;
+      this.fromDockerFile = fromDockerFile;
+    }
+
+    /**
+     * Build an image which already exists on the target machine.
+     *
+     * @param image  the image name
+     * @return the Image instance
+     */
+    public static Image createLocal(String image) {
+      return new Image(image, null, false);
+    }
+
+
+    /**
+     * Build an image from an external docker file.
+     *
+     * @param image  the image name
+     * @param remote a Git repository URI or HTTP/HTTPS URI build source. If the URI specifies a filename, the file’s contents are placed into a file called Dockerfile.
+     * @return the Image instance
+     */
+    public static Image buildFromDockerFile(String image, String remote) {
+      return new Image(image, remote, true);
+    }
+
+    /**
+     * Pull an image from an external docker registry.
+     *
+     * @param image  the image name
+     * @param remote the registry to pull from
+     * @return the Image instance
+     */
+    public static Image pullFromRegistry(String image, String remote) {
+      return new Image(image, remote, false);
+    }
+
+    /**
+     * For specific vendor / private registries which may require authentication.
+     *
+     * @param login    the login info
+     * @param password the password info
+     * @return the Image instance
+     */
+    public Image addRegistryCredentials(String login, String password) {
+      //TODO setup authHeader attribute
+      return this;
+    }
+
+    public String getImage() {
+      return image;
+    }
+
+    public String getRemote() {
+      return remote;
+    }
+
+    public String getAuthHeader() {
+      return authHeader;
+    }
+
+    public boolean isFromDockerFile() {
+      return fromDockerFile;
+    }
+
+    public void setImage(String image) {
+      this.image = image;
+    }
+
+    public void setRemote(String remote) {
+      this.remote = remote;
+    }
+
+    public void setAuthHeader(String authHeader) {
+      this.authHeader = authHeader;
+    }
+
+    public void setFromDockerFile(boolean fromDockerFile) {
+      this.fromDockerFile = fromDockerFile;
     }
   }
 
@@ -369,6 +420,12 @@ public class Container {
    */
   public static class Volume {
     private String path;
+
+    /**
+     * Pojo Constructor.
+     */
+    public Volume() {
+    }
 
     /**
      * Constructor.
@@ -393,6 +450,10 @@ public class Container {
     public String getPath() {
       return path;
     }
+
+    public void setPath(String path) {
+      this.path = path;
+    }
   }
 
   /**
@@ -404,6 +465,12 @@ public class Container {
   public static class HostVolume {
     private String hostPath;
     private String containerPath;
+
+    /**
+     * Pojo Constructor.
+     */
+    private HostVolume() {
+    }
 
     /**
      * Constructor.
@@ -432,8 +499,16 @@ public class Container {
       return hostPath;
     }
 
+    public void setHostPath(String hostPath) {
+      this.hostPath = hostPath;
+    }
+
     public String getContainerPath() {
       return containerPath;
+    }
+
+    public void setContainerPath(String containerPath) {
+      this.containerPath = containerPath;
     }
   }
 
@@ -460,8 +535,15 @@ public class Container {
    * @see <a href="https://docs.docker.com/reference/run/#env-environment-variables">https://docs.docker.com/reference/run/#env-environment-variables</a>
    */
   public static class EnvVariable {
-    private final String key;
-    private final String value;
+    private String key;
+    private String value;
+
+    /**
+     * Pojo Constructor.
+     */
+    public EnvVariable() {
+
+    }
 
     /**
      * Constructor.
@@ -491,8 +573,16 @@ public class Container {
       return key;
     }
 
+    public void setKey(String key) {
+      this.key = key;
+    }
+
     public String getValue() {
       return value;
+    }
+
+    public void setValue(String value) {
+      this.value = value;
     }
   }
 
@@ -504,6 +594,13 @@ public class Container {
   public static class Link {
     private String name;
     private String alias;
+
+    /**
+     * Pojo Constructor.
+     */
+    public Link() {
+
+    }
 
     /**
      * Constructor.
@@ -531,8 +628,16 @@ public class Container {
       return name;
     }
 
+    public void setName(String name) {
+      this.name = name;
+    }
+
     public String getAlias() {
       return alias;
+    }
+
+    public void setAlias(String alias) {
+      this.alias = alias;
     }
   }
 
@@ -544,6 +649,13 @@ public class Container {
   public static class Command {
     private String cmd;
     private String[] args;
+
+    /**
+     * Pojo Constructor.
+     */
+    public Command() {
+
+    }
 
     /**
      * Constructor.
@@ -572,8 +684,16 @@ public class Container {
       return cmd;
     }
 
+    public void setCmd(String cmd) {
+      this.cmd = cmd;
+    }
+
     public String[] getArgs() {
       return args;
+    }
+
+    public void setArgs(String[] args) {
+      this.args = args;
     }
   }
 
@@ -587,6 +707,13 @@ public class Container {
     private int container;
     private String hostRange;
     private String containerRange;
+
+    /**
+     * Pojo Constructor.
+     */
+    public PortForwarding() {
+
+    }
 
     /**
      * Constructor.
@@ -686,10 +813,34 @@ public class Container {
     public String getHostRange() {
       return hostRange;
     }
+
+    public void setHost(int host) {
+      this.host = host;
+    }
+
+    public void setContainer(int container) {
+      this.container = container;
+    }
+
+    public void setHostRange(String hostRange) {
+      this.hostRange = hostRange;
+    }
+
+    public void setContainerRange(String containerRange) {
+      this.containerRange = containerRange;
+    }
   }
 
   public static abstract class Options {
+    protected Type type;
 
+    public Type getType() {
+      return type;
+    }
+
+    public void setType(Type type) {
+      this.type = type;
+    }
   }
 
   public static class DataVolumeOptions extends Options {
@@ -772,6 +923,38 @@ public class Container {
       return portMap;
     }
 
+    public void setDataVolumeContainers(Set<String> dataVolumeContainers) {
+      this.dataVolumeContainers = dataVolumeContainers;
+    }
+
+    public void setHostVolumes(Set<HostVolume> hostVolumes) {
+      this.hostVolumes = hostVolumes;
+    }
+
+    public void setEnvVariables(Set<EnvVariable> envVariables) {
+      this.envVariables = envVariables;
+    }
+
+    public void setMode(Mode mode) {
+      this.mode = mode;
+    }
+
+    public void setLinks(Set<Link> links) {
+      this.links = links;
+    }
+
+    public void setMapExposedPorts(boolean mapExposedPorts) {
+      this.mapExposedPorts = mapExposedPorts;
+    }
+
+    public void setPortMap(Map<Integer, Integer> portMap) {
+      this.portMap = portMap;
+    }
+
+    public void setCommand(Command command) {
+      this.command = command;
+    }
+
     @Override
     public boolean equals(Object o) {
       if (this == o) {
@@ -830,27 +1013,6 @@ public class Container {
           '}';
     }
 
-    public CommandOptionsEditor edit() {
-      return new CommandOptionsEditor();
-    }
-
-    public class CommandOptionsEditor {
-
-      Map<Integer, Integer> tmpSetPF = null;
-
-      public CommandOptionsEditor setPortMap(Map<Integer, Integer> pm) {
-        tmpSetPF = pm;
-        return this;
-      }
-
-      public Options build() {
-        if (tmpSetPF != null) {
-          portMap = tmpSetPF;
-        }
-        return CommandOptions.this;
-      }
-    }
-
   }
 
   public static abstract class ContainerBuilder {
@@ -872,7 +1034,7 @@ public class Container {
       super(container);
       this.options = new DataVolumeOptions();
 
-      this.config.type = Type.DATA_VOLUME;
+      this.options.type = Type.DATA_VOLUME;
       this.config.options = options;
     }
 
@@ -896,8 +1058,10 @@ public class Container {
       super(container);
       this.options = new CommandOptions();
 
-      this.config.type = Type.COMMAND;
+      this.options.type = Type.COMMAND;
       this.config.options = options;
+      this.options.mode = Mode.DETACHED;
+      this.options.portMap = new HashMap<>();
     }
 
     public CommandContainerBuilder bindDataVolumeContainer(String v) {
