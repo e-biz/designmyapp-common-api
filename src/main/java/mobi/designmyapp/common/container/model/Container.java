@@ -281,7 +281,9 @@ public class Container {
   @Override
   public String toString() {
     return "Container{" +
-        "name='" + name + '\'' +
+        "containerId='" + containerId + '\'' +
+        ", containerGroupId='" + containerGroupId + '\'' +
+        ", name='" + name + '\'' +
         ", image='" + image + '\'' +
         ", type=" + type +
         ", options=" + options +
@@ -290,8 +292,8 @@ public class Container {
         ", endpoint=" + endpoint +
         '}';
   }
-  
-  /*=========================================*/
+
+/*=========================================*/
   // END GENERATED CODE
   /*=========================================*/
 
@@ -821,8 +823,8 @@ public class Container {
           ", hostVolumes=" + hostVolumes +
           ", envVariables=" + envVariables +
           ", mode=" + mode +
-          ", mapExposedPorts=" + mapExposedPorts +
           ", links=" + links +
+          ", mapExposedPorts=" + mapExposedPorts +
           ", portMap=" + portMap +
           ", command=" + command +
           '}';
