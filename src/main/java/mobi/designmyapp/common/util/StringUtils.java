@@ -12,6 +12,7 @@
  */
 package mobi.designmyapp.common.util;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -95,4 +96,11 @@ public interface StringUtils {
    */
   String normalizeName(String name);
 
+  /**
+   * Method to transform an object into a Base64 String.
+   *
+   * @param object the object to transform
+   * @return the encoded string of the object
+   */
+  String encodeBase64(Serializable object);
 }

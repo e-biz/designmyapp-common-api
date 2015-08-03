@@ -1,5 +1,8 @@
 package mobi.designmyapp.common.container.model;
 
+import mobi.designmyapp.common.util.UtilsFactory;
+
+import java.io.Serializable;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -310,14 +313,14 @@ public class Container {
      * @throws java.lang.IllegalStateException if not.
      */
     private void assertMandatoryFieldsValid() {
-      if (config.name == null || config.name.trim().isEmpty() || config.image == null || config.image.image.trim().isEmpty()) {
+      if (config.name == null || config.name.trim().isEmpty() || config.image == null || config.image.name.trim().isEmpty()) {
         throw new IllegalStateException("Container image and name must be filled out before calling toCommandContainer or toDataVolumeContainer");
       }
     }
   }
 
   public static class Image {
-    private String image;
+    private String name;
     private String remote;
     private boolean fromDockerFile;
     private String authHeader;
@@ -329,11 +332,17 @@ public class Container {
 
     }
 
-    private Image(String image, String remote, boolean fromDockerFile) {
-      this.image = image;
+    private Image(String name, String remote, boolean fromDockerFile) {
+      this.name = name;
       this.remote = remote;
       this.fromDockerFile = fromDockerFile;
     }
+
+    private Image(String name, String remote, boolean fromDockerFile, String authHeader) {
+      this(name, remote, fromDockerFile);
+      this.authHeader = authHeader;
+    }
+
 
     /**
      * Build an image which already exists on the target machine.
@@ -341,7 +350,7 @@ public class Container {
      * @param image  the image name
      * @return the Image instance
      */
-    public static Image createLocal(String image) {
+    public static Image create(String image) {
       return new Image(image, null, false);
     }
 
@@ -369,19 +378,22 @@ public class Container {
     }
 
     /**
-     * For specific vendor / private registries which may require authentication.
+     * Pull an image from an external docker registry.
      *
-     * @param login    the login info
-     * @param password the password info
+     * @param image  the image name
+     * @param remote the registry to pull from
+     * @param login the login to register to the registry
+     * @param password the paswword to register to the registry
      * @return the Image instance
      */
-    public Image addRegistryCredentials(String login, String password) {
-      //TODO setup authHeader attribute
-      return this;
+    public static Image pullFromRegistry(String image, String remote, String login, String password) {
+      ImageAuthentification imageAuthentification = new ImageAuthentification(login,password);
+      String authHeader=UtilsFactory.getStringUtils().encodeBase64(imageAuthentification);
+      return new Image(image, remote, false, authHeader);
     }
 
-    public String getImage() {
-      return image;
+    public String getName() {
+      return name;
     }
 
     public String getRemote() {
@@ -396,8 +408,8 @@ public class Container {
       return fromDockerFile;
     }
 
-    public void setImage(String image) {
-      this.image = image;
+    public void setName(String name) {
+      this.name = name;
     }
 
     public void setRemote(String remote) {
@@ -411,7 +423,19 @@ public class Container {
     public void setFromDockerFile(boolean fromDockerFile) {
       this.fromDockerFile = fromDockerFile;
     }
+
+    private static class ImageAuthentification implements Serializable {
+      private String username;
+      private String password;
+
+      public ImageAuthentification(String username, String password) {
+        this.username = username;
+        this.password = password;
+      }
+    }
   }
+
+
 
   /**
    * Represents a data-volume.
