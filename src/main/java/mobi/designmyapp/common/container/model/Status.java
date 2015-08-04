@@ -18,6 +18,7 @@ package mobi.designmyapp.common.container.model;
  */
 public enum Status {
   RUNNING,
+  PAUSED,
   BUSY,
   SHUTDOWN
 }
