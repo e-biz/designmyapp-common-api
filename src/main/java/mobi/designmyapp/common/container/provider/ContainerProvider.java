@@ -346,7 +346,8 @@ public abstract class ContainerProvider implements Comparable<ContainerProvider>
       }
       options.setPortMap(newMap);
     }
-    container.setContainerId(newStatus.getContainerId());
+    String id = newStatus.getContainerId().replace("\"", "");
+    container.setContainerId(id);
     container.setProgress(newStatus.getProgress());
     container.setStatus(newStatus.getStatus());
     container.setEndpoint(newStatus.getEndpoint());
