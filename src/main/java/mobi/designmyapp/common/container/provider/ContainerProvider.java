@@ -80,6 +80,15 @@ public abstract class ContainerProvider implements Comparable<ContainerProvider>
   }
 
   /**
+   * Get listener.
+   *
+   * @return the listener
+   */
+  public ContainerProviderChangeListener getListener() {
+    return listener;
+  }
+
+  /**
    * Set the ContainerProviderChangeListener.
    *
    * @param listener the listener to notify.
@@ -337,6 +346,7 @@ public abstract class ContainerProvider implements Comparable<ContainerProvider>
       }
       options.setPortMap(newMap);
     }
+    container.setContainerId(newStatus.getContainerId());
     container.setProgress(newStatus.getProgress());
     container.setStatus(newStatus.getStatus());
     container.setEndpoint(newStatus.getEndpoint());

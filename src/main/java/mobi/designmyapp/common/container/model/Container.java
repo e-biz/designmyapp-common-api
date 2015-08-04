@@ -878,6 +878,9 @@ public class Container {
     public Set<Volume> getVolumes() {
       return volumes;
     }
+    public void setVolumes(Set<Volume> volumes) {
+      this.volumes = volumes;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -1147,7 +1150,7 @@ public class Container {
     }
 
     public CommandContainerBuilder executeCommand(Command command) {
-      if (command != null) {
+      if (options.command != null) {
         throw new IllegalStateException("Can only execute one command.");
       }
       options.command = command;
