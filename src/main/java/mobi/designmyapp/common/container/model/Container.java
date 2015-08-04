@@ -287,6 +287,11 @@ public class Container {
       return this;
     }
 
+    public Builder image(String image) {
+      config.image = Image.create(image);
+      return this;
+    }
+
     /**
      * Set Container to CommandContainer.
      *
@@ -354,7 +359,6 @@ public class Container {
       return new Image(image, null, false);
     }
 
-
     /**
      * Build an image from an external docker file.
      *
@@ -390,6 +394,7 @@ public class Container {
       ImageAuthentification imageAuthentification = new ImageAuthentification(login,password);
       String authHeader=UtilsFactory.getStringUtils().encodeBase64(imageAuthentification);
       return new Image(image, remote, false, authHeader);
+
     }
 
     public String getName() {
