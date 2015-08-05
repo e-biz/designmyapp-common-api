@@ -152,8 +152,8 @@ public class Container {
     return image;
   }
 
-  public Options getOptions() {
-    return options;
+  public <T extends Options> T getOptions() {
+    return (T) options;
   }
 
   public int getProgress() {

@@ -129,4 +129,12 @@ public interface ContainerManager {
    */
   void setStrategy(ContainerProviderSelectionStrategy strategy);
 
+  /**
+   * If set to true, will replace oldest container when container manager is full.
+   * Otherwise, will throw an exception.
+   *
+   * @param enabled replace oldest container on overload
+   */
+  void setReplaceOldestWhenFull(boolean enabled);
+
 }
