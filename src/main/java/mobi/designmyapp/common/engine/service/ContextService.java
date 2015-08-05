@@ -80,7 +80,7 @@ public interface ContextService {
    *
    * @return a String representing the url to access the file
    */
-  String createBundleUrl();
+  String getBundleUrl();
 
   /**
    * Return the appId of the current generation.
