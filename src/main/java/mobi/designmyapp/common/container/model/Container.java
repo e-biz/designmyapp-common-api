@@ -136,6 +136,11 @@ public class Container {
   protected Container() {
   }
 
+
+  /*=========================================*/
+  // BEGIN GENERATED CODE
+  /*=========================================*/
+  
   public String getContainerId() {
     return containerId;
   }
@@ -200,9 +205,6 @@ public class Container {
     this.endpoint = endpoint;
   }
 
-  /*=========================================*/
-  // BEGIN GENERATED CODE
-  /*=========================================*/
 
   @Override
   public boolean equals(Object o) {
