@@ -102,5 +102,5 @@ public interface StringUtils {
    * @param object the object to transform
    * @return the encoded string of the object
    */
-  String encodeBase64(Serializable object);
+  String encodeBase64(Object object);
 }
