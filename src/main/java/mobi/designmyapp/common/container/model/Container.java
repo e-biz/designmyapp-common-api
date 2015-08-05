@@ -140,7 +140,7 @@ public class Container {
   /*=========================================*/
   // BEGIN GENERATED CODE
   /*=========================================*/
-  
+
   public String getContainerId() {
     return containerId;
   }
@@ -329,8 +329,12 @@ public class Container {
   public static class Image {
     private String name;
     private String remote;
-    private boolean fromDockerFile;
     private String authHeader;
+    private Integer type;
+    public static final int LOCAL_OR_PUBLIC = 1;
+    public static final int DOCKER_FILE = 2;
+    public static final int ARCHIVE = 4;
+    public static final int REGISTRY = 8;
 
     /**
      * POJO Constructor.
@@ -339,14 +343,14 @@ public class Container {
 
     }
 
-    private Image(String name, String remote, boolean fromDockerFile) {
+    private Image(String name, String remote, Integer type) {
       this.name = name;
       this.remote = remote;
-      this.fromDockerFile = fromDockerFile;
+      this.type = type;
     }
 
-    private Image(String name, String remote, boolean fromDockerFile, String authHeader) {
-      this(name, remote, fromDockerFile);
+    private Image(String name, String remote, Integer type, String authHeader) {
+      this(name, remote, type);
       this.authHeader = authHeader;
     }
 
@@ -354,11 +358,11 @@ public class Container {
     /**
      * Build an image which already exists on the target machine.
      *
-     * @param image  the image name
+     * @param image the image name
      * @return the Image instance
      */
     public static Image create(String image) {
-      return new Image(image, null, false);
+      return new Image(image, null, LOCAL_OR_PUBLIC);
     }
 
     /**
@@ -369,7 +373,18 @@ public class Container {
      * @return the Image instance
      */
     public static Image buildFromDockerFile(String image, String remote) {
-      return new Image(image, remote, true);
+      return new Image(image, remote, DOCKER_FILE);
+    }
+
+    /**
+     * Build an image from an external archive.
+     *
+     * @param image  the image name
+     * @param remote a Git repository URI or HTTP/HTTPS URI build source to a tar.gz file which will contain the Dockerfile at the root.
+     * @return the Image instance
+     */
+    public static Image buildFromArchive(String image, String remote) {
+      return new Image(image, remote, ARCHIVE);
     }
 
     /**
@@ -380,22 +395,22 @@ public class Container {
      * @return the Image instance
      */
     public static Image pullFromRegistry(String image, String remote) {
-      return new Image(image, remote, false);
+      return new Image(image, remote, REGISTRY);
     }
 
     /**
      * Pull an image from an external docker registry.
      *
-     * @param image  the image name
-     * @param remote the registry to pull from
-     * @param login the login to register to the registry
+     * @param image    the image name
+     * @param remote   the registry to pull from
+     * @param login    the login to register to the registry
      * @param password the paswword to register to the registry
      * @return the Image instance
      */
     public static Image pullFromRegistry(String image, String remote, String login, String password) {
-      ImageAuthentification imageAuthentification = new ImageAuthentification(login,password);
-      String authHeader=UtilsFactory.getStringUtils().encodeBase64(imageAuthentification);
-      return new Image(image, remote, false, authHeader);
+      ImageAuthentification imageAuthentification = new ImageAuthentification(login, password);
+      String authHeader = UtilsFactory.getStringUtils().encodeBase64(imageAuthentification);
+      return new Image(image, remote, REGISTRY, authHeader);
 
     }
 
@@ -411,8 +426,8 @@ public class Container {
       return authHeader;
     }
 
-    public boolean isFromDockerFile() {
-      return fromDockerFile;
+    public Integer getType() {
+      return type;
     }
 
     public void setName(String name) {
@@ -427,8 +442,8 @@ public class Container {
       this.authHeader = authHeader;
     }
 
-    public void setFromDockerFile(boolean fromDockerFile) {
-      this.fromDockerFile = fromDockerFile;
+    public void setType(Integer type) {
+      this.type = type;
     }
 
     private static class ImageAuthentification implements Serializable {
@@ -441,7 +456,6 @@ public class Container {
       }
     }
   }
-
 
 
   /**
@@ -880,6 +894,7 @@ public class Container {
     public Set<Volume> getVolumes() {
       return volumes;
     }
+
     public void setVolumes(Set<Volume> volumes) {
       this.volumes = volumes;
     }
