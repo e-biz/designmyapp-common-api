@@ -697,6 +697,17 @@ public class Container {
     /**
      * Factory method for Link.
      *
+     * @param c     the container to be linked to
+     * @param alias the DNS alias the container will be callable from (added to /etc/hosts)
+     * @return the new Link instance
+     */
+    public static Link create(Container c, String alias) {
+      return new Link(c.getName(), alias);
+    }
+
+    /**
+     * Factory method for Link.
+     *
      * @param name  the container name to be linked to
      * @param alias the DNS alias the container will be callable from (added to /etc/hosts)
      * @return the new Link instance
@@ -1149,6 +1160,14 @@ public class Container {
       this.options.portMap = new HashMap<>();
     }
 
+    public CommandContainerBuilder bindDataVolumeContainer(Container c) {
+      if (!c.getOptions().getType().equals(Type.DATA_VOLUME)) {
+        throw new IllegalArgumentException("Cannot bind data volume container: container provided was not a data volume container");
+      }
+      String v = c.getName();
+      return bindDataVolumeContainer(v);
+    }
+
     public CommandContainerBuilder bindDataVolumeContainer(String v) {
       if (options.dataVolumeContainers == null) {
         options.dataVolumeContainers = new HashSet<>();
@@ -1184,6 +1203,10 @@ public class Container {
     public CommandContainerBuilder mode(Mode mode) {
       options.mode = mode;
       return this;
+    }
+
+    public CommandContainerBuilder linkContainer(Container c, String alias) {
+      return linkContainer(Link.create(c.getName(), alias));
     }
 
     public CommandContainerBuilder linkContainer(String name, String alias) {
@@ -1229,7 +1252,7 @@ public class Container {
         options.portMap = new HashMap<>();
       }
       if (!PortForwarding.isValidPort(hostPort) || !PortForwarding.isValidPort(containerPort)) {
-        throw new IllegalArgumentException("Port Range must be declared like this: XXXXX-YYYYY. example: 80-123");
+        throw new IllegalArgumentException("Port must be between 1 and 65635. example: 80");
       }
       options.portMap.put(containerPort, hostPort);
       return this;
