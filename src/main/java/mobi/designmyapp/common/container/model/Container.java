@@ -445,6 +445,10 @@ public class Container {
       return type;
     }
 
+    public String getTag() {
+      return tag;
+    }
+
     public void setName(String name) {
       this.name = name;
     }
@@ -459,6 +463,10 @@ public class Container {
 
     public void setType(Integer type) {
       this.type = type;
+    }
+
+    public void setTag(String tag) {
+      this.tag = tag;
     }
 
     public static class ImageAuthentification implements Serializable {
