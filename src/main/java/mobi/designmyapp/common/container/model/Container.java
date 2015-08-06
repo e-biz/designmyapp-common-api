@@ -31,7 +31,7 @@ import java.util.regex.Pattern;
  * <p/>
  * Container dockerVolumeConfig = Container.builder()
  * .name("my-docker-volume")
- * .image("dma-storage")
+ * .image(Image.create("dma-storage:2.0.0"))
  * .toDataVolumeContainer()
  * .addVolume(Volume.create("/opt/data"))
  * .addVolume(Volume.create("/var/log"))
@@ -40,15 +40,15 @@ import java.util.regex.Pattern;
  * <p/>
  * Container dockerDbConfig = Container.builder()
  * .name("my-docker-db")
- * .image("dma-mongo")
+ * .image(Image.buildFromDockerfile("dma-mongo:2.1.0", "https://my.repository.com/image.tar.gz"))
  * .toCommandContainer()
- * .bindDataVolumeContainer("my-docker-volume")
+ * .bindDataVolumeContainer(dockerVolumeConfig)
  * .mode(Mode.DETACHED)
  * .build();
  * <p/>
  * Container dockerWebappConfig = Container.builder()
  * .name("my-docker-webapp")
- * .image("dma-engine")
+ * .image(Image.create("dma-engine:latest"))
  * .toCommandContainer()
  * .bindDataVolumeContainer("my-docker-volume")
  * .addEnvVariable(EnvVariable.create("M2_HOME", "/home/myhomefolder/.m2/repository"))
@@ -59,11 +59,11 @@ import java.util.regex.Pattern;
  * <p/>
  * Container dockerWebsiteConfig = Container.builder()
  * .name("my-docker-website")
- * .image("dma-website")
+ * .image(Image.pullFromRegistry("dma-website:latest", "registry.designmyapp.mobi:9999", "user", "password"))
  * .toCommandContainer()
- * .bindDataVolumeContainer("my-docker-volume")
- * .linkContainer(Link.create("my-docker-db", "dma-db"))
- * .linkContainer(Link.create("my-docker-webapp", "dma-api"))
+ * .bindDataVolumeContainer(dockerVolumeConfig)
+ * .linkContainer(Link.create(dockerDbConfig, "dma-db"))
+ * .linkContainer(Link.create(dockerWebappConfig, "dma-api"))
  * .mode(Mode.DETACHED)
  * .build();
  * <p/>
@@ -73,10 +73,10 @@ import java.util.regex.Pattern;
  * The bound data-volume will not be removed though.
  * <p/>
  * Container dockerBackupConfig = Container.builder()
- * .name("my-docker-backup")
- * .image("dma-backup")
+ * .name("my-docker-backup:latest")
+ * .image(Image.pullFromRegistry("dma-backup:2.0.0", "registry.designmyapp.mobi:9999", "user", "password"))
  * .toCommandContainer()
- * .bindDataVolumeContainer("my-docker-volume")
+ * .bindDataVolumeContainer(dockerVolumeConfig)
  * .mode(Mode.CLEANUP)
  * .build();
  * <p/>
@@ -87,7 +87,7 @@ import java.util.regex.Pattern;
  * <p/>
  * Container dockerExposedConfig = Container.builder()
  * .name("my-docker-exposed")
- * .image("dma-official-website")
+ * .image(Image.create("dma-official-website:latest"))
  * .toCommandContainer()
  * .bindHostVolume(HostVolume.create("/var/www", "/var/www"))
  * .mapPortToHost(PortForwarding.create(80, 80))
@@ -102,13 +102,13 @@ import java.util.regex.Pattern;
  * <p/>
  * Container dockerFastConfig = Container.builder()
  * .name("my-docker-website")
- * .image("dma-website")
+ * .image("dma-website:latest")
  * .toCommandContainer()
- * .bindDataVolumeContainer("my-docker-volume")
+ * .bindDataVolumeContainer(dockerVolumeConfig)
  * .bindHostVolume("/var/www", "/var/www")
  * .addEnvVariable("DMA_ENVIRONMENT", "PRODUCTION")
- * .linkContainer("my-docker-db", "dma-db")
- * .linkContainer("my-docker-webapp", "dma-api")
+ * .linkContainer(dockerDbConfig, "dma-db")
+ * .linkContainer(dockerWebappConfig, "dma-api")
  * .mapPortToHost(443, 443)
  * .mapPortToHost("8000-8005", "8000-8005")
  * .mode(Mode.DETACHED)
@@ -329,6 +329,7 @@ public class Container {
   public static class Image {
     private String name;
     private String remote;
+    private String tag;
     private String authHeader;
     private Integer type;
     public static final int LOCAL_OR_PUBLIC = 1;
@@ -342,23 +343,33 @@ public class Container {
     public Image() {
 
     }
-
+    
     private Image(String name, String remote, Integer type) {
-      this.name = name;
-      this.remote = remote;
-      this.type = type;
+      String[] splittedImage = name.split(":");
+      if (splittedImage.length == 2) {
+        init(splittedImage[0], remote, splittedImage[1], type);
+      } else {
+        init(name, remote, "latest", type);
+      }
     }
 
     private Image(String name, String remote, Integer type, String authHeader) {
       this(name, remote, type);
       this.authHeader = authHeader;
     }
-
+    
+    private void init(String name, String remote, String tag, Integer type) {
+      this.name = name;
+      this.remote = remote;
+      this.tag = tag;
+      this.type = type;
+    }
 
     /**
      * Build an image which already exists on the target machine.
      *
-     * @param image the image name
+     * @param image the image name (Formatted like imageName:imageTag)
+     * If no imageTag is provided, default will be set to "latest".
      * @return the Image instance
      */
     public static Image create(String image) {
@@ -368,7 +379,8 @@ public class Container {
     /**
      * Build an image from an external docker file.
      *
-     * @param image  the image name
+     * @param image the image name (Formatted like imageName:imageTag)
+     * If no imageTag is provided, default will be set to "latest".
      * @param remote a Git repository URI or HTTP/HTTPS URI build source. If the URI specifies a filename, the file’s contents are placed into a file called Dockerfile.
      * @return the Image instance
      */
@@ -379,7 +391,8 @@ public class Container {
     /**
      * Build an image from an external archive.
      *
-     * @param image  the image name
+     * @param image the image name (Formatted like imageName:imageTag)
+     * If no imageTag is provided, default will be set to "latest".
      * @param remote a Git repository URI or HTTP/HTTPS URI build source to a tar.gz file which will contain the Dockerfile at the root.
      * @return the Image instance
      */
@@ -390,7 +403,8 @@ public class Container {
     /**
      * Pull an image from an external docker registry.
      *
-     * @param image  the image name
+     * @param image the image name (Formatted like imageName:imageTag)
+     * If no imageTag is provided, default will be set to "latest".
      * @param remote the registry to pull from
      * @return the Image instance
      */
@@ -399,9 +413,10 @@ public class Container {
     }
 
     /**
-     * Pull an image from an external docker registry.
+     * Pull an image from an external docker registry, with authentication.
      *
-     * @param image    the image name
+     * @param image the image name (Formatted like imageName:imageTag)
+     * If no imageTag is provided, default will be set to "latest".
      * @param remote   the registry to pull from
      * @param login    the login to register to the registry
      * @param password the paswword to register to the registry
