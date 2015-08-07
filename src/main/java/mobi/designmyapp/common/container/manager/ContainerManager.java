@@ -13,36 +13,36 @@
 package mobi.designmyapp.common.container.manager;
 
 import mobi.designmyapp.common.container.model.Container;
-import mobi.designmyapp.common.container.provider.ContainerProvider;
-import mobi.designmyapp.common.container.strategy.ContainerProviderSelectionStrategy;
+import mobi.designmyapp.common.container.provider.Node;
+import mobi.designmyapp.common.container.strategy.NodeSelectionStrategy;
 
 import java.util.Collection;
 import java.util.List;
 
 /**
  * This interface represents an container manager
- * (@see mobi.designmyapp.common.instance.provider.ContainerProvider),
- * this manager is used to store a Set of container providers and manage your containers using
+ * (@see mobi.designmyapp.common.container.provider.Node),
+ * this manager is used to store a Set of nodes and manage your containers using
  * a predefined strategy (@see mobi.designmyapp.common.instance.strategy.ContainerSelectionStrategy)
  * The ContainerManager singleton can be retrieved by the @see mobi.designmyapp.common.instance.service.ContainerService class.
  * Created by Alexandre Nunesse on 24/02/2015.
  */
 public interface ContainerManager {
   /**
-   * Add a provider to the ContainerManager.
+   * Add a node to the ContainerManager.
    *
-   * @param containerProvider the containerProvider to add
-   * @param priority          the containerProvider priority
+   * @param node the node to add
+   * @param priority          the node priority
    */
-  void addProvider(ContainerProvider containerProvider, int priority);
+  void addNode(Node node, int priority);
 
 
   /**
-   * Add a provider to the ContainerManager.
+   * Add a node to the ContainerManager.
    *
-   * @param containerProvider the containerProvider to add
+   * @param node the node to add
    */
-  void addProvider(ContainerProvider containerProvider);
+  void addNode(Node node);
 
   /**
    * Start a new container.
@@ -54,7 +54,7 @@ public interface ContainerManager {
 
   /**
    * Start a new set of containers.
-   * Those containers will be launched on the same provider.
+   * Those containers will be launched on the same node.
    *
    * @param configs the container configs
    */
@@ -70,7 +70,7 @@ public interface ContainerManager {
 
   /**
    * Start a new set of containers with a specific time-to-live (in minutes).
-   * Those containers will be launched on the same provider.
+   * Those containers will be launched on the same node.
    *
    * @param ttl     the container's time-to-live in minutes. After the TTL is expired, the container will be killed.
    * @param configs the container configs
@@ -93,17 +93,17 @@ public interface ContainerManager {
   Container restartContainer(String containerId);
 
   /**
-   * Get all containerProvider.
+   * Get all nodes.
    *
-   * @return a collection of containerProvider
+   * @return a collection of node
    */
-  Collection<ContainerProvider> getContainerProviders();
+  Collection<Node> getNodes();
 
   /**
-   * Set the containerProviders.
-   * @param containerProviders the containerProvider set
+   * Set the nodes.
+   * @param nodes the node set
    */
-  void setContainerProviders(Collection<ContainerProvider> containerProviders);
+  void setNodes(Collection<Node> nodes);
 
   /**
    * Find a container by its id.
@@ -125,9 +125,9 @@ public interface ContainerManager {
    * Set strategy.
    *
    * @param strategy the strategy.
-   * @see ContainerProviderSelectionStrategy
+   * @see NodeSelectionStrategy
    */
-  void setStrategy(ContainerProviderSelectionStrategy strategy);
+  void setStrategy(NodeSelectionStrategy strategy);
 
   /**
    * If set to true, will replace oldest container when container manager is full.

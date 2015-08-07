@@ -3,7 +3,7 @@ package mobi.designmyapp.common.container.provider;
 /**
  * Created by Loïc Ortola on 11/03/2015.
  */
-public class ContainerProviderRequest<T> {
+public class NodeRequest<T> {
 
   private T obj;
 
@@ -11,7 +11,7 @@ public class ContainerProviderRequest<T> {
    * Constructor.
    * @param obj the object
    */
-  private ContainerProviderRequest(T obj) {
+  private NodeRequest(T obj) {
     this.obj = obj;
   }
 
@@ -33,16 +33,16 @@ public class ContainerProviderRequest<T> {
   /*=========================================*/
 
   /**
-   * DesignMyAppRequest is used to create a new ContainerProvider using three parameters (all mandatory):
+   * DesignMyAppRequest is used to create a new Node using three parameters (all mandatory):
    * Your template tag.
-   * A endpoint that point to the container provider client
-   * A keyId and a secretKey that protect your container provider client
+   * A endpoint that point to the node client
+   * A keyId and a secretKey that protect your node client
    * <p/>
-   * The particularity of this provider, is that it can be used directly with our default implementation of
+   * The particularity of this node, is that it can be used directly with our default implementation of
    * the Container manager API. ( See knowledge Base at 3.1.2 of the 2 section )
    * <p/>
    * Use the builder pattern to create a new request :
-   * ContainerProviderRequest request = ContainerProviderRequest.designMyApp()
+   * NodeRequest request = NodeRequest.designMyApp()
    * .templateTag("myTemplateTag")
    * .endpoint("http://myServeurUrl:8080")
    * .keyId("myKeyId")
@@ -106,7 +106,7 @@ public class ContainerProviderRequest<T> {
     }
 
     /**
-     * The provider containers Time To Live in minutes.
+     * The node Time To Live in minutes.
      * If this parameter is not provided, the containers will live forever, unless set otherwise.
      * If this parameter is provided, it will force each container to be automatically shutdown after that ttl is expired.
      *
@@ -129,11 +129,11 @@ public class ContainerProviderRequest<T> {
       return this;
     }
 
-    public ContainerProviderRequest<DesignMyAppRequest> build() {
+    public NodeRequest<DesignMyAppRequest> build() {
       if (this.endpoint == null || this.endpoint == null || this.keyId == null || this.secretKey == null || this.poolSize <= 0) {
         throw new IllegalArgumentException("None of these parameters should be null : templateTag, endpoint, keyId, secretKey, and poolSize must be strictly superior to 0");
       }
-      return new ContainerProviderRequest<>(this);
+      return new NodeRequest<>(this);
     }
 
     public String getKeyId() {
@@ -166,17 +166,17 @@ public class ContainerProviderRequest<T> {
   }
 
   /**
-   * AmazonEc2Request is used to create a new ContainerProvider using three parameters (all mandatory):
+   * AmazonEc2Request is used to create a new Node using three parameters (all mandatory):
    * Your template tag.
    * A endpoint that point representing the amazon region API endpoint
    * Your Amazon accessKey and secretKey with launch rights to your Amazon Account
    * Warning: we recommend that you create dedicated rights for DesignMyApp instances within Amazon EC2
    * <p/>
-   * The particularity of this provider, is that it can be used directly with our default implementation of
+   * The particularity of this node, is that it can be used directly with our default implementation of
    * the Container manager API. ( See knowledge Base at 3.1.2 of the 2 section )
    * <p/>
    * Use the builder pattern to create a new request :
-   * ContainerProviderRequest request = ContainerProviderRequest.amazonEc2()
+   * NodeRequest request = NodeRequest.amazonEc2()
    * .templateTag("myTemplateTag")
    * .endpoint("ec2.us-east-1.amazonaws.com")
    * .accessKey("myAmazonAccessKey")
@@ -259,7 +259,7 @@ public class ContainerProviderRequest<T> {
     }
 
     /**
-     * The provider containers Time To Live in minutes.
+     * The node Time To Live in minutes.
      * If this parameter is not provided, the containers will live forever, unless set otherwise.
      * If this parameter is provided, it will force each container to be automatically shutdown after that ttl is expired.
      *
@@ -283,7 +283,7 @@ public class ContainerProviderRequest<T> {
     }
 
     /**
-     * Laziness of an Amazon provider can be defined so that it does not launch a dedicated instance before it is necessary.
+     * Laziness of an Amazon node can be defined so that it does not launch a dedicated instance before it is necessary.
      * Enabling lazy mode will meaningfully increase the container init time on first container start.
      * @param lazy to enable or not
      * @return building AmazonEc2Request
@@ -293,11 +293,11 @@ public class ContainerProviderRequest<T> {
       return this;
     }
 
-    public ContainerProviderRequest<AmazonEc2Request> build() {
+    public NodeRequest<AmazonEc2Request> build() {
       if (this.endpoint == null || this.endpoint == null || this.accessKey == null || this.secretKey == null || this.instanceType == null || this.securityGroups == null || this.poolSize <= 0) {
         throw new IllegalArgumentException("None of these parameters should be null : templateTag, endpoint, accessKey, secretKey, instanceType, securityGroups, and poolSize must be strictly superior to 0");
       }
-      return new ContainerProviderRequest<>(this);
+      return new NodeRequest<>(this);
     }
 
     public String getAccessKey() {

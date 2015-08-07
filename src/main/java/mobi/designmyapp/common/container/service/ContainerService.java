@@ -1,8 +1,8 @@
 package mobi.designmyapp.common.container.service;
 
 import mobi.designmyapp.common.container.manager.ContainerManager;
-import mobi.designmyapp.common.container.provider.ContainerProvider;
-import mobi.designmyapp.common.container.provider.ContainerProviderRequest;
+import mobi.designmyapp.common.container.provider.Node;
+import mobi.designmyapp.common.container.provider.NodeRequest;
 
 
 /**
@@ -20,12 +20,12 @@ public interface ContainerService {
   <T extends ContainerManager> ContainerManager getContainerManager(String templateTag);
 
   /**
-   * Retrieve an instance provider matching one of the default implementations.
+   * Retrieve an node matching one of the default implementations.
    *
-   * @param request the InstanceProviderRequest
-   * @return your instance provider object
+   * @param request the nodeRequest
+   * @return your node object
    */
-  ContainerProvider createContainerProvider(ContainerProviderRequest request);
+  Node createNode(NodeRequest request);
 
 
 }

@@ -12,7 +12,7 @@
  */
 package mobi.designmyapp.common.container.provider;
 
-import mobi.designmyapp.common.container.listener.ContainerProviderChangeListener;
+import mobi.designmyapp.common.container.listener.NodeChangeListener;
 import mobi.designmyapp.common.container.model.Container;
 import mobi.designmyapp.common.container.model.ContainerStatus;
 import mobi.designmyapp.common.container.model.Status;
@@ -27,24 +27,24 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
- * This class represents a container provider, a provider manage
+ * This class represents a node, a node manage
  * containers (@see mobi.designmyapp.common.container.model.Container)
  * Created by Jean Blanchard on 28/10/14.
  */
-public abstract class ContainerProvider implements Comparable<ContainerProvider> {
+public abstract class Node implements Comparable<Node> {
 
   protected String templateTag;
   protected Integer poolSize;
   protected Integer ttl;
   protected Integer priority;
   private ConcurrentLinkedQueue<Container> containers;
-  private ContainerProviderChangeListener listener;
+  private NodeChangeListener listener;
   private ConcurrentLinkedQueue<String> containersToClean;
 
   /**
    * Default constructor.
    */
-  public ContainerProvider() {
+  public Node() {
     this.containers = new ConcurrentLinkedQueue<>();
     this.containersToClean = new ConcurrentLinkedQueue<>();
   }
@@ -54,7 +54,7 @@ public abstract class ContainerProvider implements Comparable<ContainerProvider>
    *
    * @param templateTag the template tag
    */
-  public ContainerProvider(String templateTag) {
+  public Node(String templateTag) {
     this();
     this.templateTag = templateTag;
   }
@@ -84,16 +84,16 @@ public abstract class ContainerProvider implements Comparable<ContainerProvider>
    *
    * @return the listener
    */
-  public ContainerProviderChangeListener getListener() {
+  public NodeChangeListener getListener() {
     return listener;
   }
 
   /**
-   * Set the ContainerProviderChangeListener.
+   * Set the NodeChangeListener.
    *
    * @param listener the listener to notify.
    */
-  public void setListener(ContainerProviderChangeListener listener) {
+  public void setListener(NodeChangeListener listener) {
     this.listener = listener;
   }
 
@@ -134,12 +134,12 @@ public abstract class ContainerProvider implements Comparable<ContainerProvider>
 
 
   /**
-   * Friendly name for this provider.
+   * Friendly name for this node.
    *
-   * @return the name of the provider
+   * @return the name of the node
    */
   public String getName() {
-    return ContainerProvider.class.getSimpleName();
+    return Node.class.getSimpleName();
   }
 
   /**
@@ -153,7 +153,7 @@ public abstract class ContainerProvider implements Comparable<ContainerProvider>
    * The priority is an arbitrary number.
    * Default value is 0.
    * The lower the priority, the more important:
-   * Priority 0 - Highest importance (will be preferred when choosing one of the ContainerProvider instances)
+   * Priority 0 - Highest importance (will be preferred when choosing one of the Node instances)
    * Priority 1 - High importance
    * Priority 2 - Lower importance
    * ... etc...
@@ -165,7 +165,7 @@ public abstract class ContainerProvider implements Comparable<ContainerProvider>
   }
 
   /**
-   * Return the provider-level time-to-live for default containers.
+   * Return the node-level time-to-live for default containers.
    *
    * @return time-to-live
    */
@@ -186,9 +186,9 @@ public abstract class ContainerProvider implements Comparable<ContainerProvider>
 
 
   /**
-   * Retrieve the status of this ContainerProvider.
+   * Retrieve the status of this Node.
    *
-   * @return ContainerProvider status @see mobi.designmyapp.common.container.model.Status
+   * @return Node status @see mobi.designmyapp.common.container.model.Status
    */
   public abstract Status getStatus();
 
@@ -201,7 +201,7 @@ public abstract class ContainerProvider implements Comparable<ContainerProvider>
   }
 
   /**
-   * Indicate if the ContainerProvider can create containers checking poolSize
+   * Indicate if the Node can create containers checking poolSize
    * and running containers List.
    *
    * @return boolean indicating whether a new container can be started.
@@ -211,7 +211,7 @@ public abstract class ContainerProvider implements Comparable<ContainerProvider>
   }
 
   /**
-   * Indicate if the ContainerProvider can create containers checking poolSize
+   * Indicate if the Node can create containers checking poolSize
    * and running containers List.
    *
    * @param size the number of containers to create.
@@ -359,11 +359,11 @@ public abstract class ContainerProvider implements Comparable<ContainerProvider>
   }
 
   /**
-   * Notifies the eventual listener that there was a change on the ContainerProvider.
+   * Notifies the eventual listener that there was a change on the Node.
    */
   private void notifyContainersChanged() {
     if (listener != null) {
-      listener.onContainerProviderChanged(this);
+      listener.onNodeChanged(this);
     }
   }
 
@@ -372,11 +372,11 @@ public abstract class ContainerProvider implements Comparable<ContainerProvider>
    * Ordering is by priority and name when priority is equal.
    */
   @Override
-  public int compareTo(ContainerProvider containerProvider) {
-    if (this.getPriority().equals(containerProvider.getPriority())) {
-      return this.getName().compareTo(containerProvider.getName());
+  public int compareTo(Node node) {
+    if (this.getPriority().equals(node.getPriority())) {
+      return this.getName().compareTo(node.getName());
     } else {
-      return this.getPriority().compareTo(containerProvider.getPriority());
+      return this.getPriority().compareTo(node.getPriority());
     }
   }
 
