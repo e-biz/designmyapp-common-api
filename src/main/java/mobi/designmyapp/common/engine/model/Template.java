@@ -114,7 +114,7 @@ public abstract class Template {
     if (targets == null) {
       targets = new LinkedList<>();
     }
-    if (!target.contains(target)) {
+    if (!targets.contains(target)) {
       targets.add(target);
     }
   }

@@ -20,6 +20,7 @@ import java.io.InputStream;
  * It will allow you to upload any custom resources for your application.
  * Created by Christophe Deverre on 01/08/14.
  */
+//TODO REFACTOR THE CLASS, apiKey?? appId?? resources??
 public class UploadRequest {
 
   /**
@@ -47,6 +48,13 @@ public class UploadRequest {
    */
   private Object resources;
 
+
+  /**
+   * String for the destFilename.
+   */
+  private String destFilename;
+
+
   /**
    * Constructor.
    * @param originalFilename the original uploaded file name
@@ -54,13 +62,15 @@ public class UploadRequest {
    * @param appId the application id
    * @param obj the object to save in stream
    * @param resources Object to store additional resources
+   * @param destFilename String for the destFilename
    */
-  public UploadRequest(String originalFilename, String apiKey, String appId, InputStream obj, Object resources) {
+  public UploadRequest(String originalFilename, String apiKey, String appId, InputStream obj, Object resources, String destFilename) {
     this.originalFilename = originalFilename;
     this.apiKey = apiKey;
     this.appId = appId;
     this.obj = obj;
     this.resources = resources;
+    this.destFilename = destFilename;
   }
 
   public String getOriginalFilename() {
@@ -101,5 +111,13 @@ public class UploadRequest {
 
   public void setResources(Object resources) {
     this.resources = resources;
+  }
+
+  public String getDestFilename() {
+    return destFilename;
+  }
+
+  public void setDestFilename(String destFilename) {
+    this.destFilename = destFilename;
   }
 }
