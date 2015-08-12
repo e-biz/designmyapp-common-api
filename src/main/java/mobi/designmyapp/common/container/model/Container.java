@@ -3,7 +3,6 @@ package mobi.designmyapp.common.container.model;
 import mobi.designmyapp.common.util.UtilsFactory;
 
 import java.io.Serializable;
-import java.net.URI;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -128,7 +127,7 @@ public class Container {
 
   private int progress;
   private Status status;
-  private URI endpoint;
+  private String endpoint;
 
   /**
    * Default constructor.
@@ -169,7 +168,7 @@ public class Container {
     return status;
   }
 
-  public URI getEndpoint() {
+  public String getEndpoint() {
     return endpoint;
   }
 
@@ -201,7 +200,7 @@ public class Container {
     this.status = status;
   }
 
-  public void setEndpoint(URI endpoint) {
+  public void setEndpoint(String endpoint) {
     this.endpoint = endpoint;
   }
 

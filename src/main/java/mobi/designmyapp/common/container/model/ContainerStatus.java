@@ -1,6 +1,5 @@
 package mobi.designmyapp.common.container.model;
 
-import java.net.URI;
 import java.util.Map;
 
 public class ContainerStatus {
@@ -28,7 +27,7 @@ public class ContainerStatus {
   /**
    * Endpoint (protocol + endpoint).
    */
-  private URI endpoint;
+  private String endpoint;
 
   /**
    * Port mapping.
@@ -75,11 +74,11 @@ public class ContainerStatus {
     this.status = status;
   }
 
-  public URI getEndpoint() {
+  public String getEndpoint() {
     return endpoint;
   }
 
-  public void setEndpoint(URI endpoint) {
+  public void setEndpoint(String endpoint) {
     this.endpoint = endpoint;
   }
 }
