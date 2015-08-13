@@ -45,14 +45,6 @@ public interface ContainerManager {
   void addNode(Node node);
 
   /**
-   * Start a new container.
-   * WARNING: if you need to launch multiple containers, use {@link #startContainers(mobi.designmyapp.common.container.model.Container...)} instead.
-   *
-   * @param config the container config
-   */
-  void startContainer(Container config);
-
-  /**
    * Start a new set of containers.
    * Those containers will be launched on the same node.
    *
@@ -61,12 +53,14 @@ public interface ContainerManager {
   void startContainers(Container... configs);
 
   /**
-   * Start a new container with a specific time-to-live (in minutes).
+   * Start a new set of containers on a specified node that need to be in the manager.
+   * Those containers will be launched on the same node.
    *
-   * @param ttl    the container's time-to-live in minutes. After the TTL is expired, the container will be killed.
-   * @param config the container config
+   * @param node    the node to launch the containers
+   * @param configs the container configs
    */
-  void startContainer(int ttl, Container config);
+  void startContainers(Node node, Container... configs);
+
 
   /**
    * Start a new set of containers with a specific time-to-live (in minutes).
@@ -76,6 +70,16 @@ public interface ContainerManager {
    * @param configs the container configs
    */
   void startContainers(int ttl, Container... configs);
+
+  /**
+   * Start a new set of containers with a specific time-to-live (in minutes) .
+   * Those containers will be launched on the same node specified in the request.
+   *
+   * @param node    the node to launch the containers
+   * @param ttl     the container's time-to-live in minutes. After the TTL is expired, the container will be killed.
+   * @param configs the container configs
+   */
+  void startContainers(Node node, int ttl, Container... configs);
 
   /**
    * Stop a container.
