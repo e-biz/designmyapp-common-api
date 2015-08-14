@@ -20,7 +20,6 @@ import mobi.designmyapp.common.container.model.Status;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -168,6 +167,7 @@ public abstract class Node implements Comparable<Node> {
 
   /**
    * Boolean which check if a node is a active or not.
+   * @param active the boolean
    */
   public void setActive(Boolean active) {
     this.active = active;
@@ -320,11 +320,13 @@ public abstract class Node implements Comparable<Node> {
   }
 
   /**
-   * Check if a ContainerStatus match this node
-   * @param statusList
-   * @return
+   * Check if a ContainerStatus match this node.
+   *
+   * @param container the container to find
+   * @param statusList the status list
+   * @return the container found in the list, null otherwise
    */
-  protected ContainerStatus equalsContainerStatus(Container container,List<ContainerStatus> statusList) {
+  protected ContainerStatus equalsContainerStatus(Container container, List<ContainerStatus> statusList) {
     for (ContainerStatus status : statusList) {
       //Can't add container.getName().equals(status.getName()) in if
       // because status name has a leading "/"
@@ -390,6 +392,7 @@ public abstract class Node implements Comparable<Node> {
    * Notifies the eventual listener that there was a change on the Node.
    */
   private void notifyContainersChanged() {
+    this.setActive(true);
     if (listener != null) {
       listener.onNodeChanged(this);
     }
