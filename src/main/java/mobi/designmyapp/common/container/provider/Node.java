@@ -37,6 +37,7 @@ public abstract class Node implements Comparable<Node> {
   protected Integer poolSize;
   protected Integer ttl;
   protected Integer priority;
+  protected Boolean active;
   private ConcurrentLinkedQueue<Container> containers;
   private NodeChangeListener listener;
   private ConcurrentLinkedQueue<String> containersToClean;
@@ -47,6 +48,7 @@ public abstract class Node implements Comparable<Node> {
   public Node() {
     this.containers = new ConcurrentLinkedQueue<>();
     this.containersToClean = new ConcurrentLinkedQueue<>();
+    this.active = true;
   }
 
   /**
@@ -162,6 +164,18 @@ public abstract class Node implements Comparable<Node> {
    */
   public void setPriority(Integer priority) {
     this.priority = priority;
+  }
+
+  /**
+   * Boolean which check if a node is a active or not.
+   */
+  public void setActive(Boolean active) {
+    this.active = active;
+  }
+
+
+  public Boolean getActive() {
+    return active;
   }
 
   /**
@@ -290,15 +304,12 @@ public abstract class Node implements Comparable<Node> {
    * @param updatedContainers the updated containers
    */
   protected void updateContainers(List<ContainerStatus> updatedContainers) {
-
-    Iterator<Container> it = this.containers.iterator();
     // Updates the containers DesignMyApp knows about.
-    while (it.hasNext()) {
-      Container c = it.next();
-      int index;
-      if ((index = updatedContainers.indexOf(c)) > -1) {
+    for (Container c : this.containers) {
+      ContainerStatus status = this.equalsContainerStatus(c, updatedContainers);
+      if (status != null) {
         // Container is still remotely present. Update state
-        mergeStates(c, updatedContainers.get(index));
+        mergeStates(c, status);
       } else {
         // Container is absent remotely. Remove from list.
         // N.B.: deletion while iterating is possible because we use a ConcurrentLinkedQueue implementation.
@@ -306,6 +317,22 @@ public abstract class Node implements Comparable<Node> {
       }
     }
     notifyContainersChanged();
+  }
+
+  /**
+   * Check if a ContainerStatus match this node
+   * @param statusList
+   * @return
+   */
+  protected ContainerStatus equalsContainerStatus(Container container,List<ContainerStatus> statusList) {
+    for (ContainerStatus status : statusList) {
+      //Can't add container.getName().equals(status.getName()) in if
+      // because status name has a leading "/"
+      if (status.getContainerId().startsWith(container.getContainerId())) {
+        return status;
+      }
+    }
+    return null;
   }
 
   /**
@@ -347,6 +374,7 @@ public abstract class Node implements Comparable<Node> {
       options.setPortMap(newMap);
     }
     String id = newStatus.getContainerId().replace("\"", "");
+    container.setName(newStatus.getName());
     container.setContainerId(id);
     container.setProgress(newStatus.getProgress());
     container.setStatus(newStatus.getStatus());

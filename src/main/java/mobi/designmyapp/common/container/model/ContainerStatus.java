@@ -81,4 +81,16 @@ public class ContainerStatus {
   public void setEndpoint(String endpoint) {
     this.endpoint = endpoint;
   }
+
+  @Override
+  public String toString() {
+    return "ContainerStatus{" +
+        "name='" + name + '\'' +
+        ", containerId='" + containerId + '\'' +
+        ", status=" + status +
+        ", progress=" + progress +
+        ", endpoint=" + endpoint +
+        ", portMap=" + portMap +
+        '}';
+  }
 }
