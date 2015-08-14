@@ -15,6 +15,7 @@ package mobi.designmyapp.common.util;
 import mobi.designmyapp.common.container.service.ContainerService;
 import mobi.designmyapp.common.engine.service.ContextService;
 import mobi.designmyapp.common.engine.service.PricingService;
+import mobi.designmyapp.common.engine.service.ProgressService;
 import mobi.designmyapp.common.engine.service.provider.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -232,5 +233,14 @@ public class UtilsFactory {
    */
   public static ContainerService getContainerService() {
     return serviceProviderProxy.getService(ContainerService.class);
+  }
+
+  /**
+   * Retrieve ProgressService implementation.
+   *
+   * @return ProgressService instance
+   */
+  public static ProgressService getProgressService() {
+    return serviceProviderProxy.getService(ProgressService.class);
   }
 }
