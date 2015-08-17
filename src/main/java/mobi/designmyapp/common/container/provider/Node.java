@@ -380,7 +380,6 @@ public abstract class Node implements Comparable<Node> {
     container.setContainerId(id);
     container.setProgress(newStatus.getProgress());
     container.setStatus(newStatus.getStatus());
-    container.setEndpoint(newStatus.getEndpoint());
 
     // If container was a clean-up container, trigger removal.
     if (container.getStatus().equals(Status.SHUTDOWN) && containersToClean.contains(container.getContainerId())) {
@@ -398,16 +397,28 @@ public abstract class Node implements Comparable<Node> {
     }
   }
 
+  @Override
+  public boolean equals(Object obj) {
+    if (obj instanceof Node) {
+      Node node = (Node) obj;
+      if (this.getEndpoint().equals(node.getEndpoint()) && this.getTemplateTag().equals(node.getTemplateTag())) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+
   /**
    * Default implementation of compareTo for the ContainerManager.
    * Ordering is by priority and name when priority is equal.
    */
   @Override
   public int compareTo(Node node) {
-    if (this.getPriority().equals(node.getPriority())) {
-      return this.getName().compareTo(node.getName());
+    if (this.getTemplateTag().equals(node.getTemplateTag())) {
+      return this.getEndpoint().compareTo(node.getEndpoint());
     } else {
-      return this.getPriority().compareTo(node.getPriority());
+      return this.getTemplateTag().compareTo(node.getTemplateTag());
     }
   }
 
