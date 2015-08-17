@@ -408,6 +408,12 @@ public abstract class Node implements Comparable<Node> {
     return false;
   }
 
+  @Override
+  public int hashCode() {
+    int result = templateTag != null ? templateTag.hashCode() : 0;
+    result = 31 * result + (this.getEndpoint() != null ? this.getEndpoint().hashCode() : 0);
+    return result;
+  }
 
   /**
    * Default implementation of compareTo for the ContainerManager.
