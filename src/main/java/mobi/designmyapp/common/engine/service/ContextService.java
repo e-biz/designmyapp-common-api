@@ -94,4 +94,13 @@ public interface ContextService {
    * @return current environment base URL
    */
   String getEnvironmentBaseUrl();
+
+  /**
+   * Retrieve an url bundle.zip from server webapp resources.
+   * Use especially during upgrade.
+   *
+   * @return a String representing the url to access the file
+   */
+  String getRemoteBundleUrl();
+
 }
