@@ -141,4 +141,34 @@ public interface ContainerManager {
    */
   void setReplaceOldestWhenFull(boolean enabled);
 
+  /**
+   * Pause a container.
+   *
+   * @param containerId the container id
+   */
+  void pauseContainer(String containerId);
+
+  /**
+   * Unpause a container.
+   *
+   * @param containerId the container id
+   */
+  void unpauseContainer(String containerId);
+
+  /**
+   * Commit a container.
+   *
+   * @param containerId the container id
+   * @return id of the commit
+   */
+  String commitContainer(String containerId);
+
+  /**
+   * Get node which possess the given container.
+   *
+   * @param containerId the container id
+   * @return the node that run the container
+   */
+  Node getNodeByContainerId(String containerId);
+
 }

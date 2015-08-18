@@ -381,5 +381,26 @@ public abstract class  Node implements Comparable<Node> {
     }
   }
 
+  /**
+   * Pause a container.
+   *
+   * @param containerId container id to pause
+   */
+  public abstract void pause(String containerId);
+
+  /**
+   * Unpause a container.
+   *
+   * @param containerId container id to unpause
+   */
+  public abstract void unpause(String containerId);
+
+  /**
+   * Commit a container.
+   *
+   * @param containerId container id
+   * @return commit id
+   */
+  public abstract String commit(String containerId);
 
 }

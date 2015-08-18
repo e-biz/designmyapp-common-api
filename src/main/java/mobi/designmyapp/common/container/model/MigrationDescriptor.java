@@ -11,6 +11,9 @@ public class MigrationDescriptor {
   private String versionFrom;
   private String versionTo;
   private Container migrationContainer;
+  private Integer pauseTimeout;
+  private Integer migrationTimeout;
+  private Integer dumpTimeout;
 
   public String getVersionFrom() {
     return versionFrom;
@@ -34,6 +37,30 @@ public class MigrationDescriptor {
 
   public void setMigrationContainer(Container migrationContainer) {
     this.migrationContainer = migrationContainer;
+  }
+
+  public Integer getPauseTimeout() {
+    return pauseTimeout;
+  }
+
+  public void setPauseTimeout(Integer pauseTimeout) {
+    this.pauseTimeout = pauseTimeout;
+  }
+
+  public Integer getMigrationTimeout() {
+    return migrationTimeout;
+  }
+
+  public void setMigrationTimeout(Integer migrationTimeout) {
+    this.migrationTimeout = migrationTimeout;
+  }
+
+  public Integer getDumpTimeout() {
+    return dumpTimeout;
+  }
+
+  public void setDumpTimeout(Integer dumpTimeout) {
+    this.dumpTimeout = dumpTimeout;
   }
 
 
@@ -64,6 +91,21 @@ public class MigrationDescriptor {
 
     public Builder container(Container container) {
       md.migrationContainer = container;
+      return this;
+    }
+
+    public Builder pauseTimeout(Integer pauseTimeout) {
+      md.pauseTimeout = pauseTimeout;
+      return this;
+    }
+
+    public Builder migrationTimeout(Integer migrationTimeout) {
+      md.migrationTimeout = migrationTimeout;
+      return this;
+    }
+
+    public Builder dumpTimeout(Integer dumpTimeout) {
+      md.dumpTimeout = dumpTimeout;
       return this;
     }
 
