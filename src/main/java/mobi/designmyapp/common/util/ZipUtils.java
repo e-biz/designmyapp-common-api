@@ -25,11 +25,12 @@ public interface ZipUtils {
   /**
    * Extract Zip file in temp folder to prepare all sources.
    *
-   * @param zipFile         input zip File
+   * @param zipFile input zip File
    * @param validExtensions input File valid extensions
-   * @param errorFiles      Files with invalid extensions or names not treated
+   * @param errorFiles Files with invalid extensions or names not treated
+   * @return the directory where zip files have been extracted
    * @throws IOException in case of an I/O error
    */
-  void unzip(File zipFile, List<String> validExtensions, List<String> errorFiles) throws IOException;
+  File unzip(File zipFile, List<String> validExtensions, List<String> errorFiles) throws IOException;
 
 }

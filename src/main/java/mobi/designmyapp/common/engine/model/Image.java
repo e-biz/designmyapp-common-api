@@ -107,16 +107,10 @@ public class Image {
   public static class URLBuilder {
 
     private Image image;
-    private String apiKey;
     private String namespace;
 
     private URLBuilder(Image image) {
       this.image = image;
-    }
-
-    public URLBuilder apiKey(String apiKey) {
-      this.apiKey = apiKey;
-      return this;
     }
 
     public URLBuilder namespace(String namespace) {
@@ -128,7 +122,7 @@ public class Image {
       if (namespace == null || image.getFileName() == null) {
         throw new IllegalStateException("fileName, appId and namespace fields are mandatory.");
       }
-      image.url = UtilsFactory.getContextService().createUrl(namespace, image.getFileName(), apiKey);
+      image.url = UtilsFactory.getContextService().createUrl(namespace, image.getFileName());
       return image;
     }
 
