@@ -80,6 +80,21 @@ public interface StringUtils {
   boolean noHtmlText(String value);
 
   /**
+   * Check whether a char[] contains html tags.
+   *
+   * @param value the char[] to test
+   * @return true if the value is valid, false otherwise
+   */
+  boolean noHtmlTextCharArray(char[] value);
+
+  /**
+   * Trim a char []
+   * @param value the char[] to trim.
+   * @return the new char[]
+   */
+  char[] trim(char[] value);
+
+  /**
    * Checks whether an URL is an image or not.
    *
    * @param value the URL
