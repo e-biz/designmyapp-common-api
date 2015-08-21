@@ -29,7 +29,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  * containers (@see mobi.designmyapp.common.container.model.Container)
  * Created by Jean Blanchard on 28/10/14.
  */
-public abstract class Node implements Comparable<Node> {
+public abstract class  Node implements Comparable<Node> {
 
   protected String templateTag;
   protected Integer poolSize;

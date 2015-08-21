@@ -88,7 +88,7 @@ public interface StringUtils {
   boolean noHtmlTextCharArray(char[] value);
 
   /**
-   * Trim a char []
+   * Trim a char [].
    * @param value the char[] to trim.
    * @return the new char[]
    */
