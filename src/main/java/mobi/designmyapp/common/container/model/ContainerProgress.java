@@ -60,7 +60,7 @@ public class ContainerProgress {
   @Override
   public String toString() {
     return "InstanceProgress{" +
-        ", percentage=" + percentage +
+        "percentage=" + percentage +
         ", messages=" + messages +
         '}';
   }

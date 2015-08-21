@@ -10,8 +10,8 @@ public interface ProgressService {
    * Set the progress for a given task.
    *
    * @param appId App ID
-   * @param taskId Unique task identifier
+   * @param buildStepKey Unique build step key
    * @param progress Progression information
    */
-  void progress(String appId, String taskId, ContainerProgressRequest progress);
+  void progress(String appId, String buildStepKey, ContainerProgressRequest progress);
 }
