@@ -12,7 +12,6 @@
  */
 package mobi.designmyapp.common.container.provider;
 
-import mobi.designmyapp.common.container.listener.NodeChangeListener;
 import mobi.designmyapp.common.container.model.Container;
 import mobi.designmyapp.common.container.model.ContainerStatus;
 import mobi.designmyapp.common.container.model.Status;
@@ -38,7 +37,6 @@ public abstract class Node implements Comparable<Node> {
   protected Integer priority;
   protected Boolean active;
   private ConcurrentLinkedQueue<Container> containers;
-  private NodeChangeListener listener;
   private ConcurrentLinkedQueue<String> containersToClean;
 
   /**
@@ -78,24 +76,6 @@ public abstract class Node implements Comparable<Node> {
     ConcurrentLinkedQueue<Container> concurrent = new ConcurrentLinkedQueue<>();
     concurrent.addAll(containers);
     this.containers = concurrent;
-  }
-
-  /**
-   * Get listener.
-   *
-   * @return the listener
-   */
-  public NodeChangeListener getListener() {
-    return listener;
-  }
-
-  /**
-   * Set the NodeChangeListener.
-   *
-   * @param listener the listener to notify.
-   */
-  public void setListener(NodeChangeListener listener) {
-    this.listener = listener;
   }
 
   /**
@@ -243,13 +223,6 @@ public abstract class Node implements Comparable<Node> {
   }
 
   /**
-   * Start a new container.
-   *
-   * @param config the container config
-   */
-  public abstract void start(Container config);
-
-  /**
    * Start a new container set.
    *
    * @param configs the container configs
@@ -279,23 +252,13 @@ public abstract class Node implements Comparable<Node> {
   public abstract void remove(String containerId);
 
   /**
-   * Add a container.
-   *
-   * @param container the container to add
-   */
-  protected void addContainer(Container container) {
-    containers.add(container);
-    notifyContainersChanged();
-  }
-
-  /**
    * Add a serie of containers.
    *
    * @param containers the containers to add
    */
-  protected void addContainers(Container... containers) {
+  protected void addContainer(Container... containers) {
     this.containers.addAll(Arrays.asList(containers));
-    notifyContainersChanged();
+    this.setActive(true);
   }
 
   /**
@@ -316,7 +279,7 @@ public abstract class Node implements Comparable<Node> {
         containers.remove(c);
       }
     }
-    notifyContainersChanged();
+    this.setActive(true);
   }
 
   /**
@@ -344,7 +307,7 @@ public abstract class Node implements Comparable<Node> {
    */
   protected void removeContainer(Container container) {
     containers.remove(container);
-    notifyContainersChanged();
+    this.setActive(true);
   }
 
   /**
@@ -384,16 +347,6 @@ public abstract class Node implements Comparable<Node> {
     // If container was a clean-up container, trigger removal.
     if (container.getStatus().equals(Status.SHUTDOWN) && containersToClean.contains(container.getContainerId())) {
       remove(container.getContainerId());
-    }
-  }
-
-  /**
-   * Notifies the eventual listener that there was a change on the Node.
-   */
-  private void notifyContainersChanged() {
-    this.setActive(true);
-    if (listener != null) {
-      listener.onNodeChanged(this);
     }
   }
 
