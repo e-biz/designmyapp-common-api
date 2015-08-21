@@ -9,6 +9,7 @@ public class NodeRequest<T> {
 
   /**
    * Constructor.
+   *
    * @param obj the object
    */
   private NodeRequest(T obj) {
@@ -17,6 +18,7 @@ public class NodeRequest<T> {
 
   /**
    * Get obj attribute.
+   *
    * @return obj
    */
   public T get() {
@@ -181,9 +183,11 @@ public class NodeRequest<T> {
    * .endpoint("ec2.us-east-1.amazonaws.com")
    * .accessKey("myAmazonAccessKey")
    * .secretKey("myAmazonSecretKey")
+   * .volumeSize(20)
    * .poolSize(20)
    * .securityGroups("launch-wizard-6")
    * .instanceType("t2.medium")
+   * .name("myName") [optional]
    * .ttl(60) [optional]
    * .priority(1) [optional]
    * .lazy(true) [optional]
@@ -197,6 +201,8 @@ public class NodeRequest<T> {
 
   public static class AmazonEc2Request {
 
+    private String name;
+
     private String templateTag;
 
     private String accessKey;
@@ -209,15 +215,22 @@ public class NodeRequest<T> {
 
     private String instanceType;
 
+    private int volumeSize;
+
     private int poolSize;
 
     private int ttl;
 
     private int priority;
-    
+
     private boolean lazy;
 
     private AmazonEc2Request() {
+    }
+
+    public AmazonEc2Request name(String name) {
+      this.name = name;
+      return this;
     }
 
     public AmazonEc2Request templateTag(String templateTag) {
@@ -247,6 +260,11 @@ public class NodeRequest<T> {
 
     public AmazonEc2Request instanceType(String instanceType) {
       this.instanceType = instanceType;
+      return this;
+    }
+
+    public AmazonEc2Request volumeSize(int volumeSize){
+      this.volumeSize = volumeSize;
       return this;
     }
 
@@ -285,6 +303,7 @@ public class NodeRequest<T> {
     /**
      * Laziness of an Amazon node can be defined so that it does not launch a dedicated instance before it is necessary.
      * Enabling lazy mode will meaningfully increase the container init time on first container start.
+     *
      * @param lazy to enable or not
      * @return building AmazonEc2Request
      */
@@ -294,10 +313,14 @@ public class NodeRequest<T> {
     }
 
     public NodeRequest<AmazonEc2Request> build() {
-      if (this.endpoint == null || this.endpoint == null || this.accessKey == null || this.secretKey == null || this.instanceType == null || this.securityGroups == null || this.poolSize <= 0) {
-        throw new IllegalArgumentException("None of these parameters should be null : templateTag, endpoint, accessKey, secretKey, instanceType, securityGroups, and poolSize must be strictly superior to 0");
+      if (this.endpoint == null || this.endpoint == null || this.accessKey == null || this.secretKey == null || this.instanceType == null || this.securityGroups == null || this.poolSize <= 0 || this.volumeSize <= 0) {
+        throw new IllegalArgumentException("None of these parameters should be null : templateTag, endpoint, accessKey, secretKey, instanceType, securityGroups, and poolSize and volumeSize must be strictly superior to 0");
       }
       return new NodeRequest<>(this);
+    }
+
+    public String getName() {
+      return name;
     }
 
     public String getAccessKey() {
@@ -314,6 +337,10 @@ public class NodeRequest<T> {
 
     public String getEndpoint() {
       return endpoint;
+    }
+
+    public int getVolumeSize() {
+      return volumeSize;
     }
 
     public int getPoolSize() {
