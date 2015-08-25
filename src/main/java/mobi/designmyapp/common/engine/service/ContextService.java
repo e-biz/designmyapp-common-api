@@ -103,4 +103,10 @@ public interface ContextService {
    */
   String getRemoteBundleUrl();
 
+  /**
+   * Node name where containers should be launch.
+   *
+   * @return a String representing the name of the targeted node
+   */
+  String getTargetedNodeName();
 }
