@@ -403,4 +403,11 @@ public abstract class  Node implements Comparable<Node> {
    */
   public abstract String commit(String containerId);
 
+  /**
+   * Remove a commit.
+   *
+   * @param commitName commit name to remove
+   */
+  public abstract void removeCommit(String commitName);
+
 }

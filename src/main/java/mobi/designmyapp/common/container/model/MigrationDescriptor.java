@@ -14,6 +14,7 @@ public class MigrationDescriptor {
   private Integer pauseTimeout;
   private Integer migrationTimeout;
   private Integer dumpTimeout;
+  private Integer exposedBundleTtl;
 
   public String getVersionFrom() {
     return versionFrom;
@@ -61,6 +62,14 @@ public class MigrationDescriptor {
 
   public void setDumpTimeout(Integer dumpTimeout) {
     this.dumpTimeout = dumpTimeout;
+  }
+
+  public Integer getExposedBundleTtl() {
+    return exposedBundleTtl;
+  }
+
+  public void setExposedBundleTtl(Integer exposedBundleTtl) {
+    this.exposedBundleTtl = exposedBundleTtl;
   }
 
 
