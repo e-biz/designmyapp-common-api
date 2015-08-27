@@ -330,13 +330,13 @@ public abstract class  Node implements Comparable<Node> {
     if (container.getOptions().getType() == Container.Type.COMMAND) {
       Container.CommandOptions options = ((Container.CommandOptions) container.getOptions());
       Map<Integer, Integer> newMap = new HashMap<>();
-      if (newStatus.getPortMap() == null) {
-        newStatus.setPortMap(new HashMap<>());
+      if (newStatus.getPortsMap() == null) {
+        newStatus.setPortsMap(new HashMap<>());
       }
-      for (Map.Entry<String, String> ports : newStatus.getPortMap().entrySet()) {
+      for (Map.Entry<String, String> ports : newStatus.getPortsMap().entrySet()) {
         newMap.put(Integer.valueOf(ports.getKey()), Integer.valueOf(ports.getValue()));
       }
-      options.setPortMap(newMap);
+      options.setPortsMap(newMap);
     }
     String id = newStatus.getContainerId().replace("\"", "");
     container.setName(newStatus.getName());

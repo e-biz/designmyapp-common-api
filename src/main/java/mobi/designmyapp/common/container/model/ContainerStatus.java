@@ -32,7 +32,7 @@ public class ContainerStatus {
   /**
    * Port mapping.
    */
-  private Map<String, String> portMap;
+  private Map<String, String> portsMap;
 
   public String getName() {
     return name;
@@ -58,12 +58,12 @@ public class ContainerStatus {
     this.progress = progress;
   }
 
-  public Map<String, String> getPortMap() {
-    return portMap;
+  public Map<String, String> getPortsMap() {
+    return portsMap;
   }
 
-  public void setPortMap(Map<String, String> portMap) {
-    this.portMap = portMap;
+  public void setPortsMap(Map<String, String> portsMap) {
+    this.portsMap = portsMap;
   }
 
   public Status getStatus() {
@@ -90,7 +90,7 @@ public class ContainerStatus {
         ", status=" + status +
         ", progress=" + progress +
         ", endpoint=" + endpoint +
-        ", portMap=" + portMap +
+        ", portsMap=" + portsMap +
         '}';
   }
 }

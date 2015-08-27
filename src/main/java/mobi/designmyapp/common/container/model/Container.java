@@ -1006,7 +1006,7 @@ public class Container {
     protected Mode mode;
     protected Set<Link> links;
     protected boolean mapExposedPorts;
-    protected Map<Integer, Integer> portMap;
+    protected Map<Integer, Integer> portsMap;
     protected Command command;
 
     public Set<String> getDataVolumeContainers() {
@@ -1037,8 +1037,8 @@ public class Container {
       return mapExposedPorts;
     }
 
-    public Map<Integer, Integer> getPortMap() {
-      return portMap;
+    public Map<Integer, Integer> getPortsMap() {
+      return portsMap;
     }
 
     public void setDataVolumeContainers(Set<String> dataVolumeContainers) {
@@ -1065,8 +1065,8 @@ public class Container {
       this.mapExposedPorts = mapExposedPorts;
     }
 
-    public void setPortMap(Map<Integer, Integer> portMap) {
-      this.portMap = portMap;
+    public void setPortsMap(Map<Integer, Integer> portMap) {
+      this.portsMap = portMap;
     }
 
     public void setCommand(Command command) {
@@ -1099,7 +1099,7 @@ public class Container {
       if (mode != that.mode) {
         return false;
       }
-      if (portMap != null ? !portMap.equals(that.portMap) : that.portMap != null) {
+      if (portsMap != null ? !portsMap.equals(that.portsMap) : that.portsMap != null) {
         return false;
       }
 
@@ -1113,7 +1113,7 @@ public class Container {
       result = 31 * result + (envVariables != null ? envVariables.hashCode() : 0);
       result = 31 * result + (mode != null ? mode.hashCode() : 0);
       result = 31 * result + (links != null ? links.hashCode() : 0);
-      result = 31 * result + (portMap != null ? portMap.hashCode() : 0);
+      result = 31 * result + (portsMap != null ? portsMap.hashCode() : 0);
       return result;
     }
 
@@ -1126,7 +1126,7 @@ public class Container {
           ", mode=" + mode +
           ", links=" + links +
           ", mapExposedPorts=" + mapExposedPorts +
-          ", portMap=" + portMap +
+          ", portsMap=" + portsMap +
           ", command=" + command +
           '}';
     }
@@ -1179,7 +1179,7 @@ public class Container {
       this.options.type = Type.COMMAND;
       this.config.options = options;
       this.options.mode = Mode.DETACHED;
-      this.options.portMap = new HashMap<>();
+      this.options.portsMap = new HashMap<>();
     }
 
     public CommandContainerBuilder bindDataVolumeContainer(Container c) {
@@ -1270,13 +1270,13 @@ public class Container {
     }
 
     public CommandContainerBuilder mapPortToHost(int hostPort, int containerPort) {
-      if (options.portMap == null) {
-        options.portMap = new HashMap<>();
+      if (options.portsMap == null) {
+        options.portsMap = new HashMap<>();
       }
       if (!PortForwarding.isValidPort(hostPort) || !PortForwarding.isValidPort(containerPort)) {
         throw new IllegalArgumentException("Port must be between 1 and 65635. example: 80");
       }
-      options.portMap.put(containerPort, hostPort);
+      options.portsMap.put(containerPort, hostPort);
       return this;
     }
 
@@ -1298,7 +1298,7 @@ public class Container {
       int rangeSize = Integer.valueOf(hostPorts[1]) - beginHostPort;
 
       for (Integer i = 0; i < rangeSize; i++) {
-        options.portMap.put(beginContainerPort + i, beginHostPort + i);
+        options.portsMap.put(beginContainerPort + i, beginHostPort + i);
       }
       return this;
     }
