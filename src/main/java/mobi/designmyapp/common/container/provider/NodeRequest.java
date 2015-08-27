@@ -367,6 +367,193 @@ public class NodeRequest<T> {
       return lazy;
     }
   }
+
+  /**
+   * GoogleComputeRequest is used to create a new Node using parameters (all mandatory):
+   * Your template tag.
+   * A endpoint that point representing the amazon region API endpoint
+   * Your Amazon accessKey and secretKey with launch rights to your Amazon Account
+   * Warning: we recommend that you create dedicated rights for DesignMyApp instances within Amazon EC2
+   * <p/>
+   * The particularity of this node, is that it can be used directly with our default implementation of
+   * the Container manager API. ( See knowledge Base at 3.1.2 of the 2 section )
+   * <p/>
+   * Use the builder pattern to create a new request :
+   * NodeRequest request = NodeRequest.googleCompute()
+   * .templateTag("myTemplateTag")
+   * .instanceName("myInstanceName")
+   * .clientId("myGoogleClientId")
+   * .clientSecret("myGoogleClientSecret")
+   * .accessToken("myAccessToken")
+   * .zoneName("myZoneName")
+   * .projectId("myProjectId")
+   * .volumeSize(10)
+   * .build();
+   *
+   * @return new GoogleComputeRequest container
+   */
+  public static GoogleComputeRequest googleCompute() {
+    return new GoogleComputeRequest();
+  }
+
+  public static class GoogleComputeRequest {
+    /** Min volume size required */
+    private static final long VOLUME_SIZE_MIN = 10L;
+
+    private String templateTag;
+    private String instanceName;
+    private String clientId;
+    private String clientSecret;
+    private String accessToken;
+    private String zoneName;
+    private String projectId;
+    private String instanceType;
+    private long volumeSize;
+    private int poolSize;
+    private int ttl;
+    private int priority;
+
+    private GoogleComputeRequest() {}
+
+    public GoogleComputeRequest templateTag(String templateTag) {
+      this.templateTag = templateTag;
+      return this;
+    }
+
+    public GoogleComputeRequest instanceName(String instanceName) {
+      this.instanceName = instanceName;
+      return this;
+    }
+
+    public GoogleComputeRequest clientId(String clientId) {
+      this.clientId = clientId;
+      return this;
+    }
+
+    public GoogleComputeRequest clientSecret(String clientSecret) {
+      this.clientSecret = clientSecret;
+      return this;
+    }
+
+    public GoogleComputeRequest accessToken(String accessToken) {
+      this.accessToken = accessToken;
+      return this;
+    }
+
+    public GoogleComputeRequest zoneName(String zoneName) {
+      this.zoneName = zoneName;
+      return this;
+    }
+
+    public GoogleComputeRequest projectId(String projectId) {
+      this.projectId = projectId;
+      return this;
+    }
+
+    public GoogleComputeRequest instanceType(String instanceType) {
+      this.instanceType = instanceType;
+      return this;
+    }
+
+    public GoogleComputeRequest volumeSize(long volumeSize) {
+      this.volumeSize = volumeSize;
+      return this;
+    }
+
+    public GoogleComputeRequest poolSize(int poolSize) {
+      if (poolSize <= 0) {
+        throw new IllegalArgumentException("PoolSize Cannot be less than or equal to 0.");
+      }
+      this.poolSize = poolSize;
+      return this;
+    }
+
+    public GoogleComputeRequest ttl(int ttl) {
+      if (ttl < 0) {
+        throw new IllegalArgumentException("TTL Cannot be negative.");
+      }
+      this.ttl = ttl;
+      return this;
+    }
+
+    public GoogleComputeRequest priority(int priority) {
+      if (priority < 0) {
+        throw new IllegalArgumentException("Priority Cannot be less than 0.");
+      }
+      this.priority = priority;
+      return this;
+    }
+
+    public NodeRequest<GoogleComputeRequest> build() {
+      if (instanceName == null || clientId == null || clientSecret == null
+          || accessToken == null || zoneName == null || projectId == null
+          || instanceType == null) {
+        throw new IllegalArgumentException("All fields are required");
+      }
+      if (volumeSize < VOLUME_SIZE_MIN) {
+        throw new IllegalArgumentException("Minimum required volume size is " + VOLUME_SIZE_MIN);
+      }
+      if (poolSize <= 0) {
+        throw new IllegalArgumentException("PoolSize Cannot be less than or equal to 0.");
+      }
+      if (ttl < 0) {
+        throw new IllegalArgumentException("TTL Cannot be negative.");
+      }
+      if (priority < 0) {
+        throw new IllegalArgumentException("Priority Cannot be less than 0.");
+      }
+      return new NodeRequest<>(this);
+    }
+
+    public String getTemplateTag() {
+      return templateTag;
+    }
+
+    public String getInstanceName() {
+      return instanceName;
+    }
+
+    public String getClientId() {
+      return clientId;
+    }
+
+    public String getClientSecret() {
+      return clientSecret;
+    }
+
+    public String getAccessToken() {
+      return accessToken;
+    }
+
+    public String getZoneName() {
+      return zoneName;
+    }
+
+    public String getProjectId() {
+      return projectId;
+    }
+
+    public long getVolumeSize() {
+      return volumeSize;
+    }
+
+    public String getInstanceType() {
+      return instanceType;
+    }
+
+    public int getPoolSize() {
+      return poolSize;
+    }
+
+    public int getTtl() {
+      return ttl;
+    }
+
+    public int getPriority() {
+      return priority;
+    }
+  }
+
   /*=========================================*/
   // END GENERATED CODE
   /*=========================================*/
