@@ -313,7 +313,7 @@ public class NodeRequest<T> {
     }
 
     public NodeRequest<AmazonEc2Request> build() {
-      if (this.endpoint == null || this.endpoint == null || this.accessKey == null || this.secretKey == null || this.instanceType == null || this.securityGroups == null || this.poolSize <= 0 || this.volumeSize <= 0) {
+      if (this.endpoint == null || this.accessKey == null || this.secretKey == null || this.instanceType == null || this.poolSize <= 0 || this.volumeSize <= 0) {
         throw new IllegalArgumentException("None of these parameters should be null : templateTag, endpoint, accessKey, secretKey, instanceType, securityGroups, and poolSize and volumeSize must be strictly superior to 0");
       }
       return new NodeRequest<>(this);
