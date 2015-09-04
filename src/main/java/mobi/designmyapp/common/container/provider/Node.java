@@ -334,7 +334,9 @@ public abstract class  Node implements Comparable<Node> {
         newStatus.setPortsMap(new HashMap<>());
       }
       for (Map.Entry<String, String> ports : newStatus.getPortsMap().entrySet()) {
-        newMap.put(Integer.valueOf(ports.getKey()), Integer.valueOf(ports.getValue()));
+        if (!ports.getValue().isEmpty()) {
+          newMap.put(Integer.valueOf(ports.getKey()), Integer.valueOf(ports.getValue()));
+        }
       }
       options.setPortsMap(newMap);
     }

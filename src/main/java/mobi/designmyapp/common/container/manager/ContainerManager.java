@@ -18,6 +18,7 @@ import mobi.designmyapp.common.container.strategy.NodeSelectionStrategy;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 /**
  * This interface represents an container manager
@@ -39,10 +40,18 @@ public interface ContainerManager {
 
   /**
    * Add a node to the ContainerManager.
+   * If node already exists replaces it by the new one.
    *
    * @param node the node to add
    */
   void addNode(Node node);
+
+  /**
+   * Adds a node if not already present.
+   * @param node the node to add.
+   * @return the node already present or the new one
+   */
+  Node addNodeIfNotPresent(Node node);
 
   /**
    * Start a new set of containers.
@@ -97,11 +106,17 @@ public interface ContainerManager {
   Container restartContainer(String containerId);
 
   /**
+   * Removes a container.
+   * @param containerId the container id
+   */
+  void removeContainer(String containerId);
+
+  /**
    * Get all nodes.
    *
    * @return a collection of node
    */
-  Collection<Node> getNodes();
+  Set<Node> getNodes();
 
   /**
    * Set the nodes.
