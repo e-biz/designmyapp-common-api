@@ -27,5 +27,13 @@ public interface ContainerService {
    */
   Node createNode(NodeRequest request);
 
+  /**
+   * Retrieve current builder response during the generation cycle.
+   * Should only be called when appId and templateTag are set in ThreadLocal.
+   * Should only be called from Builder implementations during app build.
+   * @return the Serializable container response
+   */
+  Object getBuilderResponse();
+
 
 }
