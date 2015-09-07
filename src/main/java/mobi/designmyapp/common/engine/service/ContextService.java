@@ -104,6 +104,13 @@ public interface ContextService {
   String getRemoteBundleUrl();
 
   /**
+   * Retrieve the contextual bundle server security token.
+   * Use especially during migration.
+   * @return the security token as string
+   */
+  String getRemoteBundleSecurityToken();
+
+  /**
    * Node name where containers should be launch.
    *
    * @return a String representing the name of the targeted node
