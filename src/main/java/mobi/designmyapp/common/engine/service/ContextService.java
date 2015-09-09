@@ -14,6 +14,7 @@ package mobi.designmyapp.common.engine.service;
 
 import java.io.File;
 
+import mobi.designmyapp.common.container.provider.Node;
 import mobi.designmyapp.common.engine.builder.Builder;
 
 /**
@@ -111,9 +112,9 @@ public interface ContextService {
   String getRemoteBundleSecurityToken();
 
   /**
-   * Node name where containers should be launch.
+   * Node where containers should be launch.
    *
-   * @return a String representing the name of the targeted node
+   * @return  the targeted node
    */
-  String getTargetedNodeName();
+  Node getTargetedNode();
 }
