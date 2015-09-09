@@ -47,13 +47,6 @@ public interface ContainerManager {
   void addNode(Node node);
 
   /**
-   * Adds a node if not already present.
-   * @param node the node to add.
-   * @return the node already present or the new one
-   */
-  Node addNodeIfNotPresent(Node node);
-
-  /**
    * Start a new set of containers.
    * Those containers will be launched on the same node.
    *

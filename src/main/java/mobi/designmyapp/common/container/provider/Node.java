@@ -212,7 +212,7 @@ public abstract class  Node implements Comparable<Node> {
    * @return boolean indicating whether a new container can be started.
    */
   public boolean canCreateContainers(int size) {
-    return getActiveCount() < (this.poolSize - size);
+    return getActiveCount() + size <= this.poolSize;
   }
 
   /**
