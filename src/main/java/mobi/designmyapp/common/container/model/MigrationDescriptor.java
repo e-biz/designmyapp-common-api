@@ -10,7 +10,7 @@ public class MigrationDescriptor {
 
   private String versionFrom;
   private String versionTo;
-  private Container migrationContainer;
+  private String migrationImage;
   private Integer pauseTimeout;
   private Integer migrationTimeout;
   private Integer dumpTimeout;
@@ -32,12 +32,12 @@ public class MigrationDescriptor {
     this.versionTo = versionTo;
   }
 
-  public Container getMigrationContainer() {
-    return migrationContainer;
+  public String getMigrationImage() {
+    return migrationImage;
   }
 
-  public void setMigrationContainer(Container migrationContainer) {
-    this.migrationContainer = migrationContainer;
+  public void setMigrationImage(String image) {
+    this.migrationImage = image;
   }
 
   public Integer getPauseTimeout() {
@@ -98,8 +98,8 @@ public class MigrationDescriptor {
       return this;
     }
 
-    public Builder container(Container container) {
-      md.migrationContainer = container;
+    public Builder migrationImage(String image) {
+      md.migrationImage = image;
       return this;
     }
 
