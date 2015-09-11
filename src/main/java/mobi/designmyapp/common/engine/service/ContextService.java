@@ -14,6 +14,7 @@ package mobi.designmyapp.common.engine.service;
 
 import java.io.File;
 
+import mobi.designmyapp.common.container.model.MigrationRemoteBundle;
 import mobi.designmyapp.common.container.provider.Node;
 import mobi.designmyapp.common.engine.builder.Builder;
 
@@ -97,19 +98,10 @@ public interface ContextService {
   String getEnvironmentBaseUrl();
 
   /**
-   * Retrieve an url bundle.zip from server webapp resources.
-   * Use especially during upgrade.
-   *
-   * @return a String representing the url to access the file
+   * Retrieves the migration remote bundle information.
+   * @return the migration remote bundle info
    */
-  String getRemoteBundleUrl();
-
-  /**
-   * Retrieve the contextual bundle server security token.
-   * Use especially during migration.
-   * @return the security token as string
-   */
-  String getRemoteBundleSecurityToken();
+  MigrationRemoteBundle getMigrationRemoteBundle();
 
   /**
    * Node where containers should be launch.
