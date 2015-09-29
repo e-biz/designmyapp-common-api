@@ -137,7 +137,7 @@ public class NodeRequest<T> {
     }
 
     public NodeRequest<DesignMyAppRequest> build() {
-      if (this.endpoint == null || this.endpoint == null || this.keyId == null || this.secretKey == null || this.poolSize <= 0) {
+      if (this.endpoint == null || this.templateTag == null || this.keyId == null || this.secretKey == null || this.poolSize <= 0) {
         throw new IllegalArgumentException("None of these parameters should be null : templateTag, endpoint, keyId, secretKey, and poolSize must be strictly superior to 0");
       }
       return new NodeRequest<>(this);
